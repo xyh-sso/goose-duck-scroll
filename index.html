@@ -5,784 +5,831 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>鹅鸭杀 · 全员卷宗</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap');
 
 :root {
-  --paper: #f5f0e8;
-  --cream: #faf7f0;
-  --wine: #4a1525;
-  --wine-dark: #2d0a14;
-  --wine-mid: #6b2a3a;
-  --ink: #1a1410;
-  --ink-light: #3d3028;
-  --gold: #c9a96e;
-  --gold-bright: #d4b87a;
-  --gold-dim: #a0854a;
-  --red-warn: #8b2a3a;
-  --shadow: rgba(45,10,20,0.25);
-  --serif: 'Playfair Display', 'Crimson Text', 'Noto Serif SC', serif;
+  --parchment: #ece3d0;
+  --parchment-dark: #d9cba8;
+  --paper: #f5efe0;
+  --paper-light: #faf6ec;
+  --wine: #3d0f1a;
+  --wine-deep: #20080e;
+  --wine-bright: #5a1a2a;
+  --gold: #b8943d;
+  --gold-light: #d4b85c;
+  --gold-pale: #e0d0a0;
+  --ink: #111111;
+  --ink-soft: #2a2a2a;
+  --ink-mid: #444;
+  --accent: #6b5b4a;
+  --shadow-brown: rgba(32, 8, 14, 0.4);
+  --serif: 'Playfair Display', 'Cormorant Garamond', 'Noto Serif SC', serif;
+  --serif-sc: 'Noto Serif SC', 'STSong', serif;
   --sans: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
 }
 
 * { margin:0; padding:0; box-sizing:border-box; }
 html, body {
   width:100%; height:100%; overflow:hidden;
-  font-family:var(--sans); background:#0d0508;
+  font-family:var(--sans); background:#0a0406;
   -webkit-font-smoothing:antialiased; -webkit-tap-highlight-color:transparent;
   touch-action:pan-y; user-select:none; -webkit-user-select:none;
 }
+
+/* ═══════════ GLOBAL PAPER GRAIN OVERLAY ═══════════ */
 body::after {
-  content:''; position:fixed; inset:0; pointer-events:none; z-index:9999; opacity:0.035;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-  background-size:200px 200px;
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:9999;
+  opacity:0.045; mix-blend-mode:multiply;
+  background:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:180px 180px;
 }
 
 #app { width:100%; height:100%; position:relative; overflow:hidden; }
 
-/* ── Page base ── */
+/* ═══════════ PAGE BASE ═══════════ */
 .page {
-  position:absolute; inset:0; overflow-y:auto; overflow-x:hidden;
+  position:absolute; top:0; left:0; width:100%; height:100%;
+  overflow-y:auto; overflow-x:hidden;
   -webkit-overflow-scrolling:touch; scrollbar-width:none;
-  transition:transform 0.55s cubic-bezier(0.4,0,0.2,1);
-  will-change:transform;
+  transition:transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+  will-change:transform; backface-visibility:hidden;
 }
 .page::-webkit-scrollbar { display:none; }
 .page.active  { transform:translateY(0);    z-index:10; }
 .page.before  { transform:translateY(-100%); z-index:5; }
 .page.after   { transform:translateY(100%);  z-index:5; }
 
-/* ── Page Inner ── */
+/* ═══════════ PAGE INNER — AGED PARCHMENT ═══════════ */
 .pg {
-  position:relative; min-height:100%; padding:24px 16px 48px;
-  border:1px solid var(--gold); margin:8px;
-  background:var(--paper);
+  position:relative; min-height:100%; padding:28px 18px 56px;
+  margin:8px; border:2px solid var(--gold-pale);
+  background:
+    /* Base parchment */
+    linear-gradient(180deg, #f5efe0 0%, #ece3d0 30%, #e8dcbe 60%, #ece3d0 85%, #f2e9d5 100%),
+    /* Subtle horizontal grain lines */
+    repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(139,119,80,0.03) 3px, rgba(139,119,80,0.03) 4px),
+    /* Occasional darker streaks */
+    linear-gradient(175deg, transparent 40%, rgba(139,119,80,0.04) 40.5%, transparent 41%),
+    linear-gradient(5deg, transparent 70%, rgba(139,119,80,0.03) 70.5%, transparent 71%);
+  box-shadow:
+    inset 0 0 120px rgba(139,119,80,0.12),
+    0 4px 30px var(--shadow-brown),
+    0 1px 3px rgba(0,0,0,0.3);
+  border-radius: 1px;
 }
+/* Inner gold rule */
 .pg::after {
-  content:''; position:absolute; top:5px; left:5px; right:5px; bottom:5px;
-  border:0.5px solid rgba(201,169,110,0.35); pointer-events:none;
+  content:''; position:absolute; top:6px; left:6px; right:6px; bottom:6px;
+  border:1px solid rgba(184,148,61,0.3); pointer-events:none;
 }
-.pg .corner { position:absolute; width:16px; height:16px; opacity:0.25; }
-.pg .corner.tl { top:10px; left:10px; border-top:1px solid var(--gold); border-left:1px solid var(--gold); }
-.pg .corner.tr { top:10px; right:10px; border-top:1px solid var(--gold); border-right:1px solid var(--gold); }
-.pg .corner.bl { bottom:10px; left:10px; border-bottom:1px solid var(--gold); border-left:1px solid var(--gold); }
-.pg .corner.br { bottom:10px; right:10px; border-bottom:1px solid var(--gold); border-right:1px solid var(--gold); }
+/* Paper grain overlay */
+.pg::before {
+  content:''; position:absolute; inset:0; pointer-events:none; z-index:1;
+  opacity:0.07; mix-blend-mode:multiply;
+  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+}
 
-/* backgrounds */
-.bg-cream .pg { background:var(--cream); }
-.bg-wine .pg { background:var(--wine); color:var(--cream); }
-.bg-wine .pg .text-body { color:#d4c5b0; }
-.bg-dia .pg { background:linear-gradient(135deg, var(--cream) 52%, var(--wine) 52%); }
-.bg-dark .pg { background:var(--wine-dark); color:var(--cream); }
-.bg-mid  .pg { background:var(--wine-mid); color:var(--cream); }
+/* ═══════════ ORNATE CORNER DECORATIONS ═══════════ */
+.corner { position:absolute; width:24px; height:24px; z-index:2; }
+.corner.tl { top:10px; left:10px; border-top:2px solid var(--gold); border-left:2px solid var(--gold); }
+.corner.tr { top:10px; right:10px; border-top:2px solid var(--gold); border-right:2px solid var(--gold); }
+.corner.bl { bottom:10px; left:10px; border-bottom:2px solid var(--gold); border-left:2px solid var(--gold); }
+.corner.br { bottom:10px; right:10px; border-bottom:2px solid var(--gold); border-right:2px solid var(--gold); }
+/* Diamond dot at each corner */
+.corner::after { content:'◆'; position:absolute; font-size:6px; color:var(--gold); }
+.corner.tl::after { top:-3px; left:-3px; }
+.corner.tr::after { top:-3px; right:-3px; }
+.corner.bl::after { bottom:-3px; left:-3px; }
+.corner.br::after { bottom:-3px; right:-3px; }
 
-/* ── Typography ── */
-.t-xl { font-family:var(--serif); font-size:clamp(2rem,5vw,3.2rem); font-weight:900; line-height:1.2; text-align:center; }
-.t-lg { font-family:var(--serif); font-size:clamp(1.4rem,3.5vw,2rem); font-weight:700; line-height:1.3; text-align:center; }
-.t-md { font-family:var(--serif); font-size:1.15rem; font-weight:700; }
-.t-sm { font-family:var(--serif); font-size:1rem; font-weight:700; }
-.t-body { font-size:0.92rem; line-height:1.85; color:var(--ink-light); }
-.t-cap { font-size:0.75rem; color:var(--gold-dim); text-align:center; letter-spacing:2px; text-transform:uppercase; }
-.t-hint { font-size:0.72rem; color:rgba(201,169,110,0.8); text-align:center; }
+/* ═══════════ MAGPIE SILHOUETTE ═══════════ */
+.magpie-sil {
+  display:inline-block; opacity:0.12; font-size:2rem;
+  filter:drop-shadow(0 1px 2px rgba(0,0,0,0.3));
+}
 
-.gold-line { width:50px; height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); margin:10px auto; }
-.gold-line.l { margin-left:0; }
-.gold-div  { width:100%; height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); margin:14px 0; }
+/* ═══════════ VIGNETTE EFFECT FOR ATMOSPHERE ═══════════ */
+.vignette {
+  position:relative;
+}
+.vignette::after {
+  content:''; position:absolute; inset:0; pointer-events:none; z-index:1;
+  background:radial-gradient(ellipse at center, transparent 60%, rgba(32,8,14,0.15) 100%);
+}
 
-/* ── Wax Seal ── */
-.seal { width:44px; height:44px; border-radius:50%; margin:0 auto;
-  background:radial-gradient(circle at 40% 38%, #c0392b, #5e1010);
-  box-shadow:0 2px 8px rgba(0,0,0,0.35), inset 0 1px 2px rgba(255,255,255,0.12);
-  display:flex; align-items:center; justify-content:center; font-size:16px; color:rgba(212,184,122,0.5); }
-.seal.lg { width:66px; height:66px; font-size:24px; }
+/* ═══════════ DARK PAGES (wine/dark backgrounds) ═══════════ */
+.bg-wine .pg {
+  background:
+    linear-gradient(180deg, #3d0f1a 0%, #2d0a12 40%, #20080e 100%),
+    repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.015) 3px, rgba(255,255,255,0.015) 4px);
+  border-color:rgba(184,148,61,0.5);
+  box-shadow:inset 0 0 100px rgba(0,0,0,0.4), 0 4px 30px rgba(0,0,0,0.5);
+  color:#f5efe0;
+}
+.bg-wine .pg::after { border-color:rgba(184,148,61,0.5); }
+.bg-wine .corner { border-color:var(--gold-light); }
+.bg-wine .corner::after { color:var(--gold-light); }
 
-/* ── Cards ── */
+/* ═══════════ DIAGONAL COVER PAGE ═══════════ */
+.bg-dia .pg {
+  background:linear-gradient(135deg, #faf6ec 48%, #f5efe0 48%, #f5efe0 52%, #3d0f1a 52%, #3d0f1a 55%, #2d0a12 55%);
+  border-color:rgba(184,148,61,0.6);
+}
+
+/* ═══════════ TYPOGRAPHY ═══════════ */
+.t-xl {
+  font-family:var(--serif); font-size:clamp(2.2rem,5.5vw,3.6rem);
+  font-weight:900; line-height:1.15; text-align:center;
+  letter-spacing:2px; color:var(--ink);
+  text-shadow:1px 1px 0 rgba(184,148,61,0.2);
+}
+.t-lg {
+  font-family:var(--serif); font-size:clamp(1.5rem,3.5vw,2.2rem);
+  font-weight:700; line-height:1.3; text-align:center;
+  color:var(--ink);
+}
+.t-md { font-family:var(--serif); font-size:1.2rem; font-weight:700; color:var(--ink); }
+.t-sm { font-family:var(--serif); font-size:1rem; font-weight:700; color:var(--ink-soft); }
+.t-body { font-size:0.95rem; line-height:1.9; color:var(--ink); }
+.t-cap {
+  font-family:var(--serif); font-size:0.72rem; color:var(--gold);
+  text-align:center; letter-spacing:4px; text-transform:uppercase;
+}
+.t-hint {
+  font-size:0.72rem; color:var(--accent); text-align:center;
+  font-style:italic;
+}
+
+/* ═══════════ GOLD ORNAMENTAL LINE ═══════════ */
+.gold-rule {
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  margin:12px auto; width:100%; max-width:280px;
+}
+.gold-rule::before, .gold-rule::after {
+  content:''; flex:1; height:1px;
+  background:linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.gold-rule span { font-size:8px; color:var(--gold); }
+.gold-rule.l { margin-left:0; justify-content:flex-start; }
+.gold-div {
+  width:100%; height:1px; margin:16px 0;
+  background:linear-gradient(90deg, transparent, var(--gold-pale), var(--gold), var(--gold-pale), transparent);
+}
+
+/* ═══════════ WAX SEAL ═══════════ */
+.seal {
+  width:50px; height:50px; border-radius:50%; margin:0 auto;
+  background:radial-gradient(circle at 38% 35%, #c94040, #6e1111);
+  box-shadow:0 3px 12px rgba(0,0,0,0.4), inset 0 1px 2px rgba(255,255,255,0.15), 0 0 0 2px rgba(184,148,61,0.3);
+  display:flex; align-items:center; justify-content:center;
+  font-size:18px; color:rgba(212,184,92,0.6);
+  position:relative;
+}
+.seal::after { content:'♜'; }
+.seal.lg { width:70px; height:70px; font-size:24px; }
+
+/* ═══════════ CARDS ═══════════ */
 .card {
-  background:rgba(255,255,255,0.75); border:0.5px solid rgba(201,169,110,0.5);
-  border-radius:1px; padding:14px; margin:10px 0; position:relative;
-  box-shadow:0 2px 10px rgba(45,10,20,0.12); transition:all 0.3s;
+  background:rgba(255,255,255,0.8);
+  border:1px solid rgba(184,148,61,0.4);
+  border-radius:1px; padding:16px; margin:10px 0; position:relative;
+  box-shadow:0 2px 12px rgba(32,8,14,0.1), inset 0 1px 0 rgba(255,255,255,0.5);
+  transition:all 0.3s;
 }
-.card:active { transform:translateY(2px); box-shadow:0 1px 4px rgba(45,10,20,0.15); }
-.card-wine { background:rgba(74,21,37,0.92); color:var(--cream); border-color:rgba(201,169,110,0.4); }
-.card-wine .t-body { color:rgba(245,240,232,0.8); }
-.card-neut { background:linear-gradient(135deg, rgba(250,247,240,0.95) 55%, rgba(74,21,37,0.85) 55%); color:var(--cream); }
-.card-neut .t-body { color:rgba(245,240,232,0.85); }
-.card-fold { position:absolute; top:0; right:0; width:20px; height:20px;
-  background:linear-gradient(135deg, transparent 50%, rgba(0,0,0,0.06) 50%); }
-.card-left-red { border-left:3px solid var(--red-warn); }
+.card::before {
+  content:''; position:absolute; inset:0; pointer-events:none; opacity:0.03;
+  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+}
+.card:active { transform:translateY(2px); box-shadow:0 1px 4px rgba(32,8,14,0.15); }
+.card-wine {
+  background:rgba(255,245,235,0.9); color:#000;
+  border-color:rgba(184,148,61,0.5);
+  box-shadow:0 2px 12px rgba(32,8,14,0.1), inset 0 1px 0 rgba(255,255,255,0.5);
+  border-left:4px solid var(--wine);
+}
+.card-wine .t-body { color:#000; }
+.card-neut {
+  background:rgba(255,248,240,0.9); color:#000;
+  border-color:rgba(184,148,61,0.5);
+  box-shadow:0 2px 12px rgba(32,8,14,0.1), inset 0 1px 0 rgba(255,255,255,0.5);
+  border-left:4px solid var(--gold);
+}
+.card-neut .t-body { color:#000; }
+.card-fold {
+  position:absolute; top:0; right:0; width:22px; height:22px;
+  background:linear-gradient(135deg, transparent 50%, rgba(139,119,80,0.1) 50%);
+}
+.card-left-red { border-left:3px solid #8b2a3a; }
 
-.tag { display:inline-block; padding:2px 10px; font-size:0.68rem; font-family:var(--serif);
-  border:0.5px solid var(--gold); letter-spacing:1px; }
-.tag-g { background:var(--cream); color:var(--wine); }
-.tag-d { background:var(--wine); color:var(--cream); }
-.tag-n { background:var(--gold-dim); color:var(--cream); }
+/* ═══════════ TAGS ═══════════ */
+.tag {
+  display:inline-block; padding:2px 12px; font-size:0.68rem;
+  font-family:var(--serif); letter-spacing:1px; border-radius:1px;
+  border:1px solid var(--gold);
+}
+.tag-g { background:var(--paper); color:var(--wine); }
+.tag-d { background:var(--wine); color:var(--paper); border-color:var(--gold-light); }
+.tag-n { background:var(--gold); color:#1a1a1a; }
 
 .stars { color:var(--gold); font-size:0.8rem; letter-spacing:3px; }
 
-/* ── Buttons ── */
+/* ═══════════ BUTTONS ═══════════ */
 .btn {
-  display:inline-block; padding:10px 22px; border:1px solid var(--gold);
-  font-family:var(--serif); font-size:0.85rem; cursor:pointer; text-align:center;
-  transition:all 0.25s; background:transparent; border-radius:1px;
+  display:inline-block; padding:10px 24px; border:1px solid var(--gold);
+  font-family:var(--serif); font-size:0.85rem; cursor:pointer;
+  text-align:center; transition:all 0.25s; border-radius:1px;
+  letter-spacing:1px; position:relative;
 }
-.btn:active { transform:translateY(2px); border-color:var(--gold-bright); box-shadow:0 0 10px rgba(201,169,110,0.25); }
-.btn-cream { background:var(--cream); color:var(--wine); }
-.btn-wine  { background:var(--wine); color:var(--cream); }
-.btn-sm { padding:6px 14px; font-size:0.7rem; }
+.btn:active { transform:translateY(2px); border-color:var(--gold-light); }
+.btn-cream { background:var(--paper); color:var(--wine); }
+.btn-wine  { background:var(--wine); color:var(--paper); }
+.btn-sm { padding:6px 14px; font-size:0.72rem; }
 
-/* ── Split layout ── */
+/* ═══════════ SPLIT LAYOUT ═══════════ */
 .split { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-.split-col { padding:14px; border:0.5px solid rgba(201,169,110,0.3); }
-.split-col.l { background:rgba(255,255,255,0.6); }
-.split-col.r { background:rgba(74,21,37,0.06); }
+.split-col { padding:16px; border:1px solid rgba(184,148,61,0.3); border-radius:1px; }
+.split-col.l { background:rgba(255,255,255,0.5); }
+.split-col.r { background:rgba(61,15,26,0.04); }
 
-/* ── Timeline ── */
-.tl { position:relative; padding-left:30px; }
-.tl::before { content:''; position:absolute; left:11px; top:0; bottom:0; width:1px;
-  background:linear-gradient(180deg, var(--gold), var(--gold-dim), var(--gold)); }
-.tl-node { position:relative; margin-bottom:16px; padding:10px 14px;
-  background:rgba(255,255,255,0.55); border:0.5px solid rgba(201,169,110,0.25);
-  border-radius:1px; transition:background 0.3s; }
-.tl-node:active { background:rgba(201,169,110,0.1); }
-.tl-node::before { content:''; position:absolute; left:-23px; top:14px;
-  width:7px; height:7px; border:1px solid var(--gold); border-radius:50%; background:var(--cream); }
+/* ═══════════ TIMELINE ═══════════ */
+.tl { position:relative; padding-left:32px; }
+.tl::before {
+  content:''; position:absolute; left:12px; top:0; bottom:0; width:2px;
+  background:linear-gradient(180deg, var(--gold-pale), var(--gold), var(--gold-pale));
+}
+.tl-node {
+  position:relative; margin-bottom:18px; padding:12px 16px;
+  background:rgba(255,255,255,0.6); border:1px solid rgba(184,148,61,0.25);
+  border-radius:1px; transition:all 0.3s;
+}
+.tl-node:active { background:rgba(184,148,61,0.08); }
+.tl-node::before {
+  content:''; position:absolute; left:-24px; top:16px;
+  width:9px; height:9px; border:2px solid var(--gold);
+  border-radius:50%; background:var(--paper);
+}
 
-/* ── Swiper ── */
-.swiper { display:flex; overflow-x:auto; scroll-snap-type:x mandatory;
-  -webkit-overflow-scrolling:touch; gap:10px; padding:8px 0; scrollbar-width:none; }
+/* ═══════════ SWIPER ═══════════ */
+.swiper {
+  display:flex; overflow-x:auto; scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch; gap:10px; padding:8px 0;
+  scrollbar-width:none;
+}
 .swiper::-webkit-scrollbar { display:none; }
-.swiper-card { flex:0 0 88%; scroll-snap-align:center; min-width:270px; }
+.swiper-card { flex:0 0 86%; scroll-snap-align:center; min-width:260px; }
 
-/* ── Character Avatar ── */
-.c-av { width:100px; height:100px; border-radius:50%; border:2px solid var(--gold);
-  display:flex; align-items:center; justify-content:center; font-size:2.6rem;
-  background:rgba(201,169,110,0.08); margin:0 auto 8px; }
-.c-av.goose { background:linear-gradient(135deg, #faf7f0, #e8dcc8); }
-.c-av.duck { background:linear-gradient(135deg, #3d101d, #1d060c); }
-.c-av.neut { background:linear-gradient(135deg, #b8943d, #6d4f1a); }
+/* ═══════════ CHARACTER AVATAR ═══════════ */
+.c-av {
+  width:110px; height:110px; border-radius:50%; border:3px solid var(--gold);
+  display:flex; align-items:center; justify-content:center;
+  font-size:3rem; margin:0 auto 10px;
+  box-shadow:0 4px 20px rgba(32,8,14,0.2);
+}
+.c-av.goose { background:linear-gradient(135deg, #faf6ec, #e8dcc8); }
+.c-av.duck { background:linear-gradient(135deg, #5a1a2a, #3d0f1a); }
+.c-av.neut { background:linear-gradient(135deg, #b8943d, #8b6914); }
 
-/* ── Quick Ref Grid ── */
-.qgrid { display:grid; grid-template-columns:repeat(auto-fill, minmax(105px,1fr)); gap:6px; }
-.qcard { padding:8px 4px; text-align:center; cursor:pointer; border:0.5px solid rgba(201,169,110,0.35);
-  border-radius:1px; transition:all 0.3s; }
-.qcard:active { transform:scale(0.96); border-color:var(--gold-bright); }
-.qcard.goose { background:rgba(255,255,255,0.7); }
-.qcard.duck { background:rgba(74,21,37,0.85); color:var(--cream); }
-.qcard.neut { background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(74,21,37,0.5)); color:var(--cream); }
+/* ═══════════ QUICK REF GRID ═══════════ */
+.qgrid { display:grid; grid-template-columns:repeat(auto-fill, minmax(100px,1fr)); gap:6px; }
+.qcard {
+  padding:10px 4px; text-align:center; cursor:pointer;
+  border:1px solid rgba(184,148,61,0.35); border-radius:1px;
+  transition:all 0.3s;
+}
+.qcard:active { transform:scale(0.95); border-color:var(--gold); }
+.qcard.goose { background:rgba(255,255,255,0.8); }
+.qcard.duck { background:rgba(255,240,240,0.9); border-left:3px solid var(--wine); }
+.qcard.neut {
+  background:rgba(255,248,235,0.9); border-left:3px solid var(--gold);
+}
 
-/* ── Animations ── */
-@keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
-@keyframes fadeIn  { from { opacity:0; } to { opacity:1; } }
-@keyframes shimmer { 0% { background-position:-200% 0; } 100% { background-position:200% 0; } }
-@keyframes pulse   { 0%,100% { opacity:0.5; } 50% { opacity:1; } }
-@keyframes glow    { 0%,100% { border-color:var(--gold); } 50% { border-color:var(--gold-bright); } }
-.a-fade { animation:fadeUp 0.7s ease forwards; opacity:0; }
-.a-d1 { animation-delay:0.15s; } .a-d2 { animation-delay:0.35s; } .a-d3 { animation-delay:0.55s; } .a-d4 { animation-delay:0.75s; }
+/* ═══════════ ANIMATIONS ═══════════ */
+@keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+@keyframes reveal { from { opacity:0; clip-path:inset(0 0 0 100%); } to { opacity:1; clip-path:inset(0 0 0 0); } }
+@keyframes pulse { 0%,100% { opacity:0.4; } 50% { opacity:1; } }
+@keyframes goldShimmer {
+  0% { border-color:var(--gold); box-shadow:0 0 0 rgba(184,148,61,0); }
+  50% { border-color:var(--gold-light); box-shadow:0 0 15px rgba(184,148,61,0.3); }
+  100% { border-color:var(--gold); box-shadow:0 0 0 rgba(184,148,61,0); }
+}
+.a-fade { animation:fadeUp 0.8s ease forwards; opacity:0; }
+.a-d1 { animation-delay:0.12s; } .a-d2 { animation-delay:0.3s; }
+.a-d3 { animation-delay:0.5s; } .a-d4 { animation-delay:0.7s; }
 
-/* ── Bottom bar ── */
-.bbar { position:fixed; bottom:10px; right:10px; z-index:100;
-  font-family:var(--serif); font-size:0.68rem; color:var(--gold);
-  background:rgba(0,0,0,0.55); padding:3px 10px; border-radius:10px;
-  border:0.5px solid rgba(201,169,110,0.4); pointer-events:none; }
+/* ═══════════ BOTTOM DECORATION ═══════════ */
+.bot-dec {
+  width:100%; height:12px; margin-top:16px;
+  background:repeating-linear-gradient(
+    90deg,
+    transparent, transparent 4px,
+    rgba(184,148,61,0.3) 4px, rgba(184,148,61,0.3) 5px
+  );
+}
 
-/* ── Highlight marks ── */
-.hl { background:linear-gradient(180deg, transparent 60%, rgba(201,169,110,0.22) 60%); }
-.hl-r { background:linear-gradient(180deg, transparent 60%, rgba(200,45,45,0.18) 60%); }
+/* ═══════════ HIGHLIGHT ═══════════ */
+.hl { background:linear-gradient(180deg, transparent 55%, rgba(184,148,61,0.2) 55%); }
+.hl-r { background:linear-gradient(180deg, transparent 55%, rgba(200,40,40,0.15) 55%); }
 
-/* ── Bottom decoration ── */
-.bot-dec { width:100%; height:14px; margin-top:14px;
-  background:repeating-linear-gradient(90deg, transparent, transparent 6px, rgba(201,169,110,0.35) 6px, rgba(201,169,110,0.35) 7px); }
+/* ═══════════ PAGE INDICATOR ═══════════ */
+.pg-ind {
+  position:fixed; bottom:12px; right:12px; z-index:100;
+  font-family:var(--serif); font-size:0.68rem; color:var(--gold-light);
+  background:rgba(10,4,6,0.7); padding:4px 12px; border-radius:12px;
+  border:0.5px solid rgba(184,148,61,0.4); pointer-events:none;
+}
 
-/* ── Link strip ── */
-.link-strip { display:flex; gap:6px; justify-content:center; flex-wrap:wrap; margin:6px 0; }
+/* ═══════════ SCROLL HINT ═══════════ */
+.scroll-hint {
+  text-align:center; padding:6px;
+  animation:pulse 2.5s infinite;
+  font-size:0.72rem; color:var(--gold);
+  font-style:italic;
+}
 
-/* Scroll hint */
-.scroll-hint { text-align:center; padding:6px; animation:pulse 2.2s infinite; font-size:0.7rem; color:var(--gold-dim); }
+/* ═══════════ BOOKPLATE STYLE SECTION HEADER ═══════════ */
+.bookplate {
+  text-align:center; padding:10px 0; position:relative;
+}
+.bookplate::before, .bookplate::after {
+  content:'❦'; font-size:14px; color:var(--gold); display:block;
+  margin:4px 0; opacity:0.6;
+}
 </style>
 </head>
 <body>
 <div id="app"></div>
-<div class="bbar" id="pgNum">1 / 20</div>
+<div class="pg-ind" id="pgNum">1 / 20</div>
 
 <script>
-// ═══════════════════ DATA ═══════════════════
+// ═══════════════════ CHARACTER DATA ═══════════════════
 const CHARS = {
-  goose: [
-    {id:'sheriff',name:'警长',emoji:'⭐',stars:'★★☆',role:'执法近战好人',
-     skill:'可主动击杀一名坏人，误杀好人直接"双倒"出局',
-     play:'抱团确认身份后出刀，切勿盲目开局出刀',
-     tip:'最强大的执法位——但需慎用技能，误杀代价惨重'},
-    {id:'justice',name:'正义使者',emoji:'⚔️',stars:'★★☆',role:'一次性执法',
-     skill:'全局一刀击杀，无误杀惩罚，仅单次使用机会',
-     play:'留存技能至残局使用，关键时刻一击制胜',
-     tip:'单次技能需精准判断，建议保留至最后'},
-    {id:'bird',name:'观鸟者',emoji:'🔭',stars:'★☆☆',role:'视野观察员',
-     skill:'可扩大指定方向自身视野，远距离偷看暗处玩家行动',
-     play:'利用视野优势暗中观察可疑玩家行踪',
-     tip:'信息位角色，为团队提供关键视野情报'},
-    {id:'psychic',name:'通灵者',emoji:'🔮',stars:'★★★',role:'亡灵聆听者',
-     skill:'可听见亡灵玩家的声音，获取死后关键线索',
-     play:'利用亡灵信息精准锁定坏人身份，鸭阵营克星',
-     tip:'最强信息位——听亡灵声音辨坏人，留至后期价值更大'},
-    {id:'canada',name:'加拿大鹅',emoji:'🛡️',stars:'★★☆',role:'被动警报器',
-     skill:'遇害自动触发全局报警，防止悄无声息刀人',
-     play:'鸭阵营的噩梦——刀你等于自曝身份',
-     tip:'核心保护位，让鸭子不敢轻易动手'},
-    {id:'engineer',name:'工程师',emoji:'🔧',stars:'★★★',role:'反制专家',
-     skill:'可看见存活鸭子的破坏痕迹（地图红圈），可躲管道规避猎杀',
-     play:'追踪破坏痕迹定位鸭子，钻管道保命生存',
-     tip:'克制炸弹鸭——可解除全域爆破'},
-    {id:'gravy',name:'肉汁鹅',emoji:'🪙',stars:'★☆☆',role:'金币收集者',
-     skill:'做任务获得金币，无法被混刀，在人群中会弹刀',
-     play:'专注做任务攒金币，待在人群中最安全',
-     tip:'切勿盲目跟随陌生人，防鸭子贴身联动击杀'},
-    {id:'white',name:'大白鹅',emoji:'🦢',stars:'★☆☆',role:'基础好人',
-     skill:'一直特别白的鹅——无特殊主动技能',
-     play:'最纯粹的好人角色，靠发言和推理存活',
-     tip:'基础角色——考验纯推理能力与口才'}
-  ],
-  duck: [
-    {id:'bomber',name:'炸弹鸭',emoji:'💣',stars:'★★★',role:'爆破专家',
-     skill:'贴身绑定延时炸弹，传导击杀连锁淘汰多名好人',
-     play:'搭配关门分割人群，炸弹连锁最大化收益',
-     tip:'搭配间谍鸭关门使用效果更佳'},
-    {id:'spy',name:'间谍鸭',emoji:'🕵️',stars:'★★☆',role:'信息窃取者',
-     skill:'在会议上投票后，可获得被投票者的身份信息',
-     play:'会议中收集鹅阵营身份信息，传递给鸭子队友',
-     tip:'关键信息位——为鸭队提供精准猎杀目标'},
-    {id:'prokill',name:'专业杀手',emoji:'🗡️',stars:'★★★',role:'隐匿刺客',
-     skill:'刀人后不留下倒地尸体，彻底隐匿行凶痕迹',
-     play:'悄无声息猎杀，不留尸体无法触发报警',
-     tip:'克制加拿大鹅——尸体不会自动报警'},
-    {id:'ninja',name:'忍者鸭',emoji:'🥷',stars:'★★☆',role:'暗影猎手',
-     skill:'拥有特殊隐匿身法，可悄无声息接近目标',
-     play:'利用地形和视野盲区，出其不意击杀落单好人',
-     tip:'高机动刺客——善用视野盲区突袭'},
-    {id:'morph',name:'变形鸭',emoji:'🎭',stars:'★★★',role:'伪装大师',
-     skill:'复刻在场任意玩家的外形，伪造行踪嫁祸他人',
-     play:'变身模仿弱势好人，制造混乱嫁祸无辜者',
-     tip:'变形状态无法开启破坏技能——注意切换时机'},
-    {id:'cannibal',name:'食鸟鸭',emoji:'🦴',stars:'★★☆',role:'尸体清理者',
-     skill:'可吞食倒地尸体，销毁行凶线索（自己刀的人需等3秒后吞食）',
-     play:'刀人后等待三秒吞尸，销毁关键报警线索',
-     tip:'可抵消加拿大鹅的尸爆报警——战略克制位'},
-    {id:'assassin',name:'刺客',emoji:'🎯',stars:'★★☆',role:'会议狙击手',
-     skill:'会议发言阶段赌身份击杀一名在场玩家，赌错自毙，单局最多使用两次',
-     play:'会议中精准猜测身份，一击必杀关键鹅角色',
-     tip:'高风险高回报——赌错自毙，需极度谨慎'}
-  ],
-  neutral: [
-    {id:'dodo',name:'呆呆鸟',emoji:'🐦',stars:'★☆☆',role:'求死独行者',
-     skill:'在会议中被投票放逐即可单独取胜',
-     play:'主动做出可疑行为博取怀疑，诱使他人投票放逐你',
-     tip:'演技派角色——越可疑越容易获胜，但别太假'},
-    {id:'pelican',name:'鹈鹕',emoji:'🦤',stars:'★★★',role:'吞噬霸主',
-     skill:'逐个吞噬全部存活玩家，独享对局最终胜利',
-     play:'逐个吞噬落单玩家，苟活至最后独享胜利',
-     tip:'终极独行角色——吞噬全场称霸对局'},
-    {id:'pigeon',name:'鸽子',emoji:'🕊️',stars:'★★★★',role:'全域感染者',
-     skill:'全域感染全部存活对局者，感染满额即获胜',
-     play:'低调缓慢感染他人，切忌高调行动引起集火',
-     tip:'感染需极大的耐心——高调会被优先放逐'},
-    {id:'vulture',name:'秃鹫',emoji:'🦅',stars:'★★★',role:'尸体清道夫',
-     skill:'捡拾全场倒地尸体，啃食累积达标即可取胜',
-     play:'游走战场捡拾尸体，不参与阵营正面对抗',
-     tip:'耐心等待尸体出现——捡拾达标即取胜'},
-    {id:'falcon',name:'猎鹰',emoji:'🦅',stars:'★★★☆',role:'终极猎手',
-     skill:'淘汰鹅鸭两大阵营全部人员，独行称霸对局',
-     play:'逐个淘汰鹅鸭双方玩家，独自称霸全场',
-     tip:'最强中立猎手——正面对抗两大阵营'}
-  ]
-};
+goose: [
+  {id:'sheriff',name:'警长',emoji:'⭐',stars:'★★☆',role:'执法近战好人',skill:'可主动击杀一名坏人，误杀好人直接"双倒"出局',play:'抱团确认身份后出刀，切勿盲目开局出刀',tip:'最强大的执法位——慎用技能，误杀代价惨重'},
+  {id:'justice',name:'正义使者',emoji:'⚔️',stars:'★★☆',role:'一次性执法',skill:'全局一刀击杀，无误杀惩罚，仅单次使用机会',play:'留存技能至残局使用，关键时刻一击制胜',tip:'单次技能需精准判断，建议保留至最后'},
+  {id:'bird',name:'观鸟者',emoji:'🔭',stars:'★☆☆',role:'视野观察员',skill:'可扩大指定方向自身视野，远距离偷看暗处玩家行动',play:'利用视野优势暗中观察可疑玩家行踪',tip:'信息位角色——为团队提供关键视野情报'},
+  {id:'psychic',name:'通灵者',emoji:'🔮',stars:'★★★',role:'亡灵聆听者',skill:'可听见亡灵玩家的声音，获取死后关键线索',play:'利用亡灵信息精准锁定坏人身份，鸭阵营的克星',tip:'最强信息位——听亡灵声音辨坏人，留至后期价值更大'},
+  {id:'canada',name:'加拿大鹅',emoji:'🛡️',stars:'★★☆',role:'被动警报器',skill:'遇害自动触发全局报警，防止鸭子悄无声息刀人',play:'鸭阵营的噩梦——刀你等于自曝身份',tip:'核心保护位——让鸭子不敢轻易动手'},
+  {id:'engineer',name:'工程师',emoji:'🔧',stars:'★★★',role:'反制专家',skill:'可看见存活鸭子的破坏痕迹（地图红圈），可钻管道规避猎杀',play:'追踪破坏痕迹定位鸭子，钻管道保命生存',tip:'克制炸弹鸭——可解除全域爆破'},
+  {id:'gravy',name:'肉汁鹅',emoji:'🪙',stars:'★☆☆',role:'金币收集者',skill:'做任务获得金币，无法被混刀，在人群中会弹刀',play:'专注做任务攒金币，待在人群中最安全',tip:'切勿盲目跟随陌生人——防鸭子贴身联动击杀'},
+  {id:'white',name:'大白鹅',emoji:'🦢',stars:'★☆☆',role:'基础好人',skill:'一直特别白的鹅——无特殊主动技能',play:'最纯粹的好人角色，靠发言与推理存活',tip:'基础角色——考验纯粹推理能力与口才'}
+],
+duck: [
+  {id:'bomber',name:'炸弹鸭',emoji:'💣',stars:'★★★',role:'爆破专家',skill:'贴身绑定延时炸弹，传导击杀连锁淘汰多名好人',play:'搭配关门分割人群，炸弹连锁最大化收益',tip:'搭配间谍鸭关门使用效果更佳'},
+  {id:'spy',name:'间谍鸭',emoji:'🕵️',stars:'★★☆',role:'信息窃取者',skill:'在会议上投票后，可获得被投票者的身份信息',play:'会议中收集鹅阵营身份信息，传递给鸭子队友',tip:'关键信息位——为鸭队提供精准猎杀目标'},
+  {id:'prokill',name:'专业杀手',emoji:'🗡️',stars:'★★★',role:'隐匿刺客',skill:'刀人后不留下倒地尸体，彻底隐匿行凶痕迹',play:'悄无声息猎杀，不留尸体无法触发报警',tip:'克制加拿大鹅——尸体不会自动报警'},
+  {id:'ninja',name:'忍者鸭',emoji:'🥷',stars:'★★☆',role:'暗影猎手',skill:'拥有特殊隐匿身法，可悄无声息接近目标',play:'利用地形和视野盲区，出其不意击杀落单好人',tip:'高机动刺客——善用视野盲区突袭'},
+  {id:'morph',name:'变形鸭',emoji:'🎭',stars:'★★★',role:'伪装大师',skill:'复刻在场任意玩家的外形，伪造行踪嫁祸他人',play:'变身模仿弱势好人，制造混乱嫁祸无辜者',tip:'变形状态无法开启破坏技能——注意切换时机'},
+  {id:'cannibal',name:'食鸟鸭',emoji:'🦴',stars:'★★☆',role:'尸体清理者',skill:'可吞食倒地尸体，销毁行凶线索（自己刀的人需等3秒后吞食）',play:'刀人后等待三秒吞尸，销毁关键报警线索',tip:'可抵消加拿大鹅的尸爆报警——战略克制位'},
+  {id:'assassin',name:'刺客',emoji:'🎯',stars:'★★☆',role:'会议狙击手',skill:'会议发言阶段赌身份击杀一名在场玩家，赌错自毙，单局最多两次',play:'会议中精准猜测身份，一击必杀关键鹅角色',tip:'高风险高回报——赌错自毙，需极度谨慎'}
+],
+neutral: [
+  {id:'dodo',name:'呆呆鸟',emoji:'🐦',stars:'★☆☆',role:'求死独行者',skill:'在会议中被投票放逐即可单独取胜',play:'主动做出可疑行为博取怀疑，诱使他人投票放逐你',tip:'演技派角色——越可疑越容易获胜，但别太假'},
+  {id:'pelican',name:'鹈鹕',emoji:'🦤',stars:'★★★',role:'吞噬霸主',skill:'逐个吞噬全部存活玩家，独享对局最终胜利',play:'逐个吞噬落单玩家，苟活至最后独享胜利',tip:'终极独行角色——吞噬全场称霸对局'},
+  {id:'pigeon',name:'鸽子',emoji:'🕊️',stars:'★★★★',role:'全域感染者',skill:'全域感染全部存活对局者，感染满额即获胜',play:'低调缓慢感染他人，切忌高调引起集火',tip:'感染需极大的耐心——高调会被优先放逐'},
+  {id:'vulture',name:'秃鹫',emoji:'🦅',stars:'★★★',role:'尸体清道夫',skill:'捡拾全场倒地尸体，啃食累积达标即可取胜',play:'游走战场捡拾尸体，不参与阵营正面对抗',tip:'耐心等待尸体出现——捡拾达标即胜利'},
+  {id:'falcon',name:'猎鹰',emoji:'🦅',stars:'★★★☆',role:'终极猎手',skill:'淘汰鹅鸭两大阵营全部人员，独行称霸对局',play:'逐个淘汰鹅鸭双方玩家，独自称霸全场',tip:'最强中立猎手——正面对抗两大阵营'}
+]};
 
 // ═══════════════════ HELPERS ═══════════════════
-function H(tag, cls, html, attrs='') {
-  return `<${tag} class="${cls}" ${attrs}>${html}</${tag}>`;
-}
-
-function page(id, bg, inner) {
-  return `<div class="page" id="p${id}" data-pg="${id}">
-    <div class="pg"><div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div>
+function H(t,c,h,a=''){return `<${t} class="${c}" ${a}>${h}</${t}>`;}
+function page(id,bg,inner){
+  return `<div class="page" id="p${id}" data-pg="${id}"><div class="pg vignette">
+    <div class="corner tl"></div><div class="corner tr"></div>
+    <div class="corner bl"></div><div class="corner br"></div>
     ${inner}</div></div>`;
 }
+function seal(lg){return H('div','seal'+(lg?' lg':''),'');}
+function card(cls,html,onclick){
+  return H('div','card'+(cls?' '+cls:''),'<div class="card-fold"></div>'+html,onclick?`onclick="${onclick}" style="cursor:pointer"`:'');}
+function magpie(){return '<span class="magpie-sil">🐦</span>';}
+function rule(){return '<div class="gold-rule"><span>❦</span></div>';}
 
-function seal(lg) { return H('div','seal'+(lg?' lg':''),'⚜'); }
-
-function card(cls, html, onclick) {
-  return H('div','card'+(cls?' '+cls:''),
-    '<div class="card-fold"></div>'+html,
-    onclick ? `onclick="${onclick}" style="cursor:pointer"` : '');
-}
-
-function charCard(c, idx, total) {
-  const isG = c.faction==='鹅阵营', isD = c.faction==='鸭阵营';
-  const avCls = isG ? 'goose' : (isD ? 'duck' : 'neut');
-  const cardCls = isD ? 'card-wine' : (!isG ? 'card-neut' : '');
-  const tagCls = isG ? 'tag-g' : (isD ? 'tag-d' : 'tag-n');
-  const tColor = isD || !isG ? 'color:var(--cream);' : 'color:var(--wine);';
-  const bColor = isD || !isG ? 'color:rgba(255,255,255,0.8);' : '';
-  const tipColor = isD || !isG ? 'color:rgba(255,255,255,0.6);' : 'color:#666;';
-  return `<div class="swiper-card"><div class="card ${cardCls}" style="min-height:370px;display:flex;flex-direction:column;align-items:center;text-align:center;padding:18px;">
+function charCard(c,idx,total){
+  const isG=c.faction==='鹅阵营',isD=c.faction==='鸭阵营';
+  const avCls=isG?'goose':(isD?'duck':'neut');
+  const cardCls=isD?'card-wine':(!isG?'card-neut':'');
+  const tagCls=isG?'tag-g':(isD?'tag-d':'tag-n');
+  // All text black for readability; dark cards use light card style instead
+  const tCol='color:#000;';
+  const bCol='color:#111;';
+  return `<div class="swiper-card"><div class="card ${cardCls}" style="min-height:380px;display:flex;flex-direction:column;align-items:center;text-align:center;padding:20px 16px;">
     <div class="card-fold"></div>
     <div class="c-av ${avCls}">${c.emoji}</div>
-    <h3 class="t-md" style="${tColor}margin:6px 0 2px;">${c.name}</h3>
+    <h3 class="t-md" style="${tCol}margin:8px 0 2px;">${c.name}</h3>
     <span class="tag ${tagCls}">${c.faction}</span>
-    <div class="stars" style="margin:3px 0;">${c.stars}</div>
-    <p class="t-body" style="font-size:0.8rem;margin:6px 0;${bColor}"><b>定位：</b>${c.role}</p>
-    <p class="t-body" style="font-size:0.8rem;margin:4px 0;${bColor}"><b>技能：</b>${c.skill}</p>
-    <p class="t-body" style="font-size:0.8rem;margin:4px 0;${bColor}"><b>玩法：</b>${c.play}</p>
-    <div style="margin-top:10px;padding:6px 10px;border-top:0.5px solid var(--gold);width:100%;">
-      <p style="font-size:0.7rem;color:var(--gold);font-style:italic;">📝 ${c.tip}</p></div>
-    <span style="font-size:0.65rem;color:var(--gold-dim);margin-top:8px;">${idx+1}/${total} ← 横滑切换 →</span>
+    <div class="stars" style="margin:4px 0;">${c.stars}</div>
+    <p class="t-body" style="font-size:0.82rem;margin:6px 0;${bCol}"><b>定位：</b>${c.role}</p>
+    <p class="t-body" style="font-size:0.82rem;margin:4px 0;${bCol}"><b>技能：</b>${c.skill}</p>
+    <p class="t-body" style="font-size:0.82rem;margin:4px 0;${bCol}"><b>玩法：</b>${c.play}</p>
+    <div style="margin-top:12px;padding:8px 12px;border-top:1px solid var(--gold-pale);width:100%;">
+      <p style="font-size:0.72rem;color:var(--gold);font-style:italic;">📝 ${c.tip}</p></div>
+    <span style="font-size:0.65rem;color:var(--gold);margin-top:8px;">${idx+1}/${total} ← 横滑 →</span>
   </div></div>`;
 }
 
-function navPage(to) { return `navigateTo(${to})`; }
-function navFaction(f) { return `navigateTo(8,'${f}')`; }
-
-// ═══════════════════ PAGES ═══════════════════
-
-// P1: Cover
-function P1() { return page(1,'bg-dia',`
-<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100vh - 120px);text-align:center;">
-  ${seal()} <div style="height:20px;"></div>
-  <div style="display:flex;align-items:center;justify-content:center;gap:4px;margin:12px 0;">
-    <span style="font-size:4.5rem;opacity:0.12;filter:brightness(5);">🦢</span>
-    <span style="font-size:2.2rem;opacity:0.08;color:#000;">🐦</span>
-    <span style="font-size:4.5rem;opacity:0.18;filter:brightness(0.4);">🦆</span>
+// ═══════════════════ PAGE RENDERERS ═══════════════════
+function P1(){return page(1,'bg-dia',`
+<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100vh - 130px);text-align:center;">
+  ${seal()}<div style="height:16px;"></div>
+  <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin:16px 0;">
+    <span style="font-size:5rem;opacity:0.08;filter:brightness(0.1);">🦢</span>
+    <span style="font-size:4rem;opacity:0.1;filter:brightness(0.5);">🦆</span>
   </div>
-  <h1 class="t-xl a-fade a-d3" style="color:var(--wine);mix-blend-mode:multiply;">鹅鸭杀</h1>
-  <p class="a-fade a-d3" style="font-family:var(--serif);font-size:1.2rem;color:var(--wine);opacity:0.75;">全 员 卷 宗</p>
-  <div class="gold-line a-fade a-d4"></div>
-  <p class="t-body a-fade a-d4" style="color:var(--wine-mid);font-style:italic;">一场红白棋局的谋杀推理</p>
-  <p class="t-hint a-fade a-d4" style="margin-top:6px;">复古悬疑风 · 全角色详解 · 新手玩法指南</p>
-  <div style="margin-top:36px;" class="a-fade a-d4">
-    <p class="scroll-hint">轻触翻页 · 解锁所有角色解谜线索 ↓</p>
+  <h1 class="t-xl a-fade a-d3" style="mix-blend-mode:multiply;">鹅 鸭 杀</h1>
+  <p class="a-fade a-d3" style="font-family:var(--serif);font-size:1.3rem;color:var(--wine);opacity:0.8;letter-spacing:6px;">全 员 卷 宗</p>
+  ${rule()}
+  <p class="t-body a-fade a-d4" style="color:var(--wine-bright);font-style:italic;font-family:var(--serif);">一场红白棋局的谋杀推理</p>
+  <p class="t-hint a-fade a-d4" style="margin-top:4px;">复古悬疑风 · 全角色详解 · 新手玩法指南</p>
+  <div style="margin-top:40px;" class="a-fade a-d4">
+    <p class="scroll-hint">轻触翻页 · 解锁全部角色解谜线索 ↓</p>
   </div>
-  ${H('div','bot-dec','')}
+  <div class="bot-dec" style="margin-top:40px;"></div>
 </div>`);}
 
-// P2: Preface
-function P2() { return page(2,'bg-cream',`
+function P2(){return page(2,'',`
 <div style="position:relative;">
-  <div style="position:absolute;top:0;right:0;width:36px;height:36px;
-    background:linear-gradient(135deg,transparent 50%,rgba(180,150,100,0.15) 50%);border-radius:0 0 0 3px;"></div>
-  <span style="font-size:1rem;opacity:0.08;float:right;">🐦</span>
+  <div style="position:absolute;top:0;right:0;width:40px;height:40px;background:linear-gradient(135deg,transparent 50%,rgba(184,148,61,0.2) 50%);border-radius:0 0 0 4px;"></div>
+  ${magpie()}
 </div>
-<h2 class="t-lg a-fade a-d1" style="color:var(--wine);text-align:left;">🖋️ 卷首语 · 悬疑序章</h2>
-<p class="t-sm a-fade a-d2" style="color:var(--wine-mid);">推理启幕 · 入局博弈</p>
-<div class="gold-line l a-fade a-d2"></div>
+<h2 class="t-lg a-fade a-d1" style="text-align:left;">🖋️ 卷首语 · 悬疑序章</h2>
+<p class="t-sm a-fade a-d2" style="color:var(--wine);">推理启幕 · 入局博弈</p>
+<div class="gold-rule l a-fade a-d2"><span>✦</span></div>
 <div class="split a-fade a-d3" style="margin:12px 0;">
   <div class="split-col l">
-    <p class="t-body" style="font-size:0.82rem;">纯白鹅群坚守对局真相，通力完成公共任务，投票驱逐暗处恶人</p>
-    <p style="font-size:2rem;opacity:0.06;text-align:right;">🦢</p>
+    <p class="t-body" style="font-size:0.85rem;"><b>纯白鹅群</b>坚守对局真相<br>通力完成公共任务<br>投票驱逐暗处恶人</p>
+    <p style="font-size:2.5rem;opacity:0.04;text-align:right;">🦢</p>
   </div>
   <div class="split-col r">
-    <p class="t-body" style="font-size:0.82rem;">赤红鸭群隐匿身形，破坏场地、猎杀独行好人，掌控对局生死</p>
-    <p style="font-size:2rem;opacity:0.08;text-align:right;">🦆</p>
+    <p class="t-body" style="font-size:0.85rem;"><b>赤红鸭群</b>隐匿身形<br>破坏场地、猎杀独行好人<br>掌控对局生死</p>
+    <p style="font-size:2.5rem;opacity:0.06;text-align:right;">🦆</p>
   </div>
 </div>
-<p class="t-body a-fade a-d4" style="text-indent:2em;">这是一场藏在迷雾中的阵营博弈。纯白鹅群坚守对局真相，通力完成公共任务，投票驱逐暗处恶人；赤红鸭群隐匿身形，破坏场地、猎杀独行好人，掌控对局生死；亦有独行来客游走善恶边界，不依附任意阵营，手握专属胜负法则。</p>
-<p class="t-body a-fade a-d4" style="text-indent:2em;">翻开这本英式卷宗，拆解二十位入局者底牌，成为最后的推理赢家。</p>
+<div class="gold-div a-fade a-d4"></div>
+<p class="t-body a-fade a-d4" style="text-indent:2em;">这是一场藏在迷雾中的阵营博弈。纯白鹅群坚守对局真相，通力完成公共任务，投票驱逐暗处恶人；赤红鸭群隐匿身形，破坏场地、猎杀独行好人，掌控对局生死；亦有独行来客游走善恶边界，不依附任意阵营，手握专属胜负法则。翻开这本英式卷宗，拆解二十位入局者底牌，成为最后的推理赢家。</p>
 <div class="gold-div a-fade a-d4"></div>
 <p class="t-hint a-fade a-d4">长按左侧白区或右侧红区 · 感受阵营光影</p>
 <div class="split a-fade a-d4" style="margin-top:6px;">
-  <div id="p2left" style="padding:16px;text-align:center;background:rgba(255,255,255,0.5);border:0.5px solid rgba(201,169,110,0.3);border-radius:1px;
-    transition:all 0.5s;cursor:pointer;font-size:0.75rem;color:#999;">🦢 长按白区</div>
-  <div id="p2right" style="padding:16px;text-align:center;background:rgba(74,21,37,0.18);border:0.5px solid rgba(201,169,110,0.3);border-radius:1px;
-    transition:all 0.5s;cursor:pointer;font-size:0.75rem;color:#999;">🦆 长按红区</div>
+  <div id="p2left" style="padding:18px;text-align:center;background:rgba(255,255,255,0.6);border:1px solid rgba(184,148,61,0.3);border-radius:1px;transition:all 0.5s;cursor:pointer;font-size:0.78rem;color:#666;">🦢 长按白区 · 白光晕</div>
+  <div id="p2right" style="padding:18px;text-align:center;background:rgba(61,15,26,0.15);border:1px solid rgba(184,148,61,0.3);border-radius:1px;transition:all 0.5s;cursor:pointer;font-size:0.78rem;color:#666;">🦆 长按红区 · 暗红光</div>
 </div>`);}
 
-// P3: Three Factions
-function P3() { return page(3,'bg-cream',`
-<h2 class="t-lg a-fade a-d1" style="color:var(--wine);">三大阵营全域定义</h2>
-<p class="t-sm a-fade a-d2" style="color:var(--wine-mid);text-align:center;">对局规则 · 善恶博弈的推理游戏</p>
-<div class="gold-line a-fade a-d2"></div>
-${card('','<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><span style="font-size:2rem;">🦢</span><span class="tag tag-g">鹅阵营 · 好人</span><span style="font-size:0.75rem;color:var(--gold-dim);">8位</span></div><h3 style="font-family:var(--serif);color:var(--wine);">正义清白阵营</h3><p class="t-body" style="font-size:0.82rem;margin-top:6px;">核心目标：全员协作完成公共任务，召开会议投票驱逐全部鸭子坏人。全员存活驱逐鸭群即可取胜。</p>')}
-${card('card-wine','<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><span style="font-size:2rem;">🦆</span><span class="tag tag-d">鸭阵营 · 坏人</span><span style="font-size:0.75rem;color:var(--gold-dim);">7位</span></div><h3 style="font-family:var(--serif);">隐匿猎杀阵营</h3><p class="t-body" style="font-size:0.82rem;margin-top:6px;">核心目标：伪装混入鹅群，破坏场地设施、近身击倒鹅玩家。淘汰全部好人即可掌控对局。</p>')}
-${card('card-neut','<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><span style="font-size:2rem;">⚖️</span><span class="tag tag-n">中立阵营 · 独行</span><span style="font-size:0.75rem;color:var(--gold-dim);">5位</span></div><h3 style="font-family:var(--serif);color:var(--wine);">无阵营羁绊第三方</h3><p class="t-body" style="font-size:0.82rem;margin-top:6px;">核心目标：不受鹅鸭胜负约束，每位角色拥有独一无二专属胜利条件，玩法自由，可改写对局结局。</p>')}
+function P3(){return page(3,'',`
+<h2 class="t-lg a-fade a-d1">三大阵营全域定义</h2>
+<p class="t-sm a-fade a-d2" style="color:var(--wine);text-align:center;">对局规则 · 善恶博弈的推理游戏</p>
+${rule()}
+${card('','<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;"><span style="font-size:2.2rem;">🦢</span><span class="tag tag-g">鹅阵营</span><span style="font-size:0.75rem;color:var(--gold);">8 位好人</span></div><h3 style="font-family:var(--serif);color:var(--wine);">正义清白阵营</h3><p class="t-body" style="font-size:0.85rem;margin-top:6px;">全员协作完成公共任务，召开会议投票驱逐全部鸭子坏人。全员存活驱逐鸭群即可取胜。</p>')}
+${card('card-wine','<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;"><span style="font-size:2.2rem;">🦆</span><span class="tag tag-d">鸭阵营</span><span style="font-size:0.75rem;color:var(--gold-pale);">7 位坏人</span></div><h3 style="font-family:var(--serif);color:#f5efe0;">隐匿猎杀阵营</h3><p class="t-body" style="font-size:0.85rem;margin-top:6px;">伪装混入鹅群，破坏场地设施、近身击倒鹅玩家。淘汰全部好人即可掌控对局。</p>')}
+${card('card-neut','<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;"><span style="font-size:2.2rem;">⚖️</span><span class="tag tag-n">中立阵营</span><span style="font-size:0.75rem;color:var(--gold-pale);">5 位独行</span></div><h3 style="font-family:var(--serif);color:#f5efe0;">无阵营羁绊第三方</h3><p class="t-body" style="font-size:0.85rem;margin-top:6px;">不受鹅鸭胜负约束，每位角色拥有独一无二专属胜利条件，玩法自由，可改写对局结局。</p>')}
 `);}
 
-// P4: Timeline
-function P4() { return page(4,'bg-cream',`
-<h2 class="t-lg a-fade a-d1" style="color:var(--wine);">完整对局时序流程</h2>
-<p class="t-sm a-fade a-d2" style="color:var(--wine-mid);text-align:center;">从开局入场至对局结算</p>
-<div class="gold-line a-fade a-d2"></div>
+function P4(){return page(4,'',`
+<h2 class="t-lg a-fade a-d1">完整对局时序流程</h2>
+<p class="t-sm a-fade a-d2" style="color:var(--wine);text-align:center;">从开局入场至对局结算</p>
+${rule()}
 <div class="tl a-fade a-d3" style="margin-top:12px;">
-  <div class="tl-node"><h4 style="font-family:var(--serif);color:var(--wine);">① 开局分配</h4><p class="t-body" style="font-size:0.8rem;">房间开局随机分发身份，20位角色随机抽取，身份仅本人可见</p></div>
-  <div class="tl-node"><h4 style="font-family:var(--serif);color:var(--wine);">② 任务执行</h4><p class="t-body" style="font-size:0.8rem;">鹅阵营奔赴地图点位完成公共+个人任务，积攒全局任务进度</p></div>
-  <div class="tl-node"><h4 style="font-family:var(--serif);color:var(--wine);">③ 鸭方破坏</h4><p class="t-body" style="font-size:0.8rem;">鸭子随时开启全域破坏，触发停电、关门、设备故障干扰鹅群</p></div>
-  <div class="tl-node"><h4 style="font-family:var(--serif);color:var(--wine);">④ 会议研判</h4><p class="t-body" style="font-size:0.8rem;">发现倒地尸体一键报警，地图点位手动召会，全员发言推理、投票放逐</p></div>
-  <div class="tl-node"><h4 style="font-family:var(--serif);color:var(--wine);">⑤ 胜负结算</h4><p class="t-body" style="font-size:0.8rem;">任意阵营达成胜利条件，即刻终止对局，公开全员身份结算对局</p></div>
+  <div class="tl-node"><h4 style="font-family:var(--serif);color:var(--wine);">① 开局分配</h4><p class="t-body" style="font-size:0.82rem;">房间开局随机分发身份，20位角色随机抽取，身份仅本人可见</p></div>
+  <div class="tl-node"><h4 style="font-family:var(--serif);color:var(--wine);">② 任务执行</h4><p class="t-body" style="font-size:0.82rem;">鹅阵营奔赴地图点位完成公共+个人任务，积攒全局任务进度</p></div>
+  <div class="tl-node"><h4 style="font-family:var(--serif);color:var(--wine);">③ 鸭方破坏</h4><p class="t-body" style="font-size:0.82rem;">鸭子随时开启全域破坏，触发停电、关门、设备故障干扰鹅群</p></div>
+  <div class="tl-node"><h4 style="font-family:var(--serif);color:var(--wine);">④ 会议研判</h4><p class="t-body" style="font-size:0.82rem;">发现倒地尸体一键报警，地图点位手动召会，全员发言推理、投票放逐</p></div>
+  <div class="tl-node"><h4 style="font-family:var(--serif);color:var(--wine);">⑤ 胜负结算</h4><p class="t-body" style="font-size:0.82rem;">任意阵营达成胜利条件，即刻终止对局，公开全员身份结算对局</p></div>
 </div>`);}
 
-// P5: Meeting & Vote
-function P5() { return page(5,'bg-cream',`
-<h2 class="t-lg a-fade a-d1" style="color:var(--wine);">核心会议 & 投票机制</h2>
-<p class="t-sm a-fade a-d2" style="color:var(--wine-mid);text-align:center;">关键机制 · 会议投票全域规则</p>
-<div class="gold-line a-fade a-d2"></div>
+function P5(){return page(5,'',`
+<h2 class="t-lg a-fade a-d1">核心会议 & 投票机制</h2>
+<p class="t-sm a-fade a-d2" style="color:var(--wine);text-align:center;">关键机制 · 会议投票全域规则</p>
+${rule()}
 <div class="split a-fade a-d3" style="margin-top:12px;">
-  <div class="split-col l"><h3 style="font-family:var(--serif);color:var(--wine);margin-bottom:6px;">📋 会议规则</h3>
-    <p class="t-body" style="font-size:0.78rem;margin:5px 0;"><b>触发方式：</b>捡拾尸体报警、固定会议点手动召集</p>
-    <p class="t-body" style="font-size:0.78rem;margin:5px 0;"><b>发言规则：</b>全员有序发言，仅限场内线索推理，禁止场外信息</p>
-    <p class="t-body" style="font-size:0.78rem;margin:5px 0;"><b>限制规则：</b>单局会议次数上限，破坏封禁期间无法召开</p>
+  <div class="split-col l"><h3 style="font-family:var(--serif);color:var(--wine);margin-bottom:8px;">📋 会议规则</h3>
+    <p class="t-body" style="font-size:0.8rem;margin:5px 0;"><b>触发方式：</b>捡拾尸体报警、固定会议点手动召集</p>
+    <p class="t-body" style="font-size:0.8rem;margin:5px 0;"><b>发言规则：</b>全员有序发言，仅限场内线索推理，禁止场外信息</p>
+    <p class="t-body" style="font-size:0.8rem;margin:5px 0;"><b>限制规则：</b>单局会议次数上限，破坏封禁期间无法召开</p>
   </div>
-  <div class="split-col r"><h3 style="font-family:var(--serif);color:var(--wine);margin-bottom:6px;">🗳️ 投票规则</h3>
-    <p class="t-body" style="font-size:0.78rem;margin:5px 0;"><b>投票机制：</b>单玩家单票，可投嫌疑人或主动弃票</p>
-    <p class="t-body" style="font-size:0.78rem;margin:5px 0;"><b>放逐判定：</b>单局最高得票者直接驱逐，平票则无人出局</p>
-    <p class="t-body" style="font-size:0.78rem;margin:5px 0;"><b>出局机制：</b>被驱逐者公开身份，幽灵留存无法干涉场内</p>
+  <div class="split-col r"><h3 style="font-family:var(--serif);color:var(--wine);margin-bottom:8px;">🗳️ 投票规则</h3>
+    <p class="t-body" style="font-size:0.8rem;margin:5px 0;"><b>投票机制：</b>单玩家单票，可投嫌疑人或主动弃票</p>
+    <p class="t-body" style="font-size:0.8rem;margin:5px 0;"><b>放逐判定：</b>单局最高得票者直接驱逐，平票则无人出局</p>
+    <p class="t-body" style="font-size:0.8rem;margin:5px 0;"><b>出局机制：</b>被驱逐者公开身份，幽灵留存无法干涉场内</p>
   </div>
 </div>`);}
 
-// P6: Task & Death
-function P6() { return page(6,'bg-cream',`
-<h2 class="t-lg a-fade a-d1" style="color:var(--wine);">任务 & 死亡补充机制</h2>
-<p class="t-sm a-fade a-d2" style="color:var(--wine-mid);text-align:center;">细节补充 · 死亡倒地 & 任务机制</p>
-<div class="gold-line a-fade a-d2"></div>
-${card('','<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><span style="font-size:1.5rem;">📋</span><h3 style="font-family:var(--serif);color:var(--wine);">任务机制</h3></div><p class="t-body" style="font-size:0.82rem;"><b>任务分级：</b>公共全局任务、个人专属任务</p><p class="t-body" style="font-size:0.82rem;">公共任务进度直接决定鹅阵营胜负，鸭子可定向破坏核心任务延缓好人取胜节奏。</p>')}
-${card('card-wine','<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><span style="font-size:1.5rem;">💀</span><h3 style="font-family:var(--serif);">死亡倒地机制</h3></div><p class="t-body" style="font-size:0.82rem;"><b>击杀规则：</b>鸭子可近身击倒存活鹅玩家</p><p class="t-body" style="font-size:0.82rem;">倒地玩家仅可报警发言，无法移动、做任务；尸体静置超时未报警，自动隐匿消失，销毁遇害线索。</p>')}
+function P6(){return page(6,'',`
+<h2 class="t-lg a-fade a-d1">任务 & 死亡补充机制</h2>
+<p class="t-sm a-fade a-d2" style="color:var(--wine);text-align:center;">细节补充 · 死亡倒地 & 任务机制</p>
+${rule()}
+${card('','<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><span style="font-size:1.5rem;">📋</span><h3 style="font-family:var(--serif);color:var(--wine);">任务机制</h3></div><p class="t-body" style="font-size:0.85rem;"><b>任务分级：</b>公共全局任务、个人专属任务</p><p class="t-body" style="font-size:0.85rem;">公共任务进度直接决定鹅阵营胜负，鸭子可定向破坏核心任务延缓好人取胜节奏。</p>')}
+${card('card-wine','<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><span style="font-size:1.5rem;">💀</span><h3 style="font-family:var(--serif);color:#f5efe0;">死亡倒地机制</h3></div><p class="t-body" style="font-size:0.85rem;"><b>击杀规则：</b>鸭子可近身击倒存活鹅玩家</p><p class="t-body" style="font-size:0.85rem;">倒地玩家仅可报警发言，无法移动、做任务；尸体静置超时未报警自动隐匿消失，销毁遇害线索。</p>')}
 `);}
 
-// P7: Faction Index
-function P7() { return page(7,'bg-cream',`
+function P7(){return page(7,'',`
 <div class="a-fade a-d1">${seal()}</div>
-<h2 class="t-lg a-fade a-d2" style="color:var(--wine);margin-top:8px;">全员阵营分类 · 卷宗索引</h2>
+<h2 class="t-lg a-fade a-d2" style="margin-top:10px;">全员阵营分类 · 卷宗索引</h2>
 <p class="t-hint a-fade a-d3">选择阵营 · 解锁角色卷宗</p>
-<div class="gold-line a-fade a-d3"></div>
-${card('','<div style="display:flex;align-items:center;gap:12px;"><span style="font-size:2.8rem;">🦢</span><div style="flex:1;"><h3 style="font-family:var(--serif);color:var(--wine);">鹅阵营 · 好人</h3><p style="font-size:0.75rem;color:#888;">清白正义 · 任务取胜</p></div><span style="font-size:0.65rem;color:var(--gold);border:1px solid var(--gold);padding:3px 10px;border-radius:10px;">点击查阅 8位 →</span></div>',navFaction('goose'))}
-${card('card-wine','<div style="display:flex;align-items:center;gap:12px;"><span style="font-size:2.8rem;">🦆</span><div style="flex:1;"><h3 style="font-family:var(--serif);">鸭阵营 · 坏人</h3><p style="font-size:0.75rem;color:rgba(255,255,255,0.55);">隐秘猎杀 · 破坏取胜</p></div><span style="font-size:0.65rem;color:var(--gold);border:1px solid var(--gold);padding:3px 10px;border-radius:10px;">点击查阅 7位 →</span></div>',navFaction('duck'))}
-${card('card-neut','<div style="display:flex;align-items:center;gap:12px;"><span style="font-size:2.8rem;">⚖️</span><div style="flex:1;"><h3 style="font-family:var(--serif);color:var(--wine);">中立阵营 · 独行</h3><p style="font-size:0.75rem;color:rgba(255,255,255,0.7);">善恶游离 · 专属取胜</p></div><span style="font-size:0.65rem;color:var(--gold);border:1px solid var(--gold);padding:3px 10px;border-radius:10px;">点击查阅 5位 →</span></div>',navFaction('neutral'))}
-<p style="font-size:1.2rem;opacity:0.06;text-align:center;margin-top:8px;">🐦 🐦 🐦</p>
+${rule()}
+${card('','<div style="display:flex;align-items:center;gap:14px;"><span style="font-size:3rem;opacity:0.15;">🦢</span><div style="flex:1;"><h3 style="font-family:var(--serif);color:var(--wine);">鹅阵营 · 好人</h3><p style="font-size:0.75rem;color:#555;">清白正义 · 任务取胜 · 8位角色</p></div><span style="font-size:0.65rem;color:var(--gold);border:1px solid var(--gold);padding:4px 12px;border-radius:12px;">点击查阅 →</span></div>',"navigateTo(8,'goose')")}
+${card('card-wine','<div style="display:flex;align-items:center;gap:14px;"><span style="font-size:3rem;opacity:0.2;">🦆</span><div style="flex:1;"><h3 style="font-family:var(--serif);color:#f5efe0;">鸭阵营 · 坏人</h3><p style="font-size:0.75rem;color:rgba(245,239,224,0.5);">隐秘猎杀 · 破坏取胜 · 7位角色</p></div><span style="font-size:0.65rem;color:var(--gold-light);border:1px solid var(--gold-light);padding:4px 12px;border-radius:12px;">点击查阅 →</span></div>',"navigateTo(8,'duck')")}
+${card('card-neut','<div style="display:flex;align-items:center;gap:14px;"><span style="font-size:3rem;opacity:0.2;">⚖️</span><div style="flex:1;"><h3 style="font-family:var(--serif);color:#f5efe0;">中立阵营 · 独行</h3><p style="font-size:0.75rem;color:rgba(245,239,224,0.5);">善恶游离 · 专属取胜 · 5位角色</p></div><span style="font-size:0.65rem;color:var(--gold-light);border:1px solid var(--gold-light);padding:4px 12px;border-radius:12px;">点击查阅 →</span></div>',"navigateTo(8,'neutral')")}
+<p style="font-size:1.5rem;opacity:0.04;text-align:center;margin-top:8px;">🐦 🐦 🐦</p>
 `);}
 
-// P8: Directory
-function P8() { return page(8,'bg-cream',`
+function P8(){return page(8,'',`
 <div id="p8wrap">
   <button class="btn btn-cream btn-sm" onclick="navigateTo(7)" style="margin-bottom:10px;">← 返回索引</button>
-  <h2 class="t-lg" id="p8Title" style="color:var(--wine);">角色目录</h2>
-  <p class="t-hint" id="p8Sub">点击角色条目，解锁专属角色卷宗档案</p>
-  <div class="gold-line"></div>
+  <h2 class="t-lg" id="p8Title">角色目录</h2>
+  <p class="t-hint" id="p8Sub">点击角色条目 · 解锁专属角色卷宗档案</p>
+  ${rule()}
   <div id="p8List" style="margin-top:10px;"></div>
 </div>`);}
 
-// P9-P13 placeholders
-function PChar(n) { return page(n,'bg-cream',`<div id="p${n}Content"></div>`); }
+function PChar(n){return page(n,'',`<div id="p${n}Content"></div>`);}
 
-// P14: Quick Ref
-function P14() { return page(14,'bg-cream',`
-<h2 class="t-lg" style="color:var(--wine);">全员速查 · 极简角色档案</h2>
+function P14(){return page(14,'',`
+<h2 class="t-lg">全员速查 · 极简角色档案</h2>
 <p class="t-hint">20位角色缩略速览卡 · 点击跳转详情</p>
-<div class="gold-line"></div>
+${rule()}
 <div class="qgrid" id="quickGrid" style="margin-top:10px;"></div>
 `);}
 
-// P15: Game Notes
-function P15() { return page(15,'bg-cream',`
-<h2 class="t-lg" style="color:var(--wine);">对局备注 · 角色联动 & 对局限制</h2>
-<p class="t-sm" style="color:var(--wine-mid);text-align:center;">角色联动机制 & 对局规则</p>
-<div class="gold-line"></div>
+function P15(){return page(15,'',`
+<h2 class="t-lg">对局备注 · 角色联动 & 对局限制</h2>
+<p class="t-sm" style="color:var(--wine);text-align:center;">角色联动机制 & 对局规则</p>
+${rule()}
 <div class="split" style="margin-top:12px;">
-  <div class="split-col l"><h3 style="font-family:var(--serif);color:var(--wine);margin-bottom:6px;">🔗 联动机制</h3>
-    <p class="t-body" style="font-size:0.8rem;margin:4px 0;">• 食鸟鸭可抵消加拿大鹅尸爆报警</p>
-    <p class="t-body" style="font-size:0.8rem;margin:4px 0;">• 工程师可解除炸弹鸭全域爆破</p>
-    <p class="t-body" style="font-size:0.8rem;margin:4px 0;">• 刺客无法击杀已护盾大白鹅</p>
-    <p class="t-body" style="font-size:0.8rem;margin:4px 0;">• 炸弹鸭搭配关门分割人群</p>
+  <div class="split-col l"><h3 style="font-family:var(--serif);color:var(--wine);margin-bottom:8px;">🔗 联动机制</h3>
+    <p class="t-body" style="font-size:0.82rem;margin:4px 0;">• 食鸟鸭可抵消加拿大鹅尸爆报警</p>
+    <p class="t-body" style="font-size:0.82rem;margin:4px 0;">• 工程师可解除炸弹鸭全域爆破</p>
+    <p class="t-body" style="font-size:0.82rem;margin:4px 0;">• 刺客无法击杀已护盾大白鹅</p>
+    <p class="t-body" style="font-size:0.82rem;margin:4px 0;">• 炸弹鸭搭配关门分割人群</p>
   </div>
-  <div class="split-col r"><h3 style="font-family:var(--serif);color:var(--wine);margin-bottom:6px;">📜 对局规则</h3>
-    <p class="t-body" style="font-size:0.8rem;margin:4px 0;">• 单局20角色随机配比</p>
-    <p class="t-body" style="font-size:0.8rem;margin:4px 0;">• 阵营数量不固定</p>
-    <p class="t-body" style="font-size:0.8rem;margin:4px 0;">• 中立角色可改写原生胜负</p>
-    <p class="t-body" style="font-size:0.8rem;margin:4px 0;">• 变形鸭变身状态无法破坏</p>
+  <div class="split-col r"><h3 style="font-family:var(--serif);color:var(--wine);margin-bottom:8px;">📜 对局规则</h3>
+    <p class="t-body" style="font-size:0.82rem;margin:4px 0;">• 单局20角色随机配比</p>
+    <p class="t-body" style="font-size:0.82rem;margin:4px 0;">• 阵营数量不固定</p>
+    <p class="t-body" style="font-size:0.82rem;margin:4px 0;">• 中立角色可改写原生胜负</p>
+    <p class="t-body" style="font-size:0.82rem;margin:4px 0;">• 变形鸭变身状态无法破坏</p>
   </div>
 </div>`);}
 
-// P16: Strategy
-function P16() { return page(16,'bg-cream',`
-<h2 class="t-lg" style="color:var(--wine);">三大阵营高阶对局攻略</h2>
-<p class="t-sm" style="color:var(--wine-mid);text-align:center;">推理技巧 · 对局高阶攻略</p>
-<div class="gold-line"></div>
+function P16(){return page(16,'',`
+<h2 class="t-lg">三大阵营高阶对局攻略</h2>
+<p class="t-sm" style="color:var(--wine);text-align:center;">推理技巧 · 对局高阶攻略</p>
+${rule()}
 <div class="split" style="margin-top:12px;">
-  <div class="split-col l"><h3 style="font-family:var(--serif);color:var(--wine);margin-bottom:6px;">🦢 新手基础</h3>
-    <p class="t-body hl" style="font-size:0.82rem;margin:6px 0;">🔒 抱团做任务降低被刀概率</p>
-    <p class="t-body hl" style="font-size:0.82rem;margin:6px 0;">📢 开会优先报出行动线</p>
-    <p class="t-body hl" style="font-size:0.82rem;margin:6px 0;">🚫 不跟风情绪化投票</p>
-    <p class="t-body hl" style="font-size:0.82rem;margin:6px 0;">🧠 牢记场上功能性角色</p>
+  <div class="split-col l"><h3 style="font-family:var(--serif);color:var(--wine);margin-bottom:8px;">🦢 新手基础</h3>
+    <p class="t-body hl" style="font-size:0.85rem;margin:7px 0;">🔒 抱团做任务降低被刀概率</p>
+    <p class="t-body hl" style="font-size:0.85rem;margin:7px 0;">📢 开会优先报出行动线</p>
+    <p class="t-body hl" style="font-size:0.85rem;margin:7px 0;">🚫 不跟风情绪化投票</p>
+    <p class="t-body hl" style="font-size:0.85rem;margin:7px 0;">🧠 牢记场上功能性角色</p>
   </div>
-  <div class="split-col r"><h3 style="font-family:var(--serif);color:var(--wine);margin-bottom:6px;">🎯 阵营套路</h3>
-    <p class="t-body hl" style="font-size:0.82rem;margin:6px 0;">🦢 留功能性角色保命，通灵者听亡灵声音辨坏人</p>
-    <p class="t-body hl" style="font-size:0.82rem;margin:6px 0;">🦆 炸弹鸭搭配关门分割人群，变形鸭模仿弱势好人</p>
-    <p class="t-body hl" style="font-size:0.82rem;margin:6px 0;">⚖️ 呆呆鸟主动博取怀疑，鸽子低速感染苟活对局</p>
+  <div class="split-col r"><h3 style="font-family:var(--serif);color:var(--wine);margin-bottom:8px;">🎯 阵营套路</h3>
+    <p class="t-body hl" style="font-size:0.85rem;margin:7px 0;">🦢 留功能性角色保命，通灵者听亡灵声音辨坏人</p>
+    <p class="t-body hl" style="font-size:0.85rem;margin:7px 0;">🦆 炸弹鸭搭配关门分割人群，变形鸭模仿弱势好人</p>
+    <p class="t-body hl" style="font-size:0.85rem;margin:7px 0;">⚖️ 呆呆鸟主动博取怀疑，鸽子低速感染苟活对局</p>
   </div>
 </div>`);}
 
-// P17: Mistakes
-function P17() { return page(17,'bg-cream',`
-<div style="background:rgba(139,42,58,0.06);padding:18px;border:1px solid rgba(139,42,58,0.2);">
-  <h2 class="t-lg" style="color:var(--red-warn);">⚠️ 避坑指南</h2>
-  <p class="t-sm" style="color:var(--red-warn);text-align:center;">新手高频错误汇总</p>
-  <div class="gold-line"></div>
-  <div style="margin-top:10px;">
-    ${card('card-left-red','<p class="t-body"><b>❌ 误区一：</b>警长盲目开局出刀，误杀好人直接出局</p>')}
-    ${card('card-left-red','<p class="t-body"><b>❌ 误区二：</b>鸭子单人贸然刀人，刀加拿大鹅直接报警锁身份</p>')}
-    ${card('card-left-red','<p class="t-body"><b>❌ 误区三：</b>鸽子高调感染，被全员集火优先放逐</p>')}
-    ${card('card-left-red','<p class="t-body"><b>❌ 误区四：</b>开会跟风投票，随意放逐功能性鹅崩盘好人对局</p>')}
-    ${card('card-left-red','<p class="t-body"><b>❌ 误区五：</b>肉汁鹅盲目跟随陌生人，被鸭子贴身联动击杀</p>')}
-  </div>
+function P17(){return page(17,'',`
+<div style="background:rgba(139,42,58,0.05);padding:20px;border:1px solid rgba(139,42,58,0.15);border-radius:1px;">
+  <h2 class="t-lg" style="color:#8b2a3a;">⚠️ 避坑指南</h2>
+  <p class="t-sm" style="color:#8b2a3a;text-align:center;">新手高频错误汇总</p>
+  ${rule()}
+  ${card('card-left-red','<p class="t-body"><b>❌ 误区一：</b>警长盲目开局出刀，误杀好人直接出局</p>')}
+  ${card('card-left-red','<p class="t-body"><b>❌ 误区二：</b>鸭子单人贸然刀人，刀加拿大鹅直接报警锁身份</p>')}
+  ${card('card-left-red','<p class="t-body"><b>❌ 误区三：</b>鸽子高调感染，被全员集火优先放逐</p>')}
+  ${card('card-left-red','<p class="t-body"><b>❌ 误区四：</b>开会跟风投票，随意放逐功能性鹅崩盘好人对局</p>')}
+  ${card('card-left-red','<p class="t-body"><b>❌ 误区五：</b>肉汁鹅盲目跟随陌生人，被鸭子贴身联动击杀</p>')}
 </div>
-<p class="t-hint" style="margin-top:10px;color:var(--red-warn);">悬停误区区块查看警示详情</p>
+<p class="t-hint" style="margin-top:10px;color:#8b2a3a;">悬停误区区块 · 查看警示详情</p>
 `);}
 
-// P18: Advanced
-function P18() { return page(18,'bg-cream',`
-<h2 class="t-lg" style="color:var(--wine);">角色进阶技巧大全</h2>
-<p class="t-sm" style="color:var(--wine-mid);text-align:center;">各阵营高阶操作指南</p>
-<div class="gold-line"></div>
-${card('','<h3 style="font-family:var(--serif);color:var(--wine);">🦢 鹅阵营进阶</h3><p class="t-body" style="font-size:0.8rem;">• 通灵者：利用亡灵信息精准定位坏人，配合正义使者一击毙命</p><p class="t-body" style="font-size:0.8rem;">• 工程师：钻管道观察全局，发现破坏痕迹立即追踪</p><p class="t-body" style="font-size:0.8rem;">• 加拿大鹅：主动暴露身份引鸭子来刀，触发报警锁定坏人</p>')}
-${card('card-wine','<h3 style="font-family:var(--serif);">🦆 鸭阵营进阶</h3><p class="t-body" style="font-size:0.8rem;">• 变形鸭：先观察目标行动轨迹，变身后精确嫁祸</p><p class="t-body" style="font-size:0.8rem;">• 专业杀手+食鸟鸭：杀手刀人无尸体，食鸟鸭处理其他现场</p><p class="t-body" style="font-size:0.8rem;">• 刺客：发言阶段精准赌身份，关键时刻击杀关键鹅</p>')}
-${card('card-neut','<h3 style="font-family:var(--serif);color:var(--wine);">⚖️ 中立阵营进阶</h3><p class="t-body" style="font-size:0.8rem;">• 呆呆鸟：做出可疑行为但不至于立刻被刀，诱导投票放逐</p><p class="t-body" style="font-size:0.8rem;">• 鹈鹕：逐个吞噬落单玩家，最后决战称霸</p><p class="t-body" style="font-size:0.8rem;">• 猎鹰：游走鹅鸭之间，逐个淘汰两大阵营</p>')}
+function P18(){return page(18,'',`
+<h2 class="t-lg">角色进阶技巧大全</h2>
+<p class="t-sm" style="color:var(--wine);text-align:center;">各阵营高阶操作指南</p>
+${rule()}
+${card('','<h3 style="font-family:var(--serif);color:var(--wine);">🦢 鹅阵营进阶</h3><p class="t-body" style="font-size:0.82rem;">• 通灵者：利用亡灵信息精准定位坏人，配合正义使者一击毙命</p><p class="t-body" style="font-size:0.82rem;">• 工程师：钻管道观察全局，发现破坏痕迹立即追踪</p><p class="t-body" style="font-size:0.82rem;">• 加拿大鹅：主动暴露身份引鸭子来刀，触发报警锁定坏人</p>')}
+${card('card-wine','<h3 style="font-family:var(--serif);color:#f5efe0;">🦆 鸭阵营进阶</h3><p class="t-body" style="font-size:0.82rem;">• 变形鸭：先观察目标行动轨迹，变身后精确嫁祸</p><p class="t-body" style="font-size:0.82rem;">• 专业杀手+食鸟鸭：杀手刀人无尸体，食鸟鸭处理其他现场</p><p class="t-body" style="font-size:0.82rem;">• 刺客：发言阶段精准赌身份，关键时刻击杀关键鹅</p>')}
+${card('card-neut','<h3 style="font-family:var(--serif);color:#f5efe0;">⚖️ 中立阵营进阶</h3><p class="t-body" style="font-size:0.82rem;">• 呆呆鸟：做出可疑行为但不过于明显，诱导投票放逐</p><p class="t-body" style="font-size:0.82rem;">• 鹈鹕：逐个吞噬落单玩家，最后决战称霸</p><p class="t-body" style="font-size:0.82rem;">• 猎鹰：游走鹅鸭之间，逐个淘汰两大阵营</p>')}
 `);}
 
-// P19: Epilogue
-function P19() { return page(19,'bg-cream',`
-<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100vh - 120px);text-align:center;
-  background:linear-gradient(180deg, rgba(250,247,240,0.3), rgba(74,21,37,0.1));padding:30px 16px;">
-  <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:28px;opacity:0.12;">
-    <span style="font-size:3.5rem;">🦢</span><span style="font-size:2rem;">🐦</span><span style="font-size:3.5rem;">🦆</span>
+function P19(){return page(19,'',`
+<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100vh - 130px);text-align:center;background:linear-gradient(180deg,rgba(245,239,224,0.4),rgba(61,15,26,0.08));padding:30px 16px;">
+  <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:32px;opacity:0.1;">
+    <span style="font-size:4rem;">🦢</span><span style="font-size:2.5rem;">🐦</span><span style="font-size:4rem;">🦆</span>
   </div>
-  <h2 class="t-xl" style="color:var(--wine);">以推理破迷雾<br>以博弈定胜负</h2>
-  <div class="gold-line"></div>
-  <p class="t-body" style="max-width:280px;margin:14px auto;color:var(--wine-mid);">吃透阵营底牌，拆解角色技能<br>每一局皆是全新悬疑对局</p>
-  <p class="t-hint" style="margin-top:28px;">鹅鸭杀20角色全卷宗 · 红白悬疑企划</p>
-  ${H('div','bot-dec','')}
+  <h2 class="t-xl" style="font-size:clamp(1.8rem,4.5vw,2.8rem);">以推理破迷雾<br>以博弈定胜负</h2>
+  ${rule()}
+  <p class="t-body" style="max-width:280px;margin:16px auto;color:var(--ink-soft);font-family:var(--serif);">吃透阵营底牌，拆解角色技能<br>每一局皆是全新悬疑对局</p>
+  <p class="t-cap" style="margin-top:28px;">鹅鸭杀20角色全卷宗 · 红白悬疑企划</p>
+  <div class="bot-dec"></div>
 </div>`);}
 
-// P20: End
-function P20() { return page(20,'bg-cream',`
-<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100vh - 120px);text-align:center;
-  background:linear-gradient(180deg, rgba(74,21,37,0.06), rgba(250,247,240,0.4));padding:30px 16px;">
-  ${seal(true)} <div style="height:16px;"></div>
-  <h2 class="t-lg" style="color:var(--wine);">卷宗归档 · 浏览完结</h2>
-  <div class="gold-line"></div>
-  <div style="display:flex;flex-direction:column;gap:14px;margin-top:28px;width:100%;max-width:250px;">
-    <button class="btn btn-cream" onclick="navigateTo(1)" style="padding:13px;">返回卷宗首页</button>
-    <button class="btn btn-wine" onclick="resetAll()" style="padding:13px;">重新整本阅览</button>
+function P20(){return page(20,'',`
+<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100vh - 130px);text-align:center;background:linear-gradient(180deg,rgba(61,15,26,0.05),rgba(245,239,224,0.3));padding:30px 16px;">
+  ${seal(true)}<div style="height:16px;"></div>
+  <h2 class="t-lg">卷宗归档 · 浏览完结</h2>
+  ${rule()}
+  <div style="display:flex;flex-direction:column;gap:16px;margin-top:28px;width:100%;max-width:250px;">
+    <button class="btn btn-cream" onclick="navigateTo(1)" style="padding:14px;">返回卷宗首页</button>
+    <button class="btn btn-wine" onclick="resetAll()" style="padding:14px;">重新整本阅览</button>
   </div>
   <p class="t-cap" style="margin-top:36px;">《鹅鸭杀全员悬疑卷宗》<br>谋杀案专属视觉企划</p>
 </div>`);}
 
 // ═══════════════════ APP LOGIC ═══════════════════
-let cur = 1, curFac = 'goose', tY = 0, tX = 0, total = 20;
+let cur=1, curFac='goose', tY=0, tX=0, total=20, navLock=false;
 
-function init() {
-  let html = '';
-  html += P1(); html += P2(); html += P3(); html += P4(); html += P5();
-  html += P6(); html += P7(); html += P8();
-  for (let i=9;i<=13;i++) html += PChar(i);
-  html += P14(); html += P15(); html += P16(); html += P17(); html += P18();
-  html += P19(); html += P20();
-  document.getElementById('app').innerHTML = html;
+function init(){
+  let h='';
+  h+=P1();h+=P2();h+=P3();h+=P4();h+=P5();h+=P6();h+=P7();h+=P8();
+  for(let i=9;i<=13;i++)h+=PChar(i);
+  h+=P14();h+=P15();h+=P16();h+=P17();h+=P18();h+=P19();h+=P20();
+  document.getElementById('app').innerHTML=h;
 
-  // Set initial page state
-  document.querySelectorAll('.page').forEach((p,i) => {
-    if (i===0) p.className = 'page active';
-    else p.className = 'page after';
+  document.querySelectorAll('.page').forEach((p,i)=>{
+    p.className=i===0?'page active':'page after';
   });
 
-  populateChars();
-  populateQuickRef();
-  updateP8('goose');
-  updateIndicator();
+  populateChars();populateQuickRef();updateP8('goose');updateIndicator();
 
-  // Animation for P1
-  requestAnimationFrame(() => {
-    document.querySelectorAll('#p1 .a-fade').forEach(el => el.style.opacity = '');
+  requestAnimationFrame(()=>{
+    document.querySelectorAll('#p1 .a-fade').forEach(el=>el.style.opacity='');
   });
 
-  // Long press for P2
-  bindLongPress('p2left', 'rgba(255,255,255,0.85)', '0 0 25px rgba(255,255,255,0.6)');
-  bindLongPress('p2right', 'rgba(74,21,37,0.45)', '0 0 25px rgba(200,40,40,0.3)');
+  bindLongPress('p2left','rgba(255,255,255,0.9)','0 0 30px rgba(255,255,255,0.7)');
+  bindLongPress('p2right','rgba(61,15,26,0.5)','0 0 30px rgba(200,30,30,0.35)');
 }
 
-function bindLongPress(id, bg, shadow) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  const origBg = el.style.background;
-  const origSh = el.style.boxShadow;
-  ['mousedown','touchstart'].forEach(ev => el.addEventListener(ev, e => {
-    if (ev.type==='touchstart') e.preventDefault();
-    el.style.background = bg; el.style.boxShadow = shadow;
+function bindLongPress(id,bg,sh){
+  const el=document.getElementById(id);if(!el)return;
+  ['mousedown','touchstart'].forEach(ev=>el.addEventListener(ev,e=>{
+    if(ev.type==='touchstart')e.preventDefault();
+    el.style.background=bg;el.style.boxShadow=sh;
   }));
-  ['mouseup','mouseleave','touchend','touchcancel'].forEach(ev => el.addEventListener(ev, () => {
-    el.style.background = origBg; el.style.boxShadow = origSh;
+  ['mouseup','mouseleave','touchend','touchcancel'].forEach(ev=>el.addEventListener(ev,()=>{
+    el.style.background='';el.style.boxShadow='';
   }));
 }
 
-function populateChars() {
-  // P9: Goose 0-2
-  renderCharGroup(9, CHARS.goose.slice(0,3), '鹅阵营合集详情页', false);
-  // P10: Goose 3-7
-  renderCharGroup(10, CHARS.goose.slice(3,8), '鹅阵营剩余角色详情页', false);
-  // P11: Duck 0-1 (ProKiller, Cannibal)
-  renderCharGroup(11, CHARS.duck.slice(0,2), '鸭阵营刺杀组详情页', true);
-  // P12: Duck 2-6
-  renderCharGroup(12, CHARS.duck.slice(2,7), '鸭阵营功能组详情页', true);
-  // P13: All neutral
-  renderCharGroup(13, CHARS.neutral, '全中立角色详情页', false);
+function populateChars(){
+  renderCharGroup(9,CHARS.goose.slice(0,3),'鹅阵营合集详情页',false);
+  renderCharGroup(10,CHARS.goose.slice(3,8),'鹅阵营剩余角色详情页',false);
+  renderCharGroup(11,CHARS.duck.slice(0,2),'鸭阵营刺杀组详情页',true);
+  renderCharGroup(12,CHARS.duck.slice(2,7),'鸭阵营功能组详情页',true);
+  renderCharGroup(13,CHARS.neutral,'全中立角色详情页',false);
 }
 
-function renderCharGroup(pgNum, chars, title, isDuck) {
-  const c = document.getElementById(`p${pgNum}Content`);
-  if (!c) return;
-  const btnCls = isDuck ? 'btn-cream' : 'btn-cream';
-  const titleCol = isDuck ? 'color:var(--cream);' : 'color:var(--wine);';
-  c.innerHTML = `
-    <button class="btn ${btnCls} btn-sm" onclick="navigateTo(8)" style="margin-bottom:8px;">← 返回目录</button>
-    <h2 class="t-lg" style="${titleCol}">${title}</h2><div class="gold-line"></div>
+function renderCharGroup(pgNum,chars,title,isDuck){
+  const c=document.getElementById(`p${pgNum}Content`);if(!c)return;
+  const titleCol=isDuck?'color:#f5efe0;':'color:var(--ink);';
+  c.innerHTML=`
+    <button class="btn btn-cream btn-sm" onclick="navigateTo(8)" style="margin-bottom:8px;">← 返回目录</button>
+    <h2 class="t-lg" style="${titleCol}">${title}</h2>${rule()}
     <div class="swiper" id="swP${pgNum}">${chars.map((ch,i)=>charCard(ch,i,chars.length)).join('')}</div>`;
 }
 
-function populateQuickRef() {
-  const g = document.getElementById('quickGrid');
-  if (!g) return;
-  const all = [
-    ...CHARS.goose.map(c=>({...c,color:'goose',pg:c===CHARS.goose[0]||c===CHARS.goose[1]||c===CHARS.goose[2]?9:10,idx:CHARS.goose.indexOf(c)})),
-    ...CHARS.duck.map(c=>({...c,color:'duck',pg:c===CHARS.duck[0]||c===CHARS.duck[1]?11:12,idx:CHARS.duck.indexOf(c)})),
-    ...CHARS.neutral.map(c=>({...c,color:'neut',pg:13,idx:CHARS.neutral.indexOf(c)}))
+function populateQuickRef(){
+  const g=document.getElementById('quickGrid');if(!g)return;
+  const all=[
+    ...CHARS.goose.map(c=>({...c,color:'goose',pg:CHARS.goose.indexOf(c)<3?9:10})),
+    ...CHARS.duck.map(c=>({...c,color:'duck',pg:CHARS.duck.indexOf(c)<2?11:12})),
+    ...CHARS.neutral.map(c=>({...c,color:'neut',pg:13}))
   ];
-  g.innerHTML = all.map(c => `
-    <div class="qcard ${c.color}" onclick="navChar('${c.id}')">
-      <div style="font-size:1.8rem;">${c.emoji}</div>
-      <p style="font-size:0.72rem;font-weight:700;">${c.name}</p>
-      <p style="font-size:0.6rem;opacity:0.7;">${c.role}</p>
-    </div>`).join('');
+  g.innerHTML=all.map(c=>`<div class="qcard ${c.color}" onclick="navChar('${c.id}')"><div style="font-size:1.8rem;">${c.emoji}</div><p style="font-size:0.72rem;font-weight:700;">${c.name}</p><p style="font-size:0.62rem;opacity:0.7;">${c.role}</p></div>`).join('');
 }
 
-function updateP8(faction) {
-  curFac = faction;
-  const list = document.getElementById('p8List');
-  const title = document.getElementById('p8Title');
-  const pg = document.getElementById('p8');
-  if (!list||!title||!pg) return;
-
-  let chars, label;
-  if (faction==='goose') { chars=CHARS.goose; label='鹅阵营 · 好人'; pg.className='page active bg-cream'; }
-  else if (faction==='duck') { chars=CHARS.duck; label='鸭阵营 · 坏人'; pg.className='page active bg-wine'; }
-  else { chars=CHARS.neutral; label='中立阵营 · 独行'; pg.className='page active bg-cream'; }
-
-  title.textContent = `角色目录 · ${label}`;
-  title.style.color = faction==='duck' ? 'var(--cream)' : 'var(--wine)';
-  const isD = faction==='duck', isN = faction==='neutral';
-
-  list.innerHTML = chars.map((c,i) => {
-    const tPg = faction==='goose' ? (i<3?9:10) : (faction==='duck' ? (i<2?11:12) : 13);
-    const cardCls = isD ? 'card-wine' : (isN ? 'card-neut' : '');
-    const tCol = isD ? 'color:var(--cream);' : (isN ? 'color:var(--cream);' : 'color:var(--wine);');
-    const subCol = isD ? 'color:rgba(255,255,255,0.5);' : (isN ? 'color:rgba(255,255,255,0.65);' : 'color:#888;');
-    return `<div class="card ${cardCls}" onclick="navCharPage(${tPg},${i},'${faction}')" style="cursor:pointer;margin:6px 0;">
-      <div class="card-fold"></div>
-      <div style="display:flex;align-items:center;gap:8px;">
-        <span style="font-size:1.8rem;">${c.emoji}</span>
-        <div style="flex:1;"><h4 style="font-family:var(--serif);${tCol}">${c.name}</h4><div class="stars">${c.stars}</div><p style="font-size:0.7rem;${subCol}">${c.role}</p></div>
-        <span style="font-size:0.6rem;color:var(--gold);border:0.5px solid var(--gold);padding:2px 8px;border-radius:8px;">详情 →</span>
-      </div></div>`;
+function updateP8(faction){
+  curFac=faction;
+  const list=document.getElementById('p8List'),title=document.getElementById('p8Title'),pg=document.getElementById('p8');
+  if(!list||!title||!pg)return;
+  let chars,label;
+  if(faction==='goose'){chars=CHARS.goose;label='鹅阵营 · 好人';}
+  else if(faction==='duck'){chars=CHARS.duck;label='鸭阵营 · 坏人';}
+  else{chars=CHARS.neutral;label='中立阵营 · 独行';}
+  const inner=pg.querySelector('.pg');
+  if(inner){
+    if(faction==='duck'){inner.style.background='linear-gradient(180deg, #3d0f1a 0%, #2d0a12 40%, #20080e 100%), repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.015) 3px, rgba(255,255,255,0.015) 4px)';inner.style.color='#f5efe0';}
+    else{inner.style.background='';inner.style.color='';}
+  }
+  title.textContent=`角色目录 · ${label}`;
+  title.style.color='#000';
+  const isD=faction==='duck',isN=faction==='neutral';
+  list.innerHTML=chars.map((c,i)=>{
+    const tPg=faction==='goose'?(i<3?9:10):(faction==='duck'?(i<2?11:12):13);
+    const cardCls=isD?'card-wine':(isN?'card-neut':'');
+    const tCol='color:#000;';
+    const subCol='color:#444;';
+    return`<div class="card ${cardCls}" onclick="navCharPage(${tPg},${i},'${faction}')" style="cursor:pointer;margin:6px 0;">
+      <div class="card-fold"></div><div style="display:flex;align-items:center;gap:10px;">
+      <span style="font-size:1.8rem;">${c.emoji}</span>
+      <div style="flex:1;"><h4 style="font-family:var(--serif);${tCol}">${c.name}</h4><div class="stars">${c.stars}</div><p style="font-size:0.7rem;${subCol}">${c.role}</p></div>
+      <span style="font-size:0.6rem;color:var(--gold);border:0.5px solid var(--gold);padding:2px 8px;border-radius:8px;">详情 →</span></div></div>`;
   }).join('');
 }
 
-function navigateTo(pg, faction) {
-  if (pg<1||pg>total||pg===cur) return;
-  const oldPg = document.getElementById(`p${cur}`);
-  const newPg = document.getElementById(`p${pg}`);
-  if (!oldPg||!newPg) return;
-
-  if (pg > cur) { oldPg.className='page before'; newPg.className='page active'; }
-  else { oldPg.className='page after'; newPg.className='page active'; }
-
-  setTimeout(() => {
-    document.querySelectorAll('.page').forEach(p => {
-      const n = parseInt(p.dataset.pg);
-      if (n !== pg) { if (n < pg) p.className='page before'; else p.className='page after'; }
-    });
-  }, 550);
-
-  cur = pg;
-  if (pg===8 && faction) updateP8(faction);
-  newPg.scrollTop = 0;
-  updateIndicator();
-
-  // Animate fade elements on new page
-  requestAnimationFrame(() => {
-    newPg.querySelectorAll('.a-fade').forEach(el => el.style.opacity = '');
+function navigateTo(pg,faction){
+  if(navLock||pg<1||pg>total||pg===cur)return;
+  navLock=true;
+  const oldPg=document.getElementById(`p${cur}`),newPg=document.getElementById(`p${pg}`);
+  if(!oldPg||!newPg){navLock=false;return;}
+  const goingForward=pg>cur;
+  oldPg.className=goingForward?'page before':'page after';
+  document.querySelectorAll('.page').forEach(p=>{
+    const n=parseInt(p.dataset.pg);
+    if(n===pg||n===cur)return;
+    p.className=n<pg?'page before':'page after';
   });
+  newPg.className='page active';newPg.scrollTop=0;cur=pg;
+  if(pg===8&&faction)updateP8(faction);
+  updateIndicator();
+  requestAnimationFrame(()=>{newPg.querySelectorAll('.a-fade').forEach(el=>el.style.opacity='');});
+  setTimeout(()=>{navLock=false;},600);
 }
 
-function navCharPage(pg, idx, faction) {
+function navCharPage(pg,idx,faction){
   navigateTo(pg);
-  setTimeout(() => {
-    const sw = document.getElementById(`swP${pg}`);
-    if (sw) { const card = sw.querySelector('.swiper-card'); if (card) sw.scrollLeft = idx * (card.clientWidth + 10); }
-  }, 650);
+  setTimeout(()=>{
+    const sw=document.getElementById(`swP${pg}`);
+    if(sw){const card=sw.querySelector('.swiper-card');if(card)sw.scrollLeft=idx*(card.clientWidth+10);}
+  },650);
 }
 
-function navChar(id) {
-  for (let i=0;i<CHARS.goose.length;i++) {
-    if (CHARS.goose[i].id===id) { navCharPage(i<3?9:10, i<3?i:i-3, 'goose'); return; }
-  }
-  for (let i=0;i<CHARS.duck.length;i++) {
-    if (CHARS.duck[i].id===id) { navCharPage(i<2?11:12, i<2?i:i-2, 'duck'); return; }
-  }
-  for (let i=0;i<CHARS.neutral.length;i++) {
-    if (CHARS.neutral[i].id===id) { navCharPage(13, i, 'neutral'); return; }
-  }
+function navChar(id){
+  for(let i=0;i<CHARS.goose.length;i++){if(CHARS.goose[i].id===id){navCharPage(i<3?9:10,i<3?i:i-3,'goose');return;}}
+  for(let i=0;i<CHARS.duck.length;i++){if(CHARS.duck[i].id===id){navCharPage(i<2?11:12,i<2?i:i-2,'duck');return;}}
+  for(let i=0;i<CHARS.neutral.length;i++){if(CHARS.neutral[i].id===id){navCharPage(13,i,'neutral');return;}}
 }
 
-function resetAll() {
+function resetAll(){
   cur=1;
-  document.querySelectorAll('.page').forEach((p,i) => {
-    p.className = i===0 ? 'page active' : 'page after';
-    p.scrollTop = 0;
-  });
+  document.querySelectorAll('.page').forEach((p,i)=>{p.className=i===0?'page active':'page after';p.scrollTop=0;});
+  const inner=document.querySelector('#p8 .pg');if(inner){inner.style.background='';inner.style.color='';}
   updateIndicator();
 }
 
-function updateIndicator() {
-  document.getElementById('pgNum').textContent = `${cur} / ${total}`;
-}
+function updateIndicator(){document.getElementById('pgNum').textContent=`${cur} / ${total}`;}
 
-// ── Touch / Input ──
-document.addEventListener('touchstart', e => { tY=e.touches[0].clientY; tX=e.touches[0].clientX; }, {passive:true});
+// ═══════════════ INPUT HANDLERS ═══════════════
+let wheelAccum=0,wheelTimer=null;
 
-document.addEventListener('touchend', e => {
-  const dy = tY - e.changedTouches[0].clientY;
-  const dx = tX - e.changedTouches[0].clientX;
-  if (Math.abs(dy)>Math.abs(dx) && Math.abs(dy)>40) {
-    if (dy>0 && cur<total) navigateTo(cur+1);
-    else if (dy<0 && cur>1) navigateTo(cur-1);
+document.addEventListener('touchstart',e=>{tY=e.touches[0].clientY;tX=e.touches[0].clientX;},{passive:true});
+
+document.addEventListener('touchend',e=>{
+  if(navLock)return;
+  const dy=tY-e.changedTouches[0].clientY,dx=tX-e.changedTouches[0].clientX;
+  if(Math.abs(dy)>Math.abs(dx)&&Math.abs(dy)>50){
+    const pg=document.getElementById(`p${cur}`);
+    if(pg){
+      const atTop=pg.scrollTop<=0,atBottom=pg.scrollTop+pg.clientHeight>=pg.scrollHeight-5;
+      if(dy>0&&cur<total&&atBottom)navigateTo(cur+1);
+      else if(dy<0&&cur>1&&atTop)navigateTo(cur-1);
+    }
   }
 });
 
-document.addEventListener('click', e => {
-  if (e.target.closest('button')||e.target.closest('[onclick]')||e.target.closest('.card')||e.target.closest('.qcard')) return;
-  if (cur===1) navigateTo(2);
+document.addEventListener('click',e=>{
+  if(e.target.closest('button')||e.target.closest('[onclick]')||e.target.closest('.card')||e.target.closest('.qcard'))return;
+  if(cur===1&&!navLock)navigateTo(2);
 });
 
-document.addEventListener('keydown', e => {
-  if (e.key==='ArrowDown'||e.key==='ArrowRight') { e.preventDefault(); if (cur<total) navigateTo(cur+1); }
-  else if (e.key==='ArrowUp'||e.key==='ArrowLeft') { e.preventDefault(); if (cur>1) navigateTo(cur-1); }
-});
-
-// Mouse wheel
-document.addEventListener('wheel', e => {
-  if (Math.abs(e.deltaY) > 30) {
-    if (e.deltaY > 0 && cur < total) navigateTo(cur + 1);
-    else if (e.deltaY < 0 && cur > 1) navigateTo(cur - 1);
+// Keyboard — fixed: listen on document with proper focus handling
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowDown'||e.key==='ArrowRight'||e.key==='PageDown'){
+    e.preventDefault();
+    if(!navLock&&cur<total){
+      const pg=document.getElementById(`p${cur}`);
+      const atBottom=pg&&pg.scrollTop+pg.clientHeight>=pg.scrollHeight-5;
+      if(atBottom||!pg||pg.scrollHeight<=pg.clientHeight+10)navigateTo(cur+1);
+    }
+  }else if(e.key==='ArrowUp'||e.key==='ArrowLeft'||e.key==='PageUp'){
+    e.preventDefault();
+    if(!navLock&&cur>1){
+      const pg=document.getElementById(`p${cur}`);
+      const atTop=pg&&pg.scrollTop<=0;
+      if(atTop||!pg)navigateTo(cur-1);
+    }
   }
-}, {passive: true});
+});
 
-// Init
+document.addEventListener('wheel',e=>{
+  const pg=document.getElementById(`p${cur}`);if(!pg||navLock)return;
+  const atTop=pg.scrollTop<=0,atBottom=pg.scrollTop+pg.clientHeight>=pg.scrollHeight-5;
+  if((e.deltaY>0&&!atBottom)||(e.deltaY<0&&!atTop)){wheelAccum=0;return;}
+  wheelAccum+=e.deltaY;
+  if(Math.abs(wheelAccum)>80){
+    if(wheelAccum>0&&cur<total&&atBottom){navigateTo(cur+1);wheelAccum=0;}
+    else if(wheelAccum<0&&cur>1&&atTop){navigateTo(cur-1);wheelAccum=0;}
+    else{wheelAccum=0;}
+  }
+  clearTimeout(wheelTimer);wheelTimer=setTimeout(()=>{wheelAccum=0;},400);
+},{passive:true});
+
+// Make sure key events work — add tabindex to body so it can receive focus
+document.body.setAttribute('tabindex','0');
+document.body.focus();
+document.body.addEventListener('click',function(){this.focus();});
+
 init();
-console.log('🦢🦆 鹅鸭杀 · 全员卷宗 | 20页全角色互动卷宗');
-console.log('📱 移动端竖向滑动翻页 | 🖥️ 桌面端滚轮/键盘方向键翻页');
-console.log('👈 角色详情页支持左右横滑切换同阵营角色');
-console.log('🔗 公开网址: https://goose-duck-scroll.surge.sh');
+console.log('🦢🦆 鹅鸭杀 · 全员卷宗 | 喜鹊谋杀案视觉企划');
+console.log('📜 20页复古悬疑卷宗 | 羊皮纸质感 | 烫金装饰');
+console.log('📱 竖向滑动翻页 | 🖥️ 键盘↑↓/Page翻页 | 👈 角色横滑切换');
 </script>
 </body>
 </html>
