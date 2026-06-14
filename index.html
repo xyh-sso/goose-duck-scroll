@@ -716,17 +716,50 @@ function P19(){return page(19,'',`
   <div class="bot-dec"></div>
 </div>`);}
 
-function P20(){return page(20,'',`
-<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100vh - 130px);text-align:center;background:linear-gradient(180deg,rgba(61,15,26,0.05),rgba(245,239,224,0.3));padding:30px 16px;">
-  ${seal(true)}<div style="height:16px;"></div>
-  <h2 class="t-lg">卷宗归档 · 浏览完结</h2>
-  ${rule()}
-  <div style="display:flex;flex-direction:column;gap:16px;margin-top:28px;width:100%;max-width:250px;">
-    <button class="btn btn-cream" onclick="navigateTo(1)" style="padding:14px;">返回卷宗首页</button>
-    <button class="btn btn-wine" onclick="resetAll()" style="padding:14px;">重新整本阅览</button>
+function P20(){return `<div class="page" id="p20" data-pg="20" style="background:#c41230;">
+  <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;">
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg, #e81224 0%, #c41230 30%, #8b1030 70%, #4a0820 100%);"></div>
+    <div style="position:absolute;top:6%;left:12%;width:50px;height:50px;border-radius:50%;background:#f0ead6;opacity:0.85;box-shadow:0 0 30px rgba(240,234,214,0.25);"></div>
+    <svg style="position:absolute;bottom:28%;left:0;width:100%;height:38%;" viewBox="0 0 400 200" preserveAspectRatio="none">
+      <rect x="0" y="155" width="35" height="45" fill="#0a0a12"/><rect x="30" y="125" width="22" height="75" fill="#0a0a12"/>
+      <rect x="48" y="140" width="28" height="60" fill="#0a0a12"/><rect x="72" y="95" width="18" height="105" fill="#080810"/>
+      <rect x="85" y="115" width="30" height="85" fill="#0a0a12"/><rect x="110" y="85" width="16" height="115" fill="#060610"/>
+      <rect x="122" y="130" width="28" height="70" fill="#0a0a12"/><rect x="146" y="100" width="20" height="100" fill="#080810"/>
+      <rect x="162" y="120" width="26" height="80" fill="#0a0a12"/><rect x="184" y="80" width="16" height="120" fill="#060610"/>
+      <rect x="196" y="125" width="30" height="75" fill="#0a0a12"/><rect x="222" y="90" width="18" height="110" fill="#080810"/>
+      <rect x="236" y="110" width="24" height="90" fill="#0a0a12"/><rect x="256" y="95" width="18" height="105" fill="#080810"/>
+      <rect x="270" y="120" width="28" height="80" fill="#0a0a12"/><rect x="294" y="85" width="20" height="115" fill="#080810"/>
+      <rect x="310" y="130" width="26" height="70" fill="#0a0a12"/><rect x="332" y="100" width="18" height="100" fill="#080810"/>
+      <rect x="346" y="135" width="24" height="65" fill="#0a0a12"/><rect x="366" y="105" width="20" height="95" fill="#080810"/>
+      <rect x="382" y="140" width="18" height="60" fill="#0a0a12"/>
+      <rect x="78" y="105" width="3" height="3" fill="#f0ead6" opacity="0.5"/><rect x="116" y="95" width="3" height="3" fill="#f0ead6" opacity="0.4"/>
+      <rect x="190" y="90" width="3" height="3" fill="#f0ead6" opacity="0.5"/><rect x="260" y="105" width="3" height="3" fill="#f0ead6" opacity="0.4"/>
+      <rect x="300" y="95" width="3" height="3" fill="#f0ead6" opacity="0.5"/>
+    </svg>
+    <div style="position:absolute;bottom:0;left:0;width:100%;height:28%;background:#0a0a12;"></div>
+    <div style="position:absolute;bottom:5%;left:0;width:100%;display:flex;flex-direction:column;gap:3px;padding:0 15%;">
+      <div style="display:flex;gap:3px;"><div style="flex:1;height:5px;background:#f0ead6;opacity:0.85;"></div><div style="flex:1;height:5px;background:#f0ead6;opacity:0.85;"></div><div style="flex:1;height:5px;background:#f0ead6;opacity:0.85;"></div><div style="flex:1;height:5px;background:#f0ead6;opacity:0.85;"></div></div>
+      <div style="display:flex;gap:3px;"><div style="flex:1;height:5px;background:#f0ead6;opacity:0.85;"></div><div style="flex:1;height:5px;background:#f0ead6;opacity:0.85;"></div><div style="flex:1;height:5px;background:#f0ead6;opacity:0.85;"></div><div style="flex:1;height:5px;background:#f0ead6;opacity:0.85;"></div></div>
+      <div style="display:flex;gap:3px;"><div style="flex:1;height:5px;background:#f0ead6;opacity:0.85;"></div><div style="flex:1;height:5px;background:#f0ead6;opacity:0.85;"></div><div style="flex:1;height:5px;background:#f0ead6;opacity:0.85;"></div><div style="flex:1;height:5px;background:#f0ead6;opacity:0.85;"></div></div>
+    </div>
+    <img src="icons/emoji/goose_set_0.png" style="position:absolute;top:18%;left:20%;width:44px;height:44px;z-index:10;filter:drop-shadow(0 3px 6px rgba(0,0,0,0.4));transform:rotate(-8deg);">
+    <img src="icons/emoji/goose_set_3.png" style="position:absolute;top:14%;right:22%;width:40px;height:40px;z-index:10;filter:drop-shadow(0 3px 6px rgba(0,0,0,0.4));transform:rotate(5deg);">
+    <img src="icons/emoji/duck_neutral_set_0.png" style="position:absolute;top:42%;left:8%;width:38px;height:38px;z-index:10;filter:drop-shadow(0 3px 6px rgba(0,0,0,0.4));transform:rotate(12deg);">
+    <img src="icons/emoji/goose_set_7.png" style="position:absolute;top:44%;right:8%;width:42px;height:42px;z-index:10;filter:drop-shadow(0 3px 6px rgba(0,0,0,0.4));transform:rotate(-5deg);">
+    <img src="icons/emoji/goose_set_2.png" style="position:absolute;top:58%;right:24%;width:38px;height:38px;z-index:10;filter:drop-shadow(0 3px 6px rgba(0,0,0,0.4));transform:rotate(8deg);">
+    <div style="position:absolute;top:12%;left:0;width:100%;text-align:center;z-index:10;padding:0 24px;">
+      <div style="font-family:var(--serif);font-size:0.7rem;letter-spacing:6px;color:rgba(240,234,214,0.6);margin-bottom:4px;">THE END</div>
+      <h1 style="font-family:var(--serif);font-size:clamp(2rem,5vw,3rem);font-weight:900;color:#f0ead6;letter-spacing:3px;text-shadow:0 3px 16px rgba(0,0,0,0.5);margin:0;">卷 宗 归 档</h1>
+      <div style="width:50px;height:2px;background:#f0ead6;margin:10px auto;opacity:0.7;"></div>
+      <p style="font-size:0.8rem;color:rgba(240,234,214,0.65);letter-spacing:2px;">浏览完结 · 感谢阅览</p>
+    </div>
+    <div style="position:absolute;bottom:18%;left:0;width:100%;text-align:center;z-index:10;display:flex;gap:12px;justify-content:center;padding:0 24px;">
+      <button onclick="navigateTo(1)" style="padding:10px 28px;background:transparent;border:2px solid #f0ead6;color:#f0ead6;font-family:var(--serif);font-size:0.85rem;letter-spacing:2px;cursor:pointer;border-radius:0;">返回卷宗首页</button>
+      <button onclick="resetAll()" style="padding:10px 28px;background:#f0ead6;border:2px solid #f0ead6;color:#8b1030;font-family:var(--serif);font-size:0.85rem;letter-spacing:2px;cursor:pointer;border-radius:0;">重新整本阅览</button>
+    </div>
+    <p style="position:absolute;bottom:8%;left:0;width:100%;text-align:center;font-size:0.65rem;color:rgba(240,234,214,0.4);letter-spacing:3px;z-index:10;">《鹅鸭杀全员悬疑卷宗》· 谋杀案专属视觉企划</p>
   </div>
-  <p class="t-cap" style="margin-top:36px;">《鹅鸭杀全员悬疑卷宗》<br>谋杀案专属视觉企划</p>
-</div>`);}
+</div>`;}
 
 // ═══════════════════ APP LOGIC ═══════════════════
 let cur=1, curFac='goose', tY=0, tX=0, total=20, navLock=false;
@@ -843,7 +876,7 @@ function navigateTo(pg,faction){
   if(pg===8&&faction)updateP8(faction);
   updateIndicator();
   requestAnimationFrame(()=>{newPg.querySelectorAll('.a-fade').forEach(el=>el.style.opacity='');});
-  setTimeout(()=>{navLock=false;},600);
+  setTimeout(()=>{navLock=false;},800);
 }
 
 function navCharPage(pg,idx,faction){
@@ -877,7 +910,7 @@ document.addEventListener('touchstart',e=>{tY=e.touches[0].clientY;tX=e.touches[
 document.addEventListener('touchend',e=>{
   if(navLock)return;
   const dy=tY-e.changedTouches[0].clientY,dx=tX-e.changedTouches[0].clientX;
-  if(Math.abs(dy)>Math.abs(dx)&&Math.abs(dy)>50){
+  if(Math.abs(dy)>Math.abs(dx)&&Math.abs(dy)>70){
     const pg=document.getElementById(`p${cur}`);
     if(pg){
       const atTop=pg.scrollTop<=0,atBottom=pg.scrollTop+pg.clientHeight>=pg.scrollHeight-5;
