@@ -620,9 +620,9 @@ function P7(){return page(7,'',`
 <h2 class="t-lg a-fade a-d2" style="margin-top:10px;">全员阵营分类 · 卷宗索引</h2>
 <p class="t-hint a-fade a-d3">选择阵营 · 解锁角色卷宗</p>
 ${rule()}
-${card('','<div style="display:flex;align-items:center;gap:14px;"><span style="font-size:3rem;opacity:0.15;">🦢</span><div style="flex:1;"><h3 style="font-family:var(--serif);color:var(--wine);">鹅阵营 · 好人</h3><p style="font-size:0.75rem;color:#555;">清白正义 · 任务取胜 · 8位角色</p></div><span style="font-size:0.65rem;color:var(--gold);border:1px solid var(--gold);padding:4px 12px;border-radius:12px;">点击查阅 →</span></div>',"navigateTo(8,'goose')")}
-${card('card-wine','<div style="display:flex;align-items:center;gap:14px;"><span style="font-size:3rem;opacity:0.3;">🦆</span><div style="flex:1;"><h3 style="font-family:var(--serif);color:#000;">鸭阵营 · 坏人</h3><p style="font-size:0.75rem;color:#555;">隐秘猎杀 · 破坏取胜 · 7位角色</p></div><span style="font-size:0.65rem;color:var(--gold);border:1px solid var(--gold);padding:4px 12px;border-radius:12px;">点击查阅 →</span></div>',"navigateTo(8,'duck')")}
-${card('card-neut','<div style="display:flex;align-items:center;gap:14px;"><span style="font-size:3rem;opacity:0.3;">⚖️</span><div style="flex:1;"><h3 style="font-family:var(--serif);color:#000;">中立阵营 · 独行</h3><p style="font-size:0.75rem;color:#555;">善恶游离 · 专属取胜 · 5位角色</p></div><span style="font-size:0.65rem;color:var(--gold);border:1px solid var(--gold);padding:4px 12px;border-radius:12px;">点击查阅 →</span></div>',"navigateTo(8,'neutral')")}
+${card('','<div style="display:flex;align-items:center;gap:12px;"><img src="icons/emoji/goose_set_0.png" style="width:52px;height:52px;border-radius:8px;background:rgba(255,255,255,0.5);padding:4px;"><div style="flex:1;"><h3 style="font-family:var(--serif);color:var(--wine);">鹅阵营 · 好人</h3><p style="font-size:0.75rem;color:#555;">清白正义 · 任务取胜 · 8位角色</p></div><span style="font-size:0.65rem;color:var(--gold);border:1px solid var(--gold);padding:4px 12px;border-radius:12px;">点击查阅 →</span></div>',"navigateTo(8,'goose')")}
+${card('card-wine','<div style="display:flex;align-items:center;gap:12px;"><img src="icons/emoji/duck_neutral_set_0.png" style="width:52px;height:52px;border-radius:8px;background:rgba(255,255,255,0.5);padding:4px;"><div style="flex:1;"><h3 style="font-family:var(--serif);color:#000;">鸭阵营 · 坏人</h3><p style="font-size:0.75rem;color:#555;">隐秘猎杀 · 破坏取胜 · 7位角色</p></div><span style="font-size:0.65rem;color:var(--gold);border:1px solid var(--gold);padding:4px 12px;border-radius:12px;">点击查阅 →</span></div>',"navigateTo(8,'duck')")}
+${card('card-neut','<div style="display:flex;align-items:center;gap:12px;"><img src="icons/emoji/duck_neutral_set_7.png" style="width:52px;height:52px;border-radius:8px;background:rgba(255,255,255,0.5);padding:4px;"><div style="flex:1;"><h3 style="font-family:var(--serif);color:#000;">中立阵营 · 独行</h3><p style="font-size:0.75rem;color:#555;">善恶游离 · 专属取胜 · 5位角色</p></div><span style="font-size:0.65rem;color:var(--gold);border:1px solid var(--gold);padding:4px 12px;border-radius:12px;">点击查阅 →</span></div>',"navigateTo(8,'neutral')")}
 <p style="font-size:1.5rem;opacity:0.04;text-align:center;margin-top:8px;">🐦 🐦 🐦</p>
 `);}
 
@@ -742,16 +742,18 @@ function P20(){return `<div class="page" id="p20" data-pg="20" style="background
       <div style="display:flex;gap:3px;"><div style="flex:1;height:5px;background:#f0ead6;opacity:0.85;"></div><div style="flex:1;height:5px;background:#f0ead6;opacity:0.85;"></div><div style="flex:1;height:5px;background:#f0ead6;opacity:0.85;"></div><div style="flex:1;height:5px;background:#f0ead6;opacity:0.85;"></div></div>
       <div style="display:flex;gap:3px;"><div style="flex:1;height:5px;background:#f0ead6;opacity:0.85;"></div><div style="flex:1;height:5px;background:#f0ead6;opacity:0.85;"></div><div style="flex:1;height:5px;background:#f0ead6;opacity:0.85;"></div><div style="flex:1;height:5px;background:#f0ead6;opacity:0.85;"></div></div>
     </div>
-    <img src="icons/emoji/goose_set_0.png" style="position:absolute;top:18%;left:20%;width:44px;height:44px;z-index:10;filter:drop-shadow(0 3px 6px rgba(0,0,0,0.4));transform:rotate(-8deg);">
-    <img src="icons/emoji/goose_set_3.png" style="position:absolute;top:14%;right:22%;width:40px;height:40px;z-index:10;filter:drop-shadow(0 3px 6px rgba(0,0,0,0.4));transform:rotate(5deg);">
-    <img src="icons/emoji/duck_neutral_set_0.png" style="position:absolute;top:42%;left:8%;width:38px;height:38px;z-index:10;filter:drop-shadow(0 3px 6px rgba(0,0,0,0.4));transform:rotate(12deg);">
-    <img src="icons/emoji/goose_set_7.png" style="position:absolute;top:44%;right:8%;width:42px;height:42px;z-index:10;filter:drop-shadow(0 3px 6px rgba(0,0,0,0.4));transform:rotate(-5deg);">
-    <img src="icons/emoji/goose_set_2.png" style="position:absolute;top:58%;right:24%;width:38px;height:38px;z-index:10;filter:drop-shadow(0 3px 6px rgba(0,0,0,0.4));transform:rotate(8deg);">
     <div style="position:absolute;top:12%;left:0;width:100%;text-align:center;z-index:10;padding:0 24px;">
       <div style="font-family:var(--serif);font-size:0.7rem;letter-spacing:6px;color:rgba(240,234,214,0.6);margin-bottom:4px;">THE END</div>
       <h1 style="font-family:var(--serif);font-size:clamp(2rem,5vw,3rem);font-weight:900;color:#f0ead6;letter-spacing:3px;text-shadow:0 3px 16px rgba(0,0,0,0.5);margin:0;">卷 宗 归 档</h1>
       <div style="width:50px;height:2px;background:#f0ead6;margin:10px auto;opacity:0.7;"></div>
       <p style="font-size:0.8rem;color:rgba(240,234,214,0.65);letter-spacing:2px;">浏览完结 · 感谢阅览</p>
+    </div>
+    <div style="position:absolute;bottom:28%;left:0;width:100%;text-align:center;z-index:10;display:flex;gap:16px;justify-content:center;align-items:center;padding:0 24px;">
+      <img src="icons/emoji/goose_set_0.png" style="width:46px;height:46px;filter:drop-shadow(0 3px 6px rgba(0,0,0,0.4));transform:rotate(-8deg);">
+      <img src="icons/emoji/goose_set_3.png" style="width:42px;height:42px;filter:drop-shadow(0 3px 6px rgba(0,0,0,0.4));transform:rotate(5deg);">
+      <img src="icons/emoji/duck_neutral_set_0.png" style="width:40px;height:40px;filter:drop-shadow(0 3px 6px rgba(0,0,0,0.4));transform:rotate(12deg);">
+      <img src="icons/emoji/goose_set_7.png" style="width:44px;height:44px;filter:drop-shadow(0 3px 6px rgba(0,0,0,0.4));transform:rotate(-5deg);">
+      <img src="icons/emoji/goose_set_2.png" style="width:40px;height:40px;filter:drop-shadow(0 3px 6px rgba(0,0,0,0.4));transform:rotate(8deg);">
     </div>
     <div style="position:absolute;bottom:18%;left:0;width:100%;text-align:center;z-index:10;display:flex;gap:12px;justify-content:center;padding:0 24px;">
       <button onclick="navigateTo(1)" style="padding:10px 28px;background:transparent;border:2px solid #f0ead6;color:#f0ead6;font-family:var(--serif);font-size:0.85rem;letter-spacing:2px;cursor:pointer;border-radius:0;">返回卷宗首页</button>
@@ -876,7 +878,7 @@ function navigateTo(pg,faction){
   if(pg===8&&faction)updateP8(faction);
   updateIndicator();
   requestAnimationFrame(()=>{newPg.querySelectorAll('.a-fade').forEach(el=>el.style.opacity='');});
-  setTimeout(()=>{navLock=false;},800);
+  setTimeout(()=>{navLock=false;},650);
 }
 
 function navCharPage(pg,idx,faction){
@@ -910,7 +912,7 @@ document.addEventListener('touchstart',e=>{tY=e.touches[0].clientY;tX=e.touches[
 document.addEventListener('touchend',e=>{
   if(navLock)return;
   const dy=tY-e.changedTouches[0].clientY,dx=tX-e.changedTouches[0].clientX;
-  if(Math.abs(dy)>Math.abs(dx)&&Math.abs(dy)>70){
+  if(Math.abs(dy)>Math.abs(dx)&&Math.abs(dy)>45){
     const pg=document.getElementById(`p${cur}`);
     if(pg){
       const atTop=pg.scrollTop<=0,atBottom=pg.scrollTop+pg.clientHeight>=pg.scrollHeight-5;
