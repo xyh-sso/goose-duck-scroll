@@ -8,14 +8,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap');
 
 :root {
-  --bg: #1a1a22;
-  --bg-card: #252530;
-  --red: #c41e3a;
-  --red-dark: #8b1530;
-  --red-bright: #e8304a;
-  --white: #f5f0e8;
-  --gray: #999099;
-  --gray-light: #c0b8c0;
+  --bg: #e8e0d5;
+  --bg-card: #f2ece2;
+  --red: #b71c2c;
+  --red-dark: #7f1320;
+  --red-bright: #d32f3f;
+  --white: #3a3035;
+  --gray: #6b6068;
+  --gray-light: #4a4048;
+  --serif: 'Playfair Display', 'Cormorant Garamond', 'Noto Serif SC', serif;
+  --serif-sc: 'Noto Serif SC', 'STSong', serif;
+  --sans: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
   --serif: 'Playfair Display', 'Cormorant Garamond', 'Noto Serif SC', serif;
   --serif-sc: 'Noto Serif SC', 'STSong', serif;
   --sans: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
@@ -51,11 +55,17 @@ body::after { display:none; }
 .pg {
   position:relative; min-height:100%; padding:28px 18px 56px;
   margin:0; border:none;
-  background:var(--bg);
+  background:
+    linear-gradient(180deg, #ebe3d6 0%, #e5dcc8 30%, #e0d5be 60%, #e5dcc8 100%),
+    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(160,140,110,0.03) 2px, rgba(160,140,110,0.03) 3px);
   color:var(--white);
   box-shadow:none; border-radius:0;
 }
-.pg::after { display:none; }
+.pg::after {
+  content:''; position:absolute; inset:0; pointer-events:none; z-index:1;
+  opacity:0.06; mix-blend-mode:multiply;
+  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+}
 .pg::before { display:none; }
 
 /* ═══════════ CORNERS — RED ACCENT ═══════════ */
@@ -153,9 +163,9 @@ body::after { display:none; }
 /* ═══════════ CARDS — DARK + RED ACCENT ═══════════ */
 .card {
   background:var(--bg-card);
-  border:1px solid rgba(255,255,255,0.06);
+  border:1px solid rgba(0,0,0,0.08);
   border-radius:0; padding:16px; margin:10px 0; position:relative;
-  box-shadow:none; transition:all 0.3s;
+  box-shadow:0 1px 6px rgba(0,0,0,0.06); transition:all 0.3s;
 }
 .card::before { display:none; }
 .card:active { transform:translateY(2px); border-color:var(--red); }
@@ -235,12 +245,12 @@ body::after { display:none; }
   width:110px; height:110px; border-radius:50%; border:3px solid var(--red);
   display:flex; align-items:center; justify-content:center;
   font-size:3rem; margin:0 auto 10px;
-  box-shadow:0 4px 20px rgba(0,0,0,0.4);
-  background:rgba(255,255,255,0.06);
+  box-shadow:0 4px 16px rgba(0,0,0,0.15);
+  background:transparent;
 }
-.c-av.goose { background:rgba(255,255,255,0.08); }
-.c-av.duck { background:rgba(255,255,255,0.06); }
-.c-av.neut { background:rgba(255,255,255,0.07); }
+.c-av.goose { background:transparent; }
+.c-av.duck { background:transparent; }
+.c-av.neut { background:transparent; }
 
 /* ═══════════ QUICK REF GRID ═══════════ */
 .qgrid { display:grid; grid-template-columns:repeat(auto-fill, minmax(100px,1fr)); gap:6px; }
@@ -302,30 +312,30 @@ body::after { display:none; }
 // ═══════════════════ CHARACTER DATA ═══════════════════
 const CHARS = {
 goose: [
-  {id:'sheriff',name:'警长',emoji:'⭐',icon:'icons/jingzhanger.png',stars:'★★☆',role:'执法近战好人',skill:'可主动击杀一名坏人，误杀好人直接"双倒"出局',play:'抱团确认身份后出刀，切勿盲目开局出刀',tip:'最强大的执法位——慎用技能，误杀代价惨重'},
-  {id:'justice',name:'正义使者',emoji:'⚔️',icon:'icons/zhengyishizhe.png',stars:'★★☆',role:'一次性执法',skill:'全局一刀击杀，无误杀惩罚，仅单次使用机会',play:'留存技能至残局使用，关键时刻一击制胜',tip:'单次技能需精准判断，建议保留至最后'},
-  {id:'bird',name:'观鸟者',emoji:'🔭',icon:'icons/guanniaozhe.png',stars:'★☆☆',role:'视野观察员',skill:'可扩大指定方向自身视野，远距离偷看暗处玩家行动',play:'利用视野优势暗中观察可疑玩家行踪',tip:'信息位角色——为团队提供关键视野情报'},
-  {id:'psychic',name:'通灵者',emoji:'🔮',icon:'icons/tonglingzhe.png',stars:'★★★',role:'亡灵聆听者',skill:'可听见亡灵玩家的声音，获取死后关键线索',play:'利用亡灵信息精准锁定坏人身份，鸭阵营的克星',tip:'最强信息位——听亡灵声音辨坏人，留至后期价值更大'},
-  {id:'canada',name:'加拿大鹅',emoji:'🛡️',icon:'icons/jianadaer.png',stars:'★★☆',role:'被动警报器',skill:'遇害自动触发全局报警，防止鸭子悄无声息刀人',play:'鸭阵营的噩梦——刀你等于自曝身份',tip:'核心保护位——让鸭子不敢轻易动手'},
-  {id:'engineer',name:'工程师',emoji:'🔧',icon:'icons/gongchengshi.png',stars:'★★★',role:'反制专家',skill:'可看见存活鸭子的破坏痕迹（地图红圈），可钻管道规避猎杀',play:'追踪破坏痕迹定位鸭子，钻管道保命生存',tip:'克制炸弹鸭——可解除全域爆破'},
-  {id:'gravy',name:'肉汁鹅',emoji:'🪙',icon:'icons/rouzhier.png',stars:'★☆☆',role:'金币收集者',skill:'做任务获得金币，无法被混刀，在人群中会弹刀',play:'专注做任务攒金币，待在人群中最安全',tip:'切勿盲目跟随陌生人——防鸭子贴身联动击杀'},
-  {id:'white',name:'大白鹅',emoji:'🦢',icon:'icons/dabaier.png',stars:'★☆☆',role:'基础好人',skill:'一直特别白的鹅——无特殊主动技能',play:'最纯粹的好人角色，靠发言与推理存活',tip:'基础角色——考验纯粹推理能力与口才'}
+  {id:'sheriff',name:'警长',emoji:'⭐',icon:'icons/jingzhanger.png',sticker:'icons/emoji/goose_set_0.png',stars:'★★☆',role:'执法近战好人',skill:'可主动击杀一名坏人，误杀好人直接"双倒"出局',play:'抱团确认身份后出刀，切勿盲目开局出刀',tip:'最强大的执法位——慎用技能，误杀代价惨重'},
+  {id:'justice',name:'正义使者',emoji:'⚔️',icon:'icons/zhengyishizhe.png',sticker:'icons/emoji/goose_set_1.png',stars:'★★☆',role:'一次性执法',skill:'全局一刀击杀，无误杀惩罚，仅单次使用机会',play:'留存技能至残局使用，关键时刻一击制胜',tip:'单次技能需精准判断，建议保留至最后'},
+  {id:'bird',name:'观鸟者',emoji:'🔭',icon:'icons/guanniaozhe.png',sticker:'icons/emoji/goose_set_2.png',stars:'★☆☆',role:'视野观察员',skill:'可扩大指定方向自身视野，远距离偷看暗处玩家行动',play:'利用视野优势暗中观察可疑玩家行踪',tip:'信息位角色——为团队提供关键视野情报'},
+  {id:'psychic',name:'通灵者',emoji:'🔮',icon:'icons/tonglingzhe.png',sticker:'icons/emoji/goose_set_3.png',stars:'★★★',role:'亡灵聆听者',skill:'可听见亡灵玩家的声音，获取死后关键线索',play:'利用亡灵信息精准锁定坏人身份，鸭阵营的克星',tip:'最强信息位——听亡灵声音辨坏人，留至后期价值更大'},
+  {id:'canada',name:'加拿大鹅',emoji:'🛡️',icon:'icons/jianadaer.png',sticker:'icons/emoji/goose_set_4.png',stars:'★★☆',role:'被动警报器',skill:'遇害自动触发全局报警，防止鸭子悄无声息刀人',play:'鸭阵营的噩梦——刀你等于自曝身份',tip:'核心保护位——让鸭子不敢轻易动手'},
+  {id:'engineer',name:'工程师',emoji:'🔧',icon:'icons/gongchengshi.png',sticker:'icons/emoji/goose_set_5.png',stars:'★★★',role:'反制专家',skill:'可看见存活鸭子的破坏痕迹（地图红圈），可钻管道规避猎杀',play:'追踪破坏痕迹定位鸭子，钻管道保命生存',tip:'克制炸弹鸭——可解除全域爆破'},
+  {id:'gravy',name:'肉汁鹅',emoji:'🪙',icon:'icons/rouzhier.png',sticker:'icons/emoji/goose_set_6.png',stars:'★☆☆',role:'金币收集者',skill:'做任务获得金币，无法被混刀，在人群中会弹刀',play:'专注做任务攒金币，待在人群中最安全',tip:'切勿盲目跟随陌生人——防鸭子贴身联动击杀'},
+  {id:'white',name:'大白鹅',emoji:'🦢',icon:'icons/dabaier.png',sticker:'icons/emoji/goose_set_7.png',stars:'★☆☆',role:'基础好人',skill:'一直特别白的鹅——无特殊主动技能',play:'最纯粹的好人角色，靠发言与推理存活',tip:'基础角色——考验纯粹推理能力与口才'}
 ],
 duck: [
-  {id:'bomber',name:'炸弹鸭',emoji:'💣',icon:'icons/zhadangwang.png',stars:'★★★',role:'爆破专家',skill:'贴身绑定延时炸弹，传导击杀连锁淘汰多名好人',play:'搭配关门分割人群，炸弹连锁最大化收益',tip:'搭配间谍鸭关门使用效果更佳'},
-  {id:'spy',name:'间谍鸭',emoji:'🕵️',icon:'icons/jiandie.png',stars:'★★☆',role:'信息窃取者',skill:'在会议上投票后，可获得被投票者的身份信息',play:'会议中收集鹅阵营身份信息，传递给鸭子队友',tip:'关键信息位——为鸭队提供精准猎杀目标'},
-  {id:'prokill',name:'专业杀手',emoji:'🗡️',icon:'icons/zhuanyeshashou.png',stars:'★★★',role:'隐匿刺客',skill:'刀人后不留下倒地尸体，彻底隐匿行凶痕迹',play:'悄无声息猎杀，不留尸体无法触发报警',tip:'克制加拿大鹅——尸体不会自动报警'},
-  {id:'ninja',name:'忍者鸭',emoji:'🥷',icon:'icons/rengzhe.png',stars:'★★☆',role:'暗影猎手',skill:'拥有特殊隐匿身法，可悄无声息接近目标',play:'利用地形和视野盲区，出其不意击杀落单好人',tip:'高机动刺客——善用视野盲区突袭'},
-  {id:'morph',name:'变形鸭',emoji:'🎭',icon:'icons/bianxingzhe.png',stars:'★★★',role:'伪装大师',skill:'复刻在场任意玩家的外形，伪造行踪嫁祸他人',play:'变身模仿弱势好人，制造混乱嫁祸无辜者',tip:'变形状态无法开启破坏技能——注意切换时机'},
-  {id:'cannibal',name:'食鸟鸭',emoji:'🦴',icon:'icons/shiniaoya.png',stars:'★★☆',role:'尸体清理者',skill:'可吞食倒地尸体，销毁行凶线索（自己刀的人需等3秒后吞食）',play:'刀人后等待三秒吞尸，销毁关键报警线索',tip:'可抵消加拿大鹅的尸爆报警——战略克制位'},
-  {id:'assassin',name:'刺客',emoji:'🎯',icon:'icons/chike.png',stars:'★★☆',role:'会议狙击手',skill:'会议发言阶段赌身份击杀一名在场玩家，赌错自毙，单局最多两次',play:'会议中精准猜测身份，一击必杀关键鹅角色',tip:'高风险高回报——赌错自毙，需极度谨慎'}
+  {id:'bomber',name:'炸弹鸭',emoji:'💣',icon:'icons/zhadangwang.png',sticker:'icons/emoji/duck_neutral_set_0.png',stars:'★★★',role:'爆破专家',skill:'贴身绑定延时炸弹，传导击杀连锁淘汰多名好人',play:'搭配关门分割人群，炸弹连锁最大化收益',tip:'搭配间谍鸭关门使用效果更佳'},
+  {id:'spy',name:'间谍鸭',emoji:'🕵️',icon:'icons/jiandie.png',sticker:'icons/emoji/duck_neutral_set_1.png',stars:'★★☆',role:'信息窃取者',skill:'在会议上投票后，可获得被投票者的身份信息',play:'会议中收集鹅阵营身份信息，传递给鸭子队友',tip:'关键信息位——为鸭队提供精准猎杀目标'},
+  {id:'prokill',name:'专业杀手',emoji:'🗡️',icon:'icons/zhuanyeshashou.png',sticker:'icons/emoji/duck_neutral_set_2.png',stars:'★★★',role:'隐匿刺客',skill:'刀人后不留下倒地尸体，彻底隐匿行凶痕迹',play:'悄无声息猎杀，不留尸体无法触发报警',tip:'克制加拿大鹅——尸体不会自动报警'},
+  {id:'ninja',name:'忍者鸭',emoji:'🥷',icon:'icons/rengzhe.png',sticker:'icons/emoji/duck_neutral_set_3.png',stars:'★★☆',role:'暗影猎手',skill:'拥有特殊隐匿身法，可悄无声息接近目标',play:'利用地形和视野盲区，出其不意击杀落单好人',tip:'高机动刺客——善用视野盲区突袭'},
+  {id:'morph',name:'变形鸭',emoji:'🎭',icon:'icons/bianxingzhe.png',sticker:'icons/emoji/duck_neutral_set_4.png',stars:'★★★',role:'伪装大师',skill:'复刻在场任意玩家的外形，伪造行踪嫁祸他人',play:'变身模仿弱势好人，制造混乱嫁祸无辜者',tip:'变形状态无法开启破坏技能——注意切换时机'},
+  {id:'cannibal',name:'食鸟鸭',emoji:'🦴',icon:'icons/shiniaoya.png',sticker:'icons/emoji/duck_neutral_set_5.png',stars:'★★☆',role:'尸体清理者',skill:'可吞食倒地尸体，销毁行凶线索（自己刀的人需等3秒后吞食）',play:'刀人后等待三秒吞尸，销毁关键报警线索',tip:'可抵消加拿大鹅的尸爆报警——战略克制位'},
+  {id:'assassin',name:'刺客',emoji:'🎯',icon:'icons/chike.png',sticker:'icons/emoji/duck_neutral_set_6.png',stars:'★★☆',role:'会议狙击手',skill:'会议发言阶段赌身份击杀一名在场玩家，赌错自毙，单局最多两次',play:'会议中精准猜测身份，一击必杀关键鹅角色',tip:'高风险高回报——赌错自毙，需极度谨慎'}
 ],
 neutral: [
-  {id:'dodo',name:'呆呆鸟',emoji:'🐦',icon:'icons/daidainiao.png',stars:'★☆☆',role:'求死独行者',skill:'在会议中被投票放逐即可单独取胜',play:'主动做出可疑行为博取怀疑，诱使他人投票放逐你',tip:'演技派角色——越可疑越容易获胜，但别太假'},
-  {id:'pelican',name:'鹈鹕',emoji:'🦤',icon:'icons/tihu.png',stars:'★★★',role:'吞噬霸主',skill:'逐个吞噬全部存活玩家，独享对局最终胜利',play:'逐个吞噬落单玩家，苟活至最后独享胜利',tip:'终极独行角色——吞噬全场称霸对局'},
-  {id:'pigeon',name:'鸽子',emoji:'🕊️',icon:'icons/gezi.png',stars:'★★★★',role:'全域感染者',skill:'全域感染全部存活对局者，感染满额即获胜',play:'低调缓慢感染他人，切忌高调引起集火',tip:'感染需极大的耐心——高调会被优先放逐'},
-  {id:'vulture',name:'秃鹫',emoji:'🦅',icon:'icons/tujiu.png',stars:'★★★',role:'尸体清道夫',skill:'捡拾全场倒地尸体，啃食累积达标即可取胜',play:'游走战场捡拾尸体，不参与阵营正面对抗',tip:'耐心等待尸体出现——捡拾达标即胜利'},
-  {id:'falcon',name:'猎鹰',emoji:'🦅',icon:'icons/lieying.png',stars:'★★★☆',role:'终极猎手',skill:'淘汰鹅鸭两大阵营全部人员，独行称霸对局',play:'逐个淘汰鹅鸭双方玩家，独自称霸全场',tip:'最强中立猎手——正面对抗两大阵营'}
+  {id:'dodo',name:'呆呆鸟',emoji:'🐦',icon:'icons/daidainiao.png',sticker:'icons/emoji/duck_neutral_set_7.png',stars:'★☆☆',role:'求死独行者',skill:'在会议中被投票放逐即可单独取胜',play:'主动做出可疑行为博取怀疑，诱使他人投票放逐你',tip:'演技派角色——越可疑越容易获胜，但别太假'},
+  {id:'pelican',name:'鹈鹕',emoji:'🦤',icon:'icons/tihu.png',sticker:'icons/emoji/duck_neutral_set_7.png',stars:'★★★',role:'吞噬霸主',skill:'逐个吞噬全部存活玩家，独享对局最终胜利',play:'逐个吞噬落单玩家，苟活至最后独享胜利',tip:'终极独行角色——吞噬全场称霸对局'},
+  {id:'pigeon',name:'鸽子',emoji:'🕊️',icon:'icons/gezi.png',sticker:'icons/emoji/duck_neutral_set_7.png',stars:'★★★★',role:'全域感染者',skill:'全域感染全部存活对局者，感染满额即获胜',play:'低调缓慢感染他人，切忌高调引起集火',tip:'感染需极大的耐心——高调会被优先放逐'},
+  {id:'vulture',name:'秃鹫',emoji:'🦅',icon:'icons/tujiu.png',sticker:'icons/emoji/duck_neutral_set_7.png',stars:'★★★',role:'尸体清道夫',skill:'捡拾全场倒地尸体，啃食累积达标即可取胜',play:'游走战场捡拾尸体，不参与阵营正面对抗',tip:'耐心等待尸体出现——捡拾达标即胜利'},
+  {id:'falcon',name:'猎鹰',emoji:'🦅',icon:'icons/lieying.png',sticker:'icons/emoji/duck_neutral_set_7.png',stars:'★★★☆',role:'终极猎手',skill:'淘汰鹅鸭两大阵营全部人员，独行称霸对局',play:'逐个淘汰鹅鸭双方玩家，独自称霸全场',tip:'最强中立猎手——正面对抗两大阵营'}
 ]};
 
 // ═══════════════════ HELPERS ═══════════════════
@@ -350,10 +360,11 @@ function charCard(c,idx,total){
   const tCol='color:#000;';
   const bCol='color:#111;';
   const avatarHtml = c.icon
-    ? `<img src="${c.icon}" alt="${c.name}" style="width:110px;height:110px;border-radius:50%;border:3px solid var(--gold);object-fit:cover;box-shadow:0 4px 20px rgba(32,8,14,0.2);" onerror="this.parentElement.innerHTML='<div class=\\'c-av ${avCls}\\'>${c.emoji}</div>'">`
+    ? `<img src="${c.icon}" alt="${c.name}" style="width:110px;height:110px;border-radius:50%;border:3px solid var(--red);object-fit:cover;box-shadow:0 4px 16px rgba(0,0,0,0.15);background:transparent;" onerror="this.parentElement.innerHTML='<div class=\\'c-av ${avCls}\\'>${c.emoji}</div>'">`
     : `<div class="c-av ${avCls}">${c.emoji}</div>`;
+  const stickerHtml = c.sticker ? `<img src="${c.sticker}" style="position:absolute;top:6px;right:8px;width:40px;height:40px;z-index:5;filter:drop-shadow(0 2px 3px rgba(0,0,0,0.2));" onerror="this.style.display='none'">` : '';
   return `<div class="swiper-card"><div class="card ${cardCls}" style="min-height:380px;display:flex;flex-direction:column;align-items:center;text-align:center;padding:20px 16px;">
-    <div class="card-fold"></div>
+    ${stickerHtml}
     ${avatarHtml}
     <h3 class="t-md" style="${tCol}margin:8px 0 2px;">${c.name}</h3>
     <span class="tag ${tagCls}">${c.faction}</span>
@@ -853,12 +864,12 @@ document.addEventListener('wheel',e=>{
   const atTop=pg.scrollTop<=0,atBottom=pg.scrollTop+pg.clientHeight>=pg.scrollHeight-5;
   if((e.deltaY>0&&!atBottom)||(e.deltaY<0&&!atTop)){wheelAccum=0;return;}
   wheelAccum+=e.deltaY;
-  if(Math.abs(wheelAccum)>80){
+  if(Math.abs(wheelAccum)>150){
     if(wheelAccum>0&&cur<total&&atBottom){navigateTo(cur+1);wheelAccum=0;}
     else if(wheelAccum<0&&cur>1&&atTop){navigateTo(cur-1);wheelAccum=0;}
     else{wheelAccum=0;}
   }
-  clearTimeout(wheelTimer);wheelTimer=setTimeout(()=>{wheelAccum=0;},400);
+  clearTimeout(wheelTimer);wheelTimer=setTimeout(()=>{wheelAccum=0;},600);
 },{passive:true});
 
 // Make sure key events work — add tabindex to body so it can receive focus
