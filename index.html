@@ -125,11 +125,11 @@ body::after {
     repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.015) 3px, rgba(255,255,255,0.015) 4px);
   border-color:rgba(184,148,61,0.5);
   box-shadow:inset 0 0 100px rgba(0,0,0,0.4), 0 4px 30px rgba(0,0,0,0.5);
-  color:#f5efe0;
+  color:#000;
 }
 .bg-wine .pg::after { border-color:rgba(184,148,61,0.5); }
-.bg-wine .corner { border-color:var(--gold-light); }
-.bg-wine .corner::after { color:var(--gold-light); }
+.bg-wine .corner { border-color:var(--gold); }
+.bg-wine .corner::after { color:var(--gold); }
 
 /* ═══════════ DIAGONAL COVER PAGE ═══════════ */
 .bg-dia .pg {
@@ -481,8 +481,8 @@ function P3(){return page(3,'',`
 <p class="t-sm a-fade a-d2" style="color:var(--wine);text-align:center;">对局规则 · 善恶博弈的推理游戏</p>
 ${rule()}
 ${card('','<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;"><span style="font-size:2.2rem;">🦢</span><span class="tag tag-g">鹅阵营</span><span style="font-size:0.75rem;color:var(--gold);">8 位好人</span></div><h3 style="font-family:var(--serif);color:var(--wine);">正义清白阵营</h3><p class="t-body" style="font-size:0.85rem;margin-top:6px;">全员协作完成公共任务，召开会议投票驱逐全部鸭子坏人。全员存活驱逐鸭群即可取胜。</p>')}
-${card('card-wine','<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;"><span style="font-size:2.2rem;">🦆</span><span class="tag tag-d">鸭阵营</span><span style="font-size:0.75rem;color:var(--gold-pale);">7 位坏人</span></div><h3 style="font-family:var(--serif);color:#f5efe0;">隐匿猎杀阵营</h3><p class="t-body" style="font-size:0.85rem;margin-top:6px;">伪装混入鹅群，破坏场地设施、近身击倒鹅玩家。淘汰全部好人即可掌控对局。</p>')}
-${card('card-neut','<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;"><span style="font-size:2.2rem;">⚖️</span><span class="tag tag-n">中立阵营</span><span style="font-size:0.75rem;color:var(--gold-pale);">5 位独行</span></div><h3 style="font-family:var(--serif);color:#f5efe0;">无阵营羁绊第三方</h3><p class="t-body" style="font-size:0.85rem;margin-top:6px;">不受鹅鸭胜负约束，每位角色拥有独一无二专属胜利条件，玩法自由，可改写对局结局。</p>')}
+${card('card-wine','<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;"><span style="font-size:2.2rem;">🦆</span><span class="tag tag-d">鸭阵营</span><span style="font-size:0.75rem;color:#555;">7 位坏人</span></div><h3 style="font-family:var(--serif);color:#000;">隐匿猎杀阵营</h3><p class="t-body" style="font-size:0.85rem;margin-top:6px;">伪装混入鹅群，破坏场地设施、近身击倒鹅玩家。淘汰全部好人即可掌控对局。</p>')}
+${card('card-neut','<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;"><span style="font-size:2.2rem;">⚖️</span><span class="tag tag-n">中立阵营</span><span style="font-size:0.75rem;color:#555;">5 位独行</span></div><h3 style="font-family:var(--serif);color:#000;">无阵营羁绊第三方</h3><p class="t-body" style="font-size:0.85rem;margin-top:6px;">不受鹅鸭胜负约束，每位角色拥有独一无二专属胜利条件，玩法自由，可改写对局结局。</p>')}
 `);}
 
 function P4(){return page(4,'',`
@@ -607,8 +607,8 @@ function P18(){return page(18,'',`
 <p class="t-sm" style="color:var(--wine);text-align:center;">各阵营高阶操作指南</p>
 ${rule()}
 ${card('','<h3 style="font-family:var(--serif);color:var(--wine);">🦢 鹅阵营进阶</h3><p class="t-body" style="font-size:0.82rem;">• 通灵者：利用亡灵信息精准定位坏人，配合正义使者一击毙命</p><p class="t-body" style="font-size:0.82rem;">• 工程师：钻管道观察全局，发现破坏痕迹立即追踪</p><p class="t-body" style="font-size:0.82rem;">• 加拿大鹅：主动暴露身份引鸭子来刀，触发报警锁定坏人</p>')}
-${card('card-wine','<h3 style="font-family:var(--serif);color:#f5efe0;">🦆 鸭阵营进阶</h3><p class="t-body" style="font-size:0.82rem;">• 变形鸭：先观察目标行动轨迹，变身后精确嫁祸</p><p class="t-body" style="font-size:0.82rem;">• 专业杀手+食鸟鸭：杀手刀人无尸体，食鸟鸭处理其他现场</p><p class="t-body" style="font-size:0.82rem;">• 刺客：发言阶段精准赌身份，关键时刻击杀关键鹅</p>')}
-${card('card-neut','<h3 style="font-family:var(--serif);color:#f5efe0;">⚖️ 中立阵营进阶</h3><p class="t-body" style="font-size:0.82rem;">• 呆呆鸟：做出可疑行为但不过于明显，诱导投票放逐</p><p class="t-body" style="font-size:0.82rem;">• 鹈鹕：逐个吞噬落单玩家，最后决战称霸</p><p class="t-body" style="font-size:0.82rem;">• 猎鹰：游走鹅鸭之间，逐个淘汰两大阵营</p>')}
+${card('card-wine','<h3 style="font-family:var(--serif);color:#000;">🦆 鸭阵营进阶</h3><p class="t-body" style="font-size:0.82rem;">• 变形鸭：先观察目标行动轨迹，变身后精确嫁祸</p><p class="t-body" style="font-size:0.82rem;">• 专业杀手+食鸟鸭：杀手刀人无尸体，食鸟鸭处理其他现场</p><p class="t-body" style="font-size:0.82rem;">• 刺客：发言阶段精准赌身份，关键时刻击杀关键鹅</p>')}
+${card('card-neut','<h3 style="font-family:var(--serif);color:#000;">⚖️ 中立阵营进阶</h3><p class="t-body" style="font-size:0.82rem;">• 呆呆鸟：做出可疑行为但不过于明显，诱导投票放逐</p><p class="t-body" style="font-size:0.82rem;">• 鹈鹕：逐个吞噬落单玩家，最后决战称霸</p><p class="t-body" style="font-size:0.82rem;">• 猎鹰：游走鹅鸭之间，逐个淘汰两大阵营</p>')}
 `);}
 
 function P19(){return page(19,'',`
@@ -680,7 +680,7 @@ function populateChars(){
 
 function renderCharGroup(pgNum,chars,title,isDuck){
   const c=document.getElementById(`p${pgNum}Content`);if(!c)return;
-  const titleCol=isDuck?'color:#f5efe0;':'color:var(--ink);';
+  const titleCol=isDuck?'color:#000;':'color:var(--ink);';
   c.innerHTML=`
     <button class="btn btn-cream btn-sm" onclick="navigateTo(8)" style="margin-bottom:8px;">← 返回目录</button>
     <h2 class="t-lg" style="${titleCol}">${title}</h2>${rule()}
@@ -712,7 +712,7 @@ function updateP8(faction){
   else{chars=CHARS.neutral;label='中立阵营 · 独行';}
   const inner=pg.querySelector('.pg');
   if(inner){
-    if(faction==='duck'){inner.style.background='linear-gradient(180deg, #3d0f1a 0%, #2d0a12 40%, #20080e 100%), repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.015) 3px, rgba(255,255,255,0.015) 4px)';inner.style.color='#f5efe0';}
+    if(faction==='duck'){inner.style.background='linear-gradient(180deg, #3d0f1a 0%, #2d0a12 40%, #20080e 100%), repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.015) 3px, rgba(255,255,255,0.015) 4px)';inner.style.color='#000';}
     else{inner.style.background='';inner.style.color='';}
   }
   title.textContent=`角色目录 · ${label}`;
