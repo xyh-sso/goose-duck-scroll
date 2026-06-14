@@ -8,18 +8,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap');
 
 :root {
-  --bg: #e8e0d5;
-  --bg-card: #f2ece2;
-  --red: #b71c2c;
-  --red-dark: #7f1320;
-  --red-bright: #d32f3f;
-  --white: #3a3035;
-  --gray: #6b6068;
-  --gray-light: #4a4048;
-  --serif: 'Playfair Display', 'Cormorant Garamond', 'Noto Serif SC', serif;
-  --serif-sc: 'Noto Serif SC', 'STSong', serif;
-  --sans: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
-}
+  --parchment: #ece3d0;
+  --parchment-dark: #d9cba8;
+  --paper: #f5efe0;
+  --paper-light: #faf6ec;
+  --wine: #3d0f1a;
+  --wine-deep: #20080e;
+  --wine-bright: #5a1a2a;
+  --gold: #b8943d;
+  --gold-light: #d4b85c;
+  --gold-pale: #e0d0a0;
+  --ink: #111111;
+  --ink-soft: #2a2a2a;
+  --ink-mid: #444;
+  --accent: #6b5b4a;
+  --shadow-brown: rgba(32, 8, 14, 0.4);
   --serif: 'Playfair Display', 'Cormorant Garamond', 'Noto Serif SC', serif;
   --serif-sc: 'Noto Serif SC', 'STSong', serif;
   --sans: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
@@ -34,7 +37,13 @@ html, body {
 }
 
 /* ═══════════ GLOBAL PAPER GRAIN OVERLAY ═══════════ */
-body::after { display:none; }
+body::after {
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:9999;
+  opacity:0.045; mix-blend-mode:multiply;
+  background:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:180px 180px;
+}
 
 #app { width:100%; height:100%; position:relative; overflow:hidden; }
 
@@ -51,34 +60,54 @@ body::after { display:none; }
 .page.before  { transform:translateY(-100%); z-index:5; }
 .page.after   { transform:translateY(100%);  z-index:5; }
 
-/* ═══════════ PAGE INNER — DARK NOIR ═══════════ */
+/* ═══════════ PAGE INNER — AGED PARCHMENT ═══════════ */
 .pg {
   position:relative; min-height:100%; padding:28px 18px 56px;
-  margin:0; border:none;
+  margin:8px; border:2px solid var(--gold-pale);
   background:
-    linear-gradient(180deg, #ebe3d6 0%, #e5dcc8 30%, #e0d5be 60%, #e5dcc8 100%),
-    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(160,140,110,0.03) 2px, rgba(160,140,110,0.03) 3px);
-  color:var(--white);
-  box-shadow:none; border-radius:0;
+    /* Base parchment */
+    linear-gradient(180deg, #f5efe0 0%, #ece3d0 30%, #e8dcbe 60%, #ece3d0 85%, #f2e9d5 100%),
+    /* Subtle horizontal grain lines */
+    repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(139,119,80,0.03) 3px, rgba(139,119,80,0.03) 4px),
+    /* Occasional darker streaks */
+    linear-gradient(175deg, transparent 40%, rgba(139,119,80,0.04) 40.5%, transparent 41%),
+    linear-gradient(5deg, transparent 70%, rgba(139,119,80,0.03) 70.5%, transparent 71%);
+  box-shadow:
+    inset 0 0 120px rgba(139,119,80,0.12),
+    0 4px 30px var(--shadow-brown),
+    0 1px 3px rgba(0,0,0,0.3);
+  border-radius: 1px;
 }
+/* Inner gold rule */
 .pg::after {
-  content:''; position:absolute; inset:0; pointer-events:none; z-index:1;
-  opacity:0.06; mix-blend-mode:multiply;
-  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  content:''; position:absolute; top:6px; left:6px; right:6px; bottom:6px;
+  border:1px solid rgba(184,148,61,0.3); pointer-events:none;
 }
-.pg::before { display:none; }
+/* Paper grain overlay */
+.pg::before {
+  content:''; position:absolute; inset:0; pointer-events:none; z-index:1;
+  opacity:0.07; mix-blend-mode:multiply;
+  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+}
 
-/* ═══════════ CORNERS — RED ACCENT ═══════════ */
+/* ═══════════ ORNATE CORNER DECORATIONS ═══════════ */
 .corner { position:absolute; width:24px; height:24px; z-index:2; }
-.corner.tl { top:10px; left:10px; border-top:1px solid var(--red); border-left:1px solid var(--red); }
-.corner.tr { top:10px; right:10px; border-top:1px solid var(--red); border-right:1px solid var(--red); }
-.corner.bl { bottom:10px; left:10px; border-bottom:1px solid var(--red); border-left:1px solid var(--red); }
-.corner.br { bottom:10px; right:10px; border-bottom:1px solid var(--red); border-right:1px solid var(--red); }
-.corner::after { content:'◆'; position:absolute; font-size:5px; color:var(--red); }
-.corner.tl::after { top:-2px; left:-2px; }
-.corner.tr::after { top:-2px; right:-2px; }
-.corner.bl::after { bottom:-2px; left:-2px; }
-.corner.br::after { bottom:-2px; right:-2px; }
+.corner.tl { top:10px; left:10px; border-top:2px solid var(--gold); border-left:2px solid var(--gold); }
+.corner.tr { top:10px; right:10px; border-top:2px solid var(--gold); border-right:2px solid var(--gold); }
+.corner.bl { bottom:10px; left:10px; border-bottom:2px solid var(--gold); border-left:2px solid var(--gold); }
+.corner.br { bottom:10px; right:10px; border-bottom:2px solid var(--gold); border-right:2px solid var(--gold); }
+/* Diamond dot at each corner */
+.corner::after { content:'◆'; position:absolute; font-size:6px; color:var(--gold); }
+.corner.tl::after { top:-3px; left:-3px; }
+.corner.tr::after { top:-3px; right:-3px; }
+.corner.bl::after { bottom:-3px; left:-3px; }
+.corner.br::after { bottom:-3px; right:-3px; }
+
+/* ═══════════ MAGPIE SILHOUETTE ═══════════ */
+.magpie-sil {
+  display:inline-block; opacity:0.12; font-size:2rem;
+  filter:drop-shadow(0 1px 2px rgba(0,0,0,0.3));
+}
 
 /* ═══════════ VIGNETTE EFFECT FOR ATMOSPHERE ═══════════ */
 .vignette {
@@ -132,103 +161,113 @@ body::after { display:none; }
   font-style:italic;
 }
 
-/* ═══════════ RED DIVIDER ═══════════ */
+/* ═══════════ GOLD ORNAMENTAL LINE ═══════════ */
 .gold-rule {
   display:flex; align-items:center; justify-content:center; gap:8px;
   margin:12px auto; width:100%; max-width:280px;
 }
 .gold-rule::before, .gold-rule::after {
   content:''; flex:1; height:1px;
-  background:linear-gradient(90deg, transparent, var(--red), transparent);
+  background:linear-gradient(90deg, transparent, var(--gold), transparent);
 }
-.gold-rule span { font-size:8px; color:var(--red); }
+.gold-rule span { font-size:8px; color:var(--gold); }
 .gold-rule.l { margin-left:0; justify-content:flex-start; }
 .gold-div {
   width:100%; height:1px; margin:16px 0;
-  background:linear-gradient(90deg, transparent, var(--red-dark), var(--red), var(--red-dark), transparent);
+  background:linear-gradient(90deg, transparent, var(--gold-pale), var(--gold), var(--gold-pale), transparent);
 }
 
-/* ═══════════ WAX SEAL — RED ═══════════ */
+/* ═══════════ WAX SEAL ═══════════ */
 .seal {
   width:50px; height:50px; border-radius:50%; margin:0 auto;
-  background:radial-gradient(circle at 38% 35%, #e8304a, #8b1530);
-  box-shadow:0 3px 12px rgba(0,0,0,0.5), 0 0 0 2px rgba(196,30,58,0.4);
+  background:radial-gradient(circle at 38% 35%, #c94040, #6e1111);
+  box-shadow:0 3px 12px rgba(0,0,0,0.4), inset 0 1px 2px rgba(255,255,255,0.15), 0 0 0 2px rgba(184,148,61,0.3);
   display:flex; align-items:center; justify-content:center;
-  font-size:18px; color:rgba(255,255,255,0.6);
+  font-size:18px; color:rgba(212,184,92,0.6);
   position:relative;
 }
 .seal::after { content:'♜'; }
 .seal.lg { width:70px; height:70px; font-size:24px; }
 
-/* ═══════════ CARDS — DARK + RED ACCENT ═══════════ */
+/* ═══════════ CARDS ═══════════ */
 .card {
-  background:var(--bg-card);
-  border:1px solid rgba(0,0,0,0.08);
-  border-radius:0; padding:16px; margin:10px 0; position:relative;
-  box-shadow:0 1px 6px rgba(0,0,0,0.06); transition:all 0.3s;
+  background:rgba(255,255,255,0.8);
+  border:1px solid rgba(184,148,61,0.4);
+  border-radius:1px; padding:16px; margin:10px 0; position:relative;
+  box-shadow:0 2px 12px rgba(32,8,14,0.1), inset 0 1px 0 rgba(255,255,255,0.5);
+  transition:all 0.3s;
 }
-.card::before { display:none; }
-.card:active { transform:translateY(2px); border-color:var(--red); }
+.card::before {
+  content:''; position:absolute; inset:0; pointer-events:none; opacity:0.03;
+  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+}
+.card:active { transform:translateY(2px); box-shadow:0 1px 4px rgba(32,8,14,0.15); }
 .card-wine {
-  background:var(--bg-card);
-  border-left:3px solid var(--red);
-  color:var(--white);
+  background:rgba(255,245,235,0.9); color:#000;
+  border-color:rgba(184,148,61,0.5);
+  box-shadow:0 2px 12px rgba(32,8,14,0.1), inset 0 1px 0 rgba(255,255,255,0.5);
+  border-left:4px solid var(--wine);
 }
-.card-wine .t-body { color:var(--gray-light); }
+.card-wine .t-body { color:#000; }
 .card-neut {
-  background:var(--bg-card);
-  color:var(--white);
-  border-left:3px solid var(--gray);
+  background:rgba(255,248,240,0.9); color:#000;
+  border-color:rgba(184,148,61,0.5);
+  box-shadow:0 2px 12px rgba(32,8,14,0.1), inset 0 1px 0 rgba(255,255,255,0.5);
+  border-left:4px solid var(--gold);
 }
-.card-neut .t-body { color:var(--gray-light); }
-.card-fold { display:none; }
-.card-left-red { border-left:3px solid var(--red); }
+.card-neut .t-body { color:#000; }
+.card-fold {
+  position:absolute; top:0; right:0; width:22px; height:22px;
+  background:linear-gradient(135deg, transparent 50%, rgba(139,119,80,0.1) 50%);
+}
+.card-left-red { border-left:3px solid #8b2a3a; }
 
 /* ═══════════ TAGS ═══════════ */
 .tag {
-  display:inline-block; padding:3px 14px; font-size:0.7rem;
-  font-family:var(--serif); letter-spacing:1px; border-radius:0;
-  font-weight:700;
+  display:inline-block; padding:2px 12px; font-size:0.68rem;
+  font-family:var(--serif); letter-spacing:1px; border-radius:1px;
+  border:1px solid var(--gold);
 }
-.tag-g { background:var(--white); color:var(--bg); }
-.tag-d { background:var(--red); color:var(--white); }
-.tag-n { background:var(--gray); color:var(--white); }
-.stars { color:var(--red); font-size:0.8rem; letter-spacing:3px; }
+.tag-g { background:var(--paper); color:var(--wine); }
+.tag-d { background:var(--wine); color:var(--paper); border-color:var(--gold-light); }
+.tag-n { background:var(--gold); color:#1a1a1a; }
+
+.stars { color:var(--gold); font-size:0.8rem; letter-spacing:3px; }
 
 /* ═══════════ BUTTONS ═══════════ */
 .btn {
-  display:inline-block; padding:10px 24px; border:1px solid var(--red);
+  display:inline-block; padding:10px 24px; border:1px solid var(--gold);
   font-family:var(--serif); font-size:0.85rem; cursor:pointer;
-  text-align:center; transition:all 0.25s; border-radius:0;
-  letter-spacing:1px; position:relative; color:var(--white); background:transparent;
+  text-align:center; transition:all 0.25s; border-radius:1px;
+  letter-spacing:1px; position:relative;
 }
-.btn:active { transform:translateY(2px); background:var(--red); color:var(--white); }
-.btn-cream { background:transparent; color:var(--white); }
-.btn-wine  { background:var(--red); color:var(--white); }
+.btn:active { transform:translateY(2px); border-color:var(--gold-light); }
+.btn-cream { background:var(--paper); color:var(--wine); }
+.btn-wine  { background:var(--wine); color:var(--paper); }
 .btn-sm { padding:6px 14px; font-size:0.72rem; }
 
 /* ═══════════ SPLIT LAYOUT ═══════════ */
 .split { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-.split-col { padding:16px; border:1px solid rgba(255,255,255,0.08); border-radius:0; }
-.split-col.l { background:rgba(255,255,255,0.03); }
-.split-col.r { background:rgba(255,255,255,0.03); }
+.split-col { padding:16px; border:1px solid rgba(184,148,61,0.3); border-radius:1px; }
+.split-col.l { background:rgba(255,255,255,0.5); }
+.split-col.r { background:rgba(61,15,26,0.04); }
 
 /* ═══════════ TIMELINE ═══════════ */
 .tl { position:relative; padding-left:32px; }
 .tl::before {
   content:''; position:absolute; left:12px; top:0; bottom:0; width:2px;
-  background:linear-gradient(180deg, var(--red-dark), var(--red), var(--red-dark));
+  background:linear-gradient(180deg, var(--gold-pale), var(--gold), var(--gold-pale));
 }
 .tl-node {
   position:relative; margin-bottom:18px; padding:12px 16px;
-  background:var(--bg-card); border:1px solid rgba(255,255,255,0.06);
-  border-radius:0; transition:all 0.3s;
+  background:rgba(255,255,255,0.6); border:1px solid rgba(184,148,61,0.25);
+  border-radius:1px; transition:all 0.3s;
 }
-.tl-node:active { border-color:var(--red); }
+.tl-node:active { background:rgba(184,148,61,0.08); }
 .tl-node::before {
   content:''; position:absolute; left:-24px; top:16px;
-  width:9px; height:9px; border:2px solid var(--red);
-  border-radius:50%; background:var(--bg);
+  width:9px; height:9px; border:2px solid var(--gold);
+  border-radius:50%; background:var(--paper);
 }
 
 /* ═══════════ SWIPER ═══════════ */
@@ -242,27 +281,28 @@ body::after { display:none; }
 
 /* ═══════════ CHARACTER AVATAR ═══════════ */
 .c-av {
-  width:110px; height:110px; border-radius:50%; border:3px solid var(--red);
+  width:110px; height:110px; border-radius:50%; border:3px solid var(--gold);
   display:flex; align-items:center; justify-content:center;
   font-size:3rem; margin:0 auto 10px;
-  box-shadow:0 4px 16px rgba(0,0,0,0.15);
-  background:transparent;
+  box-shadow:0 4px 20px rgba(32,8,14,0.2);
 }
-.c-av.goose { background:transparent; }
-.c-av.duck { background:transparent; }
-.c-av.neut { background:transparent; }
+.c-av.goose { background:linear-gradient(135deg, #faf6ec, #e8dcc8); }
+.c-av.duck { background:linear-gradient(135deg, #5a1a2a, #3d0f1a); }
+.c-av.neut { background:linear-gradient(135deg, #b8943d, #8b6914); }
 
 /* ═══════════ QUICK REF GRID ═══════════ */
 .qgrid { display:grid; grid-template-columns:repeat(auto-fill, minmax(100px,1fr)); gap:6px; }
 .qcard {
   padding:10px 4px; text-align:center; cursor:pointer;
-  border:1px solid rgba(255,255,255,0.06); border-radius:0;
-  transition:all 0.3s; background:var(--bg-card); color:var(--white);
+  border:1px solid rgba(184,148,61,0.35); border-radius:1px;
+  transition:all 0.3s;
 }
-.qcard:active { transform:scale(0.95); border-color:var(--red); }
-.qcard.goose { background:var(--bg-card); border-left:3px solid var(--red); }
-.qcard.duck { background:var(--bg-card); border-left:3px solid var(--red-dark); }
-.qcard.neut { background:var(--bg-card); border-left:3px solid var(--gray); }
+.qcard:active { transform:scale(0.95); border-color:var(--gold); }
+.qcard.goose { background:rgba(255,255,255,0.8); }
+.qcard.duck { background:rgba(255,240,240,0.9); border-left:3px solid var(--wine); }
+.qcard.neut {
+  background:rgba(255,248,235,0.9); border-left:3px solid var(--gold);
+}
 
 /* ═══════════ ANIMATIONS ═══════════ */
 @keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
@@ -280,27 +320,40 @@ body::after { display:none; }
 /* ═══════════ BOTTOM DECORATION ═══════════ */
 .bot-dec {
   width:100%; height:12px; margin-top:16px;
-  background:repeating-linear-gradient(90deg, transparent, transparent 4px, rgba(196,30,58,0.4) 4px, rgba(196,30,58,0.4) 5px);
+  background:repeating-linear-gradient(
+    90deg,
+    transparent, transparent 4px,
+    rgba(184,148,61,0.3) 4px, rgba(184,148,61,0.3) 5px
+  );
 }
 
 /* ═══════════ HIGHLIGHT ═══════════ */
-.hl { background:linear-gradient(180deg, transparent 55%, rgba(196,30,58,0.25) 55%); }
-.hl-r { background:linear-gradient(180deg, transparent 55%, rgba(200,40,40,0.2) 55%); }
+.hl { background:linear-gradient(180deg, transparent 55%, rgba(184,148,61,0.2) 55%); }
+.hl-r { background:linear-gradient(180deg, transparent 55%, rgba(200,40,40,0.15) 55%); }
 
 /* ═══════════ PAGE INDICATOR ═══════════ */
 .pg-ind {
   position:fixed; bottom:12px; right:12px; z-index:100;
-  font-family:var(--serif); font-size:0.68rem; color:var(--red);
-  background:rgba(0,0,0,0.7); padding:4px 12px; border-radius:12px;
-  border:0.5px solid rgba(196,30,58,0.4); pointer-events:none;
+  font-family:var(--serif); font-size:0.68rem; color:var(--gold-light);
+  background:rgba(10,4,6,0.7); padding:4px 12px; border-radius:12px;
+  border:0.5px solid rgba(184,148,61,0.4); pointer-events:none;
 }
 
 /* ═══════════ SCROLL HINT ═══════════ */
 .scroll-hint {
   text-align:center; padding:6px;
   animation:pulse 2.5s infinite;
-  font-size:0.72rem; color:var(--red);
+  font-size:0.72rem; color:var(--gold);
   font-style:italic;
+}
+
+/* ═══════════ BOOKPLATE STYLE SECTION HEADER ═══════════ */
+.bookplate {
+  text-align:center; padding:10px 0; position:relative;
+}
+.bookplate::before, .bookplate::after {
+  content:'❦'; font-size:14px; color:var(--gold); display:block;
+  margin:4px 0; opacity:0.6;
 }
 </style>
 </head>
@@ -312,30 +365,30 @@ body::after { display:none; }
 // ═══════════════════ CHARACTER DATA ═══════════════════
 const CHARS = {
 goose: [
-  {id:'sheriff',name:'警长',emoji:'⭐',icon:'icons/jingzhanger.png',sticker:'icons/emoji/goose_set_0.png',stars:'★★☆',role:'执法近战好人',skill:'可主动击杀一名坏人，误杀好人直接"双倒"出局',play:'抱团确认身份后出刀，切勿盲目开局出刀',tip:'最强大的执法位——慎用技能，误杀代价惨重'},
-  {id:'justice',name:'正义使者',emoji:'⚔️',icon:'icons/zhengyishizhe.png',sticker:'icons/emoji/goose_set_1.png',stars:'★★☆',role:'一次性执法',skill:'全局一刀击杀，无误杀惩罚，仅单次使用机会',play:'留存技能至残局使用，关键时刻一击制胜',tip:'单次技能需精准判断，建议保留至最后'},
-  {id:'bird',name:'观鸟者',emoji:'🔭',icon:'icons/guanniaozhe.png',sticker:'icons/emoji/goose_set_2.png',stars:'★☆☆',role:'视野观察员',skill:'可扩大指定方向自身视野，远距离偷看暗处玩家行动',play:'利用视野优势暗中观察可疑玩家行踪',tip:'信息位角色——为团队提供关键视野情报'},
-  {id:'psychic',name:'通灵者',emoji:'🔮',icon:'icons/tonglingzhe.png',sticker:'icons/emoji/goose_set_3.png',stars:'★★★',role:'亡灵聆听者',skill:'可听见亡灵玩家的声音，获取死后关键线索',play:'利用亡灵信息精准锁定坏人身份，鸭阵营的克星',tip:'最强信息位——听亡灵声音辨坏人，留至后期价值更大'},
-  {id:'canada',name:'加拿大鹅',emoji:'🛡️',icon:'icons/jianadaer.png',sticker:'icons/emoji/goose_set_4.png',stars:'★★☆',role:'被动警报器',skill:'遇害自动触发全局报警，防止鸭子悄无声息刀人',play:'鸭阵营的噩梦——刀你等于自曝身份',tip:'核心保护位——让鸭子不敢轻易动手'},
-  {id:'engineer',name:'工程师',emoji:'🔧',icon:'icons/gongchengshi.png',sticker:'icons/emoji/goose_set_5.png',stars:'★★★',role:'反制专家',skill:'可看见存活鸭子的破坏痕迹（地图红圈），可钻管道规避猎杀',play:'追踪破坏痕迹定位鸭子，钻管道保命生存',tip:'克制炸弹鸭——可解除全域爆破'},
-  {id:'gravy',name:'肉汁鹅',emoji:'🪙',icon:'icons/rouzhier.png',sticker:'icons/emoji/goose_set_6.png',stars:'★☆☆',role:'金币收集者',skill:'做任务获得金币，无法被混刀，在人群中会弹刀',play:'专注做任务攒金币，待在人群中最安全',tip:'切勿盲目跟随陌生人——防鸭子贴身联动击杀'},
-  {id:'white',name:'大白鹅',emoji:'🦢',icon:'icons/dabaier.png',sticker:'icons/emoji/goose_set_7.png',stars:'★☆☆',role:'基础好人',skill:'一直特别白的鹅——无特殊主动技能',play:'最纯粹的好人角色，靠发言与推理存活',tip:'基础角色——考验纯粹推理能力与口才'}
+  {id:'sheriff',name:'警长',emoji:'⭐',icon:'icons/jingzhanger.png',stars:'★★☆',role:'执法近战好人',skill:'可主动击杀一名坏人，误杀好人直接"双倒"出局',play:'抱团确认身份后出刀，切勿盲目开局出刀',tip:'最强大的执法位——慎用技能，误杀代价惨重'},
+  {id:'justice',name:'正义使者',emoji:'⚔️',icon:'icons/zhengyishizhe.png',stars:'★★☆',role:'一次性执法',skill:'全局一刀击杀，无误杀惩罚，仅单次使用机会',play:'留存技能至残局使用，关键时刻一击制胜',tip:'单次技能需精准判断，建议保留至最后'},
+  {id:'bird',name:'观鸟者',emoji:'🔭',icon:'icons/guanniaozhe.png',stars:'★☆☆',role:'视野观察员',skill:'可扩大指定方向自身视野，远距离偷看暗处玩家行动',play:'利用视野优势暗中观察可疑玩家行踪',tip:'信息位角色——为团队提供关键视野情报'},
+  {id:'psychic',name:'通灵者',emoji:'🔮',icon:'icons/tonglingzhe.png',stars:'★★★',role:'亡灵聆听者',skill:'可听见亡灵玩家的声音，获取死后关键线索',play:'利用亡灵信息精准锁定坏人身份，鸭阵营的克星',tip:'最强信息位——听亡灵声音辨坏人，留至后期价值更大'},
+  {id:'canada',name:'加拿大鹅',emoji:'🛡️',icon:'icons/jianadaer.png',stars:'★★☆',role:'被动警报器',skill:'遇害自动触发全局报警，防止鸭子悄无声息刀人',play:'鸭阵营的噩梦——刀你等于自曝身份',tip:'核心保护位——让鸭子不敢轻易动手'},
+  {id:'engineer',name:'工程师',emoji:'🔧',icon:'icons/gongchengshi.png',stars:'★★★',role:'反制专家',skill:'可看见存活鸭子的破坏痕迹（地图红圈），可钻管道规避猎杀',play:'追踪破坏痕迹定位鸭子，钻管道保命生存',tip:'克制炸弹鸭——可解除全域爆破'},
+  {id:'gravy',name:'肉汁鹅',emoji:'🪙',icon:'icons/rouzhier.png',stars:'★☆☆',role:'金币收集者',skill:'做任务获得金币，无法被混刀，在人群中会弹刀',play:'专注做任务攒金币，待在人群中最安全',tip:'切勿盲目跟随陌生人——防鸭子贴身联动击杀'},
+  {id:'white',name:'大白鹅',emoji:'🦢',icon:'icons/dabaier.png',stars:'★☆☆',role:'基础好人',skill:'一直特别白的鹅——无特殊主动技能',play:'最纯粹的好人角色，靠发言与推理存活',tip:'基础角色——考验纯粹推理能力与口才'}
 ],
 duck: [
-  {id:'bomber',name:'炸弹鸭',emoji:'💣',icon:'icons/zhadangwang.png',sticker:'icons/emoji/duck_neutral_set_0.png',stars:'★★★',role:'爆破专家',skill:'贴身绑定延时炸弹，传导击杀连锁淘汰多名好人',play:'搭配关门分割人群，炸弹连锁最大化收益',tip:'搭配间谍鸭关门使用效果更佳'},
-  {id:'spy',name:'间谍鸭',emoji:'🕵️',icon:'icons/jiandie.png',sticker:'icons/emoji/duck_neutral_set_1.png',stars:'★★☆',role:'信息窃取者',skill:'在会议上投票后，可获得被投票者的身份信息',play:'会议中收集鹅阵营身份信息，传递给鸭子队友',tip:'关键信息位——为鸭队提供精准猎杀目标'},
-  {id:'prokill',name:'专业杀手',emoji:'🗡️',icon:'icons/zhuanyeshashou.png',sticker:'icons/emoji/duck_neutral_set_2.png',stars:'★★★',role:'隐匿刺客',skill:'刀人后不留下倒地尸体，彻底隐匿行凶痕迹',play:'悄无声息猎杀，不留尸体无法触发报警',tip:'克制加拿大鹅——尸体不会自动报警'},
-  {id:'ninja',name:'忍者鸭',emoji:'🥷',icon:'icons/rengzhe.png',sticker:'icons/emoji/duck_neutral_set_3.png',stars:'★★☆',role:'暗影猎手',skill:'拥有特殊隐匿身法，可悄无声息接近目标',play:'利用地形和视野盲区，出其不意击杀落单好人',tip:'高机动刺客——善用视野盲区突袭'},
-  {id:'morph',name:'变形鸭',emoji:'🎭',icon:'icons/bianxingzhe.png',sticker:'icons/emoji/duck_neutral_set_4.png',stars:'★★★',role:'伪装大师',skill:'复刻在场任意玩家的外形，伪造行踪嫁祸他人',play:'变身模仿弱势好人，制造混乱嫁祸无辜者',tip:'变形状态无法开启破坏技能——注意切换时机'},
-  {id:'cannibal',name:'食鸟鸭',emoji:'🦴',icon:'icons/shiniaoya.png',sticker:'icons/emoji/duck_neutral_set_5.png',stars:'★★☆',role:'尸体清理者',skill:'可吞食倒地尸体，销毁行凶线索（自己刀的人需等3秒后吞食）',play:'刀人后等待三秒吞尸，销毁关键报警线索',tip:'可抵消加拿大鹅的尸爆报警——战略克制位'},
-  {id:'assassin',name:'刺客',emoji:'🎯',icon:'icons/chike.png',sticker:'icons/emoji/duck_neutral_set_6.png',stars:'★★☆',role:'会议狙击手',skill:'会议发言阶段赌身份击杀一名在场玩家，赌错自毙，单局最多两次',play:'会议中精准猜测身份，一击必杀关键鹅角色',tip:'高风险高回报——赌错自毙，需极度谨慎'}
+  {id:'bomber',name:'炸弹鸭',emoji:'💣',icon:'icons/zhadangwang.png',stars:'★★★',role:'爆破专家',skill:'贴身绑定延时炸弹，传导击杀连锁淘汰多名好人',play:'搭配关门分割人群，炸弹连锁最大化收益',tip:'搭配间谍鸭关门使用效果更佳'},
+  {id:'spy',name:'间谍鸭',emoji:'🕵️',icon:'icons/jiandie.png',stars:'★★☆',role:'信息窃取者',skill:'在会议上投票后，可获得被投票者的身份信息',play:'会议中收集鹅阵营身份信息，传递给鸭子队友',tip:'关键信息位——为鸭队提供精准猎杀目标'},
+  {id:'prokill',name:'专业杀手',emoji:'🗡️',icon:'icons/zhuanyeshashou.png',stars:'★★★',role:'隐匿刺客',skill:'刀人后不留下倒地尸体，彻底隐匿行凶痕迹',play:'悄无声息猎杀，不留尸体无法触发报警',tip:'克制加拿大鹅——尸体不会自动报警'},
+  {id:'ninja',name:'忍者鸭',emoji:'🥷',icon:'icons/rengzhe.png',stars:'★★☆',role:'暗影猎手',skill:'拥有特殊隐匿身法，可悄无声息接近目标',play:'利用地形和视野盲区，出其不意击杀落单好人',tip:'高机动刺客——善用视野盲区突袭'},
+  {id:'morph',name:'变形鸭',emoji:'🎭',icon:'icons/bianxingzhe.png',stars:'★★★',role:'伪装大师',skill:'复刻在场任意玩家的外形，伪造行踪嫁祸他人',play:'变身模仿弱势好人，制造混乱嫁祸无辜者',tip:'变形状态无法开启破坏技能——注意切换时机'},
+  {id:'cannibal',name:'食鸟鸭',emoji:'🦴',icon:'icons/shiniaoya.png',stars:'★★☆',role:'尸体清理者',skill:'可吞食倒地尸体，销毁行凶线索（自己刀的人需等3秒后吞食）',play:'刀人后等待三秒吞尸，销毁关键报警线索',tip:'可抵消加拿大鹅的尸爆报警——战略克制位'},
+  {id:'assassin',name:'刺客',emoji:'🎯',icon:'icons/chike.png',stars:'★★☆',role:'会议狙击手',skill:'会议发言阶段赌身份击杀一名在场玩家，赌错自毙，单局最多两次',play:'会议中精准猜测身份，一击必杀关键鹅角色',tip:'高风险高回报——赌错自毙，需极度谨慎'}
 ],
 neutral: [
-  {id:'dodo',name:'呆呆鸟',emoji:'🐦',icon:'icons/daidainiao.png',sticker:'icons/emoji/duck_neutral_set_7.png',stars:'★☆☆',role:'求死独行者',skill:'在会议中被投票放逐即可单独取胜',play:'主动做出可疑行为博取怀疑，诱使他人投票放逐你',tip:'演技派角色——越可疑越容易获胜，但别太假'},
-  {id:'pelican',name:'鹈鹕',emoji:'🦤',icon:'icons/tihu.png',sticker:'icons/emoji/duck_neutral_set_7.png',stars:'★★★',role:'吞噬霸主',skill:'逐个吞噬全部存活玩家，独享对局最终胜利',play:'逐个吞噬落单玩家，苟活至最后独享胜利',tip:'终极独行角色——吞噬全场称霸对局'},
-  {id:'pigeon',name:'鸽子',emoji:'🕊️',icon:'icons/gezi.png',sticker:'icons/emoji/duck_neutral_set_7.png',stars:'★★★★',role:'全域感染者',skill:'全域感染全部存活对局者，感染满额即获胜',play:'低调缓慢感染他人，切忌高调引起集火',tip:'感染需极大的耐心——高调会被优先放逐'},
-  {id:'vulture',name:'秃鹫',emoji:'🦅',icon:'icons/tujiu.png',sticker:'icons/emoji/duck_neutral_set_7.png',stars:'★★★',role:'尸体清道夫',skill:'捡拾全场倒地尸体，啃食累积达标即可取胜',play:'游走战场捡拾尸体，不参与阵营正面对抗',tip:'耐心等待尸体出现——捡拾达标即胜利'},
-  {id:'falcon',name:'猎鹰',emoji:'🦅',icon:'icons/lieying.png',sticker:'icons/emoji/duck_neutral_set_7.png',stars:'★★★☆',role:'终极猎手',skill:'淘汰鹅鸭两大阵营全部人员，独行称霸对局',play:'逐个淘汰鹅鸭双方玩家，独自称霸全场',tip:'最强中立猎手——正面对抗两大阵营'}
+  {id:'dodo',name:'呆呆鸟',emoji:'🐦',icon:'icons/daidainiao.png',stars:'★☆☆',role:'求死独行者',skill:'在会议中被投票放逐即可单独取胜',play:'主动做出可疑行为博取怀疑，诱使他人投票放逐你',tip:'演技派角色——越可疑越容易获胜，但别太假'},
+  {id:'pelican',name:'鹈鹕',emoji:'🦤',icon:'icons/tihu.png',stars:'★★★',role:'吞噬霸主',skill:'逐个吞噬全部存活玩家，独享对局最终胜利',play:'逐个吞噬落单玩家，苟活至最后独享胜利',tip:'终极独行角色——吞噬全场称霸对局'},
+  {id:'pigeon',name:'鸽子',emoji:'🕊️',icon:'icons/gezi.png',stars:'★★★★',role:'全域感染者',skill:'全域感染全部存活对局者，感染满额即获胜',play:'低调缓慢感染他人，切忌高调引起集火',tip:'感染需极大的耐心——高调会被优先放逐'},
+  {id:'vulture',name:'秃鹫',emoji:'🦅',icon:'icons/tujiu.png',stars:'★★★',role:'尸体清道夫',skill:'捡拾全场倒地尸体，啃食累积达标即可取胜',play:'游走战场捡拾尸体，不参与阵营正面对抗',tip:'耐心等待尸体出现——捡拾达标即胜利'},
+  {id:'falcon',name:'猎鹰',emoji:'🦅',icon:'icons/lieying.png',stars:'★★★☆',role:'终极猎手',skill:'淘汰鹅鸭两大阵营全部人员，独行称霸对局',play:'逐个淘汰鹅鸭双方玩家，独自称霸全场',tip:'最强中立猎手——正面对抗两大阵营'}
 ]};
 
 // ═══════════════════ HELPERS ═══════════════════
@@ -360,11 +413,10 @@ function charCard(c,idx,total){
   const tCol='color:#000;';
   const bCol='color:#111;';
   const avatarHtml = c.icon
-    ? `<img src="${c.icon}" alt="${c.name}" style="width:110px;height:110px;border-radius:50%;border:3px solid var(--red);object-fit:cover;box-shadow:0 4px 16px rgba(0,0,0,0.15);background:transparent;" onerror="this.parentElement.innerHTML='<div class=\\'c-av ${avCls}\\'>${c.emoji}</div>'">`
+    ? `<img src="${c.icon}" alt="${c.name}" style="width:110px;height:110px;border-radius:50%;border:3px solid var(--gold);object-fit:cover;box-shadow:0 4px 20px rgba(32,8,14,0.2);" onerror="this.parentElement.innerHTML='<div class=\\'c-av ${avCls}\\'>${c.emoji}</div>'">`
     : `<div class="c-av ${avCls}">${c.emoji}</div>`;
-  const stickerHtml = c.sticker ? `<img src="${c.sticker}" style="position:absolute;top:6px;right:8px;width:40px;height:40px;z-index:5;filter:drop-shadow(0 2px 3px rgba(0,0,0,0.2));" onerror="this.style.display='none'">` : '';
   return `<div class="swiper-card"><div class="card ${cardCls}" style="min-height:380px;display:flex;flex-direction:column;align-items:center;text-align:center;padding:20px 16px;">
-    ${stickerHtml}
+    <div class="card-fold"></div>
     ${avatarHtml}
     <h3 class="t-md" style="${tCol}margin:8px 0 2px;">${c.name}</h3>
     <span class="tag ${tagCls}">${c.faction}</span>
