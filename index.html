@@ -378,7 +378,7 @@ duck: [
   {id:'bomber',name:'炸弹鸭',emoji:'💣',icon:'icons/zhadangwang.png',stars:'★★★',role:'爆破专家',skill:'贴身绑定延时炸弹，传导击杀连锁淘汰多名好人',play:'搭配关门分割人群，炸弹连锁最大化收益',tip:'搭配间谍鸭关门使用效果更佳'},
   {id:'spy',name:'间谍鸭',emoji:'🕵️',icon:'icons/jiandie.png',stars:'★★☆',role:'信息窃取者',skill:'在会议上投票后，可获得被投票者的身份信息',play:'会议中收集鹅阵营身份信息，传递给鸭子队友',tip:'关键信息位——为鸭队提供精准猎杀目标'},
   {id:'prokill',name:'专业杀手',emoji:'🗡️',icon:'icons/zhuanyeshashou.png',stars:'★★★',role:'隐匿刺客',skill:'刀人后不留下倒地尸体，彻底隐匿行凶痕迹',play:'悄无声息猎杀，不留尸体无法触发报警',tip:'克制加拿大鹅——尸体不会自动报警'},
-  {id:'ninja',name:'忍者鸭',emoji:'🥷',icon:'icons/rengzhe.png',stars:'★★☆',role:'暗影猎手',skill:'拥有特殊隐匿身法，可悄无声息接近目标',play:'利用地形和视野盲区，出其不意击杀落单好人',tip:'高机动刺客——善用视野盲区突袭'},
+  {id:'ninja',name:'忍者鸭',emoji:'🥷',icon:'icons/rengzhe.png',stars:'★★☆',role:'暗影猎手',skill:'① 双刀刺杀：单次出刀可同时击杀范围内两名玩家，但基础冷却为普通刀的3倍；身处浓雾区域冷却大幅缩减  ② 雾域潜行：自由穿梭浓雾，持续加速技能冷却回转',play:'利用浓雾区域频繁刷新技能，等待时机双杀多人',tip:'雾中死神——在浓雾区域战力倍增，冷却大幅缩减'},
   {id:'morph',name:'变形鸭',emoji:'🎭',icon:'icons/bianxingzhe.png',stars:'★★★',role:'伪装大师',skill:'复刻在场任意玩家的外形，伪造行踪嫁祸他人',play:'变身模仿弱势好人，制造混乱嫁祸无辜者',tip:'变形状态无法开启破坏技能——注意切换时机'},
   {id:'cannibal',name:'食鸟鸭',emoji:'🦴',icon:'icons/shiniaoya.png',stars:'★★☆',role:'尸体清理者',skill:'可吞食倒地尸体，销毁行凶线索（自己刀的人需等3秒后吞食）',play:'刀人后等待三秒吞尸，销毁关键报警线索',tip:'可抵消加拿大鹅的尸爆报警——战略克制位'},
   {id:'assassin',name:'刺客',emoji:'🎯',icon:'icons/chike.png',stars:'★★☆',role:'会议狙击手',skill:'会议发言阶段赌身份击杀一名在场玩家，赌错自毙，单局最多两次',play:'会议中精准猜测身份，一击必杀关键鹅角色',tip:'高风险高回报——赌错自毙，需极度谨慎'}
@@ -612,7 +612,7 @@ function P6(){return page(6,'',`
 <p class="t-sm a-fade a-d2" style="color:var(--wine);text-align:center;">细节补充 · 死亡倒地 & 任务机制</p>
 ${rule()}
 ${card('','<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><span style="font-size:1.5rem;">📋</span><h3 style="font-family:var(--serif);color:var(--wine);">任务机制</h3></div><p class="t-body" style="font-size:0.85rem;"><b>任务分级：</b>公共全局任务、个人专属任务</p><p class="t-body" style="font-size:0.85rem;">公共任务进度直接决定鹅阵营胜负，鸭子可定向破坏核心任务延缓好人取胜节奏。</p>')}
-${card('card-wine','<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><span style="font-size:1.5rem;">💀</span><h3 style="font-family:var(--serif);color:#000;">死亡倒地机制</h3></div><p class="t-body" style="font-size:0.85rem;"><b>击杀规则：</b>鸭子可近身击倒存活鹅玩家</p><p class="t-body" style="font-size:0.85rem;">倒地玩家仅可报警发言，无法移动、做任务；尸体静置超时未报警自动隐匿消失，销毁遇害线索。</p>')}
+${card('','<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><span style="font-size:1.5rem;">💀</span><h3 style="font-family:var(--serif);color:var(--wine);">死亡倒地机制</h3></div><p class="t-body" style="font-size:0.85rem;"><b>击杀规则：</b>鸭子可近身击倒存活鹅玩家</p><p class="t-body" style="font-size:0.85rem;"><b>倒地状态：</b>倒地玩家仅可报警发言，无法移动、做任务</p><p class="t-body" style="font-size:0.85rem;"><b>尸体时效：</b>尸体静置超时未报警自动隐匿消失，销毁遇害线索</p>')}
 `);}
 
 function P7(){return page(7,'',`
@@ -764,7 +764,7 @@ function P20(){return `<div class="page" id="p20" data-pg="20" style="background
 </div>`;}
 
 // ═══════════════════ APP LOGIC ═══════════════════
-let cur=1, curFac='goose', tY=0, tX=0, total=20, navLock=false;
+let cur=1, curFac='goose', tY=0, tX=0, total=20, navLock=false, lastNavTime=0;
 
 function init(){
   let h='';
@@ -863,8 +863,9 @@ function updateP8(faction){
 }
 
 function navigateTo(pg,faction){
-  if(navLock||pg<1||pg>total||pg===cur)return;
-  navLock=true;
+  const now=Date.now();
+  if(navLock||pg<1||pg>total||pg===cur||now-lastNavTime<900)return;
+  navLock=true;lastNavTime=now;
   const oldPg=document.getElementById(`p${cur}`),newPg=document.getElementById(`p${pg}`);
   if(!oldPg||!newPg){navLock=false;return;}
   const goingForward=pg>cur;
