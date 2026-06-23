@@ -356,6 +356,7 @@ body::after {
   margin:4px 0; opacity:0.6;
 }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 </head>
 <body>
 <div id="app"></div>
@@ -1052,21 +1053,84 @@ ${rule()}
 <p class="t-hint a-fade a-d4" style="margin-top:12px;">词云大小代表玩家喜爱程度</p>
 `);}
 
+function P23(){return page(23,'',`
+<h2 class="t-lg a-fade a-d1">📊 鹅鸭杀手游 DAU 日活数据</h2>
+<p class="t-sm a-fade a-d2" style="color:var(--wine);text-align:center;">2026.1–2026.6 国服正版手游 · 财报&行业测算口径</p>
+${rule()}
+
+<!-- 柱状图：月度DAU -->
+<div class="card" style="margin:16px 0;padding:20px 12px;">
+  <h3 style="font-family:var(--serif);color:var(--wine);text-align:center;margin-bottom:8px;">📊 月度DAU柱状图（工作日 vs 周末）</h3>
+  <p style="font-size:0.7rem;color:var(--accent);text-align:center;margin-bottom:4px;">单位：万人</p>
+  <div style="position:relative;width:100%;height:300px;">
+    <canvas id="dauBarChart"></canvas>
+  </div>
+</div>
+
+<!-- 折线图：DAU趋势 -->
+<div class="card" style="margin:16px 0;padding:20px 12px;">
+  <h3 style="font-family:var(--serif);color:var(--wine);text-align:center;margin-bottom:8px;">📈 DAU趋势折线图</h3>
+  <p style="font-size:0.7rem;color:var(--accent);text-align:center;margin-bottom:4px;">单位：万人</p>
+  <div style="position:relative;width:100%;height:280px;">
+    <canvas id="dauLineChart"></canvas>
+  </div>
+</div>
+
+<!-- 关键运营指标卡片 -->
+<div class="card card-wine" style="margin:16px 0;padding:16px;">
+  <h3 style="font-family:var(--serif);color:#000;text-align:center;margin-bottom:10px;">📋 关键运营指标</h3>
+  <div class="split" style="gap:8px;">
+    <div class="split-col l" style="padding:12px;">
+      <p class="t-body" style="font-size:0.8rem;color:#000;"><b>📦 累计注册用户</b><br>3000万+（2026年3月财报披露）</p>
+      <p class="t-body" style="font-size:0.8rem;color:#000;margin-top:8px;"><b>📅 7日用户留存</b><br>稳定维持 48%–50%</p>
+    </div>
+    <div class="split-col r" style="padding:12px;">
+      <p class="t-body" style="font-size:0.8rem;color:#000;"><b>🚀 公测首日PCU</b><br>实时最高在线突破 70万</p>
+      <p class="t-body" style="font-size:0.8rem;color:#000;margin-top:8px;"><b>📈 热度波动规律</b><br>新版本/主播/节假日 → 日活临时上浮约35%</p>
+    </div>
+  </div>
+  <p style="font-size:0.68rem;color:rgba(0,0,0,0.5);text-align:center;margin-top:10px;">统计范围：安卓+iOS国服正版手游，不含Steam国际端游</p>
+</div>
+
+<!-- PCU对照简表 -->
+<div class="card card-neut" style="margin:16px 0;padding:16px;">
+  <h3 style="font-family:var(--serif);color:var(--wine);text-align:center;margin-bottom:8px;">⚡ 峰值在线PCU实时在线人数</h3>
+  <div style="overflow-x:auto;">
+    <table style="width:100%;border-collapse:collapse;font-size:0.75rem;font-family:var(--serif);">
+      <thead><tr style="border-bottom:2px solid var(--gold);">
+        <th style="padding:8px;text-align:left;">阶段</th>
+        <th style="padding:8px;text-align:right;">PCU峰值</th>
+        <th style="padding:8px;text-align:right;">备注</th>
+      </tr></thead>
+      <tbody>
+        <tr style="border-bottom:1px solid var(--gold-pale);"><td style="padding:8px;">公测首日 1.7</td><td style="padding:8px;text-align:right;font-weight:700;">70万</td><td style="padding:8px;text-align:right;font-size:0.68rem;color:var(--accent);">服务器爆满限流</td></tr>
+        <tr style="border-bottom:1px solid var(--gold-pale);"><td style="padding:8px;">公测首月 S1</td><td style="padding:8px;text-align:right;font-weight:700;">55-65万</td><td style="padding:8px;text-align:right;font-size:0.68rem;color:var(--accent);">晚高峰时段</td></tr>
+        <tr style="border-bottom:1px solid var(--gold-pale);"><td style="padding:8px;">春节赛季 2月</td><td style="padding:8px;text-align:right;font-weight:700;">45-50万</td><td style="padding:8px;text-align:right;font-size:0.68rem;color:var(--accent);">节日活动拉升</td></tr>
+        <tr style="border-bottom:1px solid var(--gold-pale);"><td style="padding:8px;">甄嬛联动 4月</td><td style="padding:8px;text-align:right;font-weight:700;">40-48万</td><td style="padding:8px;text-align:right;font-size:0.68rem;color:var(--accent);">IP联动周末冲高</td></tr>
+        <tr><td style="padding:8px;">当前常态 6月</td><td style="padding:8px;text-align:right;font-weight:700;">28-35万</td><td style="padding:8px;text-align:right;font-size:0.68rem;color:var(--accent);">圈层固化休闲玩家</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<p class="t-hint" style="margin-top:8px;">数据来源：2026年3月财报披露 & 行业第三方测算</p>
+`);}
+
 // ═══════════════════ APP LOGIC ═══════════════════
-let cur=1, curFac='goose', tY=0, tX=0, total=22, navLock=false, lastNavTime=0;
+let cur=1, curFac='goose', tY=0, tX=0, total=23, navLock=false, lastNavTime=0;
 
 function init(){
   let h='';
   h+=P1();h+=P2();h+=P3();h+=P4();h+=P5();h+=P6();h+=P7();h+=P8();
   for(let i=9;i<=13;i++)h+=PChar(i);
-  h+=P14();h+=P15();h+=P16();h+=P17();h+=P18();h+=P19();h+=P21();h+=P22();h+=P20();
+  h+=P14();h+=P15();h+=P16();h+=P17();h+=P18();h+=P19();h+=P21();h+=P22();h+=P23();h+=P20();
   document.getElementById('app').innerHTML=h;
 
   document.querySelectorAll('.page').forEach((p,i)=>{
     p.className=i===0?'page active':'page after';
   });
 
-  populateChars();populateQuickRef();updateP8('goose');updateIndicator();initGame();
+  populateChars();populateQuickRef();updateP8('goose');updateIndicator();initGame();initCharts();
 
   requestAnimationFrame(()=>{
     document.querySelectorAll('#p1 .a-fade').forEach(el=>el.style.opacity='');
@@ -1254,9 +1318,161 @@ document.body.setAttribute('tabindex','0');
 document.body.focus();
 document.body.addEventListener('click',function(){this.focus();});
 
+// ═══════════════════ CHARTS INITIALIZATION ═══════════════════
+function initCharts(){
+  const barCtx = document.getElementById('dauBarChart');
+  const lineCtx = document.getElementById('dauLineChart');
+  if(!barCtx || !lineCtx) return;
+
+  const months = ['1月 公测', '2月 春节', '3月 平稳', '4月 联动', '5月 淡季', '6月 当前'];
+  const weekday = [280, 245, 195, 175, 128, 135];
+  const weekend = [360, 310, 260, 280, 190, 203];
+
+  // Load character icons for chart decoration
+  const gooseImg = new Image(); gooseImg.src = 'icons/emoji/goose_set_0.png';
+  const duckImg = new Image(); duckImg.src = 'icons/emoji/duck_neutral_set_0.png';
+
+  // Shared font config
+  const fontFamily = "'Playfair Display','Noto Serif SC',serif";
+
+  // ── Bar Chart: Monthly DAU ──
+  new Chart(barCtx, {
+    type: 'bar',
+    data: {
+      labels: months,
+      datasets: [
+        {
+          label: '工作日常规日活',
+          data: weekday,
+          backgroundColor: 'rgba(61, 15, 26, 0.75)',
+          borderColor: '#3d0f1a',
+          borderWidth: 1.5,
+          borderRadius: 4,
+          order: 2
+        },
+        {
+          label: '周末高峰日活',
+          data: weekend,
+          backgroundColor: 'rgba(184, 148, 61, 0.7)',
+          borderColor: '#b8943d',
+          borderWidth: 1.5,
+          borderRadius: 4,
+          order: 2
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          labels: { font: { family: fontFamily, size: 11 }, color: '#2a2a2a', padding: 16, usePointStyle: true }
+        },
+        tooltip: {
+          titleFont: { family: fontFamily },
+          bodyFont: { family: fontFamily },
+          callbacks: { label: ctx => ctx.dataset.label + ': ' + ctx.raw + '万' }
+        }
+      },
+      scales: {
+        x: { ticks: { font: { family: fontFamily, size: 10 }, color: '#444' }, grid: { color: 'rgba(184,148,61,0.12)' } },
+        y: { ticks: { font: { family: fontFamily, size: 10 }, color: '#444', callback: v => v + '万' }, grid: { color: 'rgba(184,148,61,0.12)' }, beginAtZero: false, min: 50, max: 400 }
+      }
+    },
+    plugins: [{
+      id: 'barIcons',
+      afterDraw(chart) {
+        const { ctx, scales } = chart;
+        const meta0 = chart.getDatasetMeta(0);
+        const meta1 = chart.getDatasetMeta(1);
+        const allBars = [...meta0.data, ...meta1.data];
+        const imgs = [duckImg, gooseImg];  // duck on weekday, goose on weekend
+        if(!duckImg.complete || !gooseImg.complete) return;
+        allBars.forEach((bar, i) => {
+          const img = i < 6 ? imgs[0] : imgs[1];
+          ctx.drawImage(img, bar.x - 14, bar.y - 32, 28, 28);
+        });
+      }
+    }]
+  });
+
+  // ── Line Chart: DAU Trend ──
+  // Custom plugin: draw goose/duck icons at data points
+  const pointIcons = {
+    id: 'pointIcons',
+    afterDatasetsDraw(chart) {
+      const { ctx } = chart;
+      if(!gooseImg.complete || !duckImg.complete) return;
+      chart.data.datasets.forEach((ds, dsIdx) => {
+        const meta = chart.getDatasetMeta(dsIdx);
+        const img = dsIdx === 0 ? duckImg : gooseImg;
+        meta.data.forEach((pt, i) => {
+          ctx.drawImage(img, pt.x - 16, pt.y - 32, 32, 32);
+        });
+      });
+    }
+  };
+
+  new Chart(lineCtx, {
+    type: 'line',
+    data: {
+      labels: months,
+      datasets: [
+        {
+          label: '工作日 DAU',
+          data: weekday,
+          borderColor: '#3d0f1a',
+          backgroundColor: 'rgba(61, 15, 26, 0.1)',
+          borderWidth: 2.5,
+          pointBackgroundColor: '#3d0f1a',
+          pointBorderColor: '#ece3d0',
+          pointBorderWidth: 2,
+          pointRadius: 6,
+          pointHoverRadius: 9,
+          tension: 0.35,
+          fill: true
+        },
+        {
+          label: '周末 DAU',
+          data: weekend,
+          borderColor: '#b8943d',
+          backgroundColor: 'rgba(184, 148, 61, 0.12)',
+          borderWidth: 2.5,
+          pointBackgroundColor: '#b8943d',
+          pointBorderColor: '#ece3d0',
+          pointBorderWidth: 2,
+          pointRadius: 6,
+          pointHoverRadius: 9,
+          tension: 0.35,
+          fill: true
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          labels: { font: { family: fontFamily, size: 11 }, color: '#2a2a2a', padding: 16, usePointStyle: true }
+        },
+        tooltip: {
+          titleFont: { family: fontFamily },
+          bodyFont: { family: fontFamily },
+          callbacks: { label: ctx => ctx.dataset.label + ': ' + ctx.raw + '万' }
+        }
+      },
+      scales: {
+        x: { ticks: { font: { family: fontFamily, size: 10 }, color: '#444' }, grid: { color: 'rgba(184,148,61,0.12)' } },
+        y: { ticks: { font: { family: fontFamily, size: 10 }, color: '#444', callback: v => v + '万' }, grid: { color: 'rgba(184,148,61,0.12)' }, beginAtZero: false, min: 50, max: 400 }
+      }
+    },
+    plugins: [pointIcons]
+  });
+}
+
 init();
 console.log('🦢🦆 鹅鸭杀 · 全员卷宗 | 喜鹊谋杀案视觉企划');
-console.log('📜 20页复古悬疑卷宗 | 羊皮纸质感 | 烫金装饰');
+console.log('📜 23页复古悬疑卷宗 | 羊皮纸质感 | 烫金装饰');
 console.log('📱 竖向滑动翻页 | 🖥️ 键盘↑↓/Page翻页 | 👈 角色横滑切换');
 </script>
 </body>
