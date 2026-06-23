@@ -679,26 +679,146 @@ ${rule()}
 </div>`);}
 
 function P17(){return page(17,'',`
-<div style="background:rgba(139,42,58,0.05);padding:20px;border:1px solid rgba(139,42,58,0.15);border-radius:1px;">
-  <h2 class="t-lg" style="color:#8b2a3a;">⚠️ 避坑指南</h2>
-  <p class="t-sm" style="color:#8b2a3a;text-align:center;">新手高频错误汇总</p>
+<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100vh - 130px);text-align:center;background:linear-gradient(180deg,rgba(245,239,224,0.4),rgba(61,15,26,0.08));padding:30px 16px;">
+  <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:32px;opacity:0.1;">
+    <span style="font-size:4rem;">🦢</span><span style="font-size:2.5rem;">🐦</span><span style="font-size:4rem;">🦆</span>
+  </div>
+  <h2 class="t-xl" style="font-size:clamp(1.8rem,4.5vw,2.8rem);">快来测测你的鹅BTI人格</h2>
   ${rule()}
-  ${card('card-left-red','<p class="t-body"><b>❌ 误区一：</b>警长盲目开局出刀，误杀好人直接出局</p>')}
-  ${card('card-left-red','<p class="t-body"><b>❌ 误区二：</b>鸭子单人贸然刀人，刀加拿大鹅直接报警锁身份</p>')}
-  ${card('card-left-red','<p class="t-body"><b>❌ 误区三：</b>鸽子高调感染，被全员集火优先放逐</p>')}
-  ${card('card-left-red','<p class="t-body"><b>❌ 误区四：</b>开会跟风投票，随意放逐功能性鹅崩盘好人对局</p>')}
-  ${card('card-left-red','<p class="t-body"><b>❌ 误区五：</b>肉汁鹅盲目跟随陌生人，被鸭子贴身联动击杀</p>')}
-</div>
-<p class="t-hint" style="margin-top:10px;color:#8b2a3a;">悬停误区区块 · 查看警示详情</p>
-`);}
+  <p class="t-body" style="max-width:280px;margin:16px auto;color:var(--ink-soft);font-family:var(--serif);">你是正义凛然的鹅？<br>还是阴险狡诈的鸭？<br>测测你的鹅BTI人格类型！</p>
+  <a href="https://ggd.seayoo.com/event/gdti/index.html?a15b47fad2997=" target="_blank" style="display:inline-block;margin-top:20px;padding:14px 32px;background:var(--wine);color:var(--paper);font-family:var(--serif);font-size:1rem;letter-spacing:2px;text-decoration:none;border:2px solid var(--gold);border-radius:4px;transition:all 0.3s;box-shadow:0 4px 12px rgba(0,0,0,0.2);">
+    🎯 开始测试鹅BTI
+  </a>
+  <p class="t-cap" style="margin-top:28px;">鹅鸭杀20角色全卷宗 · 红白悬疑企划</p>
+  <div class="bot-dec"></div>
+</div>`);}
 
 function P18(){return page(18,'',`
-<h2 class="t-lg">角色进阶技巧大全</h2>
-<p class="t-sm" style="color:var(--wine);text-align:center;">各阵营高阶操作指南</p>
+<h2 class="t-lg">🎯 狙击小游戏</h2>
+<p class="t-sm" style="color:var(--wine);text-align:center;">移动鼠标瞄准，点击射击逃跑的鹅！</p>
 ${rule()}
-${card('','<h3 style="font-family:var(--serif);color:var(--wine);">🦢 鹅阵营进阶</h3><p class="t-body" style="font-size:0.82rem;">• 通灵者：利用亡灵信息精准定位坏人，配合正义使者一击毙命</p><p class="t-body" style="font-size:0.82rem;">• 工程师：钻管道观察全局，发现破坏痕迹立即追踪</p><p class="t-body" style="font-size:0.82rem;">• 加拿大鹅：主动暴露身份引鸭子来刀，触发报警锁定坏人</p>')}
-${card('card-wine','<h3 style="font-family:var(--serif);color:#000;">🦆 鸭阵营进阶</h3><p class="t-body" style="font-size:0.82rem;">• 变形鸭：先观察目标行动轨迹，变身后精确嫁祸</p><p class="t-body" style="font-size:0.82rem;">• 专业杀手+食鸟鸭：杀手刀人无尸体，食鸟鸭处理其他现场</p><p class="t-body" style="font-size:0.82rem;">• 刺客：发言阶段精准赌身份，关键时刻击杀关键鹅</p>')}
-${card('card-neut','<h3 style="font-family:var(--serif);color:#000;">⚖️ 中立阵营进阶</h3><p class="t-body" style="font-size:0.82rem;">• 呆呆鸟：做出可疑行为但不过于明显，诱导投票放逐</p><p class="t-body" style="font-size:0.82rem;">• 鹈鹕：逐个吞噬落单玩家，最后决战称霸</p><p class="t-body" style="font-size:0.82rem;">• 猎鹰：游走鹅鸭之间，逐个淘汰两大阵营</p>')}
+
+<div id="gameArea" style="position:relative;width:100%;height:400px;background:linear-gradient(135deg, #f5efe0, #ece3d0);border:2px solid var(--gold-pale);border-radius:4px;overflow:hidden;cursor:none;">
+  <!-- 狙击镜 -->
+  <div id="crosshair" style="position:absolute;width:60px;height:60px;border:3px solid rgba(200,40,40,0.8);border-radius:50%;pointer-events:none;z-index:100;transform:translate(-50%,-50%);display:none;">
+    <div style="position:absolute;top:50%;left:0;right:0;height:2px;background:rgba(200,40,40,0.8);transform:translateY(-50%);"></div>
+    <div style="position:absolute;left:50%;top:0;bottom:0;width:2px;background:rgba(200,40,40,0.8);transform:translateX(-50%);"></div>
+  </div>
+
+  <!-- 鹅 -->
+  <div id="goose" style="position:absolute;width:80px;height:80px;transition:none;">
+    <img src="icons/goose_run.png" style="width:100%;height:100%;object-fit:contain;" onerror="this.src='icons/emoji/goose_set_0.png'">
+  </div>
+
+  <!-- 分数 -->
+  <div style="position:absolute;top:10px;left:10px;background:rgba(0,0,0,0.7);color:#fff;padding:8px 16px;border-radius:4px;font-family:var(--serif);">
+    得分：<span id="score">0</span>
+  </div>
+
+  <!-- 时间 -->
+  <div style="position:absolute;top:10px;right:10px;background:rgba(0,0,0,0.7);color:#fff;padding:8px 16px;border-radius:4px;font-family:var(--serif);">
+    时间：<span id="timeLeft">30</span>秒
+  </div>
+</div>
+
+<div style="text-align:center;margin-top:16px;">
+  <button id="startBtn" onclick="startGame()" class="btn btn-wine">开始游戏</button>
+  <button id="resetBtn" onclick="resetGame()" class="btn btn-cream" style="margin-left:10px;display:none;">重新开始</button>
+</div>
+
+<script>
+let score = 0, timeLeft = 30, gameInterval, gooseInterval, isPlaying = false;
+
+const gameArea = document.getElementById('gameArea');
+const goose = document.getElementById('goose');
+const crosshair = document.getElementById('crosshair');
+const scoreEl = document.getElementById('score');
+const timeEl = document.getElementById('timeLeft');
+const startBtn = document.getElementById('startBtn');
+const resetBtn = document.getElementById('resetBtn');
+
+gameArea.addEventListener('mousemove', (e) => {
+  if (!isPlaying) return;
+  const rect = gameArea.getBoundingClientRect();
+  crosshair.style.left = (e.clientX - rect.left) + 'px';
+  crosshair.style.top = (e.clientY - rect.top) + 'px';
+  crosshair.style.display = 'block';
+});
+
+gameArea.addEventListener('click', (e) => {
+  if (!isPlaying) return;
+  const rect = gameArea.getBoundingClientRect();
+  const clickX = e.clientX - rect.left;
+  const clickY = e.clientY - rect.top;
+  const gooseRect = goose.getBoundingClientRect();
+  const gooseX = gooseRect.left - rect.left + gooseRect.width / 2;
+  const gooseY = gooseRect.top - rect.top + gooseRect.height / 2;
+
+  const distance = Math.sqrt(Math.pow(clickX - gooseX, 2) + Math.pow(clickY - gooseY, 2));
+
+  if (distance < 50) {
+    score += 10;
+    scoreEl.textContent = score;
+    goose.innerHTML = '<img src="icons/chicken_leg.png" style="width:100%;height:100%;object-fit:contain;" onerror="this.src=\' icons/emoji/duck_neutral_set_0.png\'">';
+    setTimeout(() => {
+      goose.innerHTML = '<img src="icons/goose_run.png" style="width:100%;height:100%;object-fit:contain;" onerror="this.src=\' icons/emoji/goose_set_0.png\'">';
+      moveGoose();
+    }, 500);
+  }
+});
+
+function moveGoose() {
+  const maxX = gameArea.clientWidth - 80;
+  const maxY = gameArea.clientHeight - 80;
+  goose.style.left = Math.random() * maxX + 'px';
+  goose.style.top = Math.random() * maxY + 'px';
+}
+
+function startGame() {
+  if (isPlaying) return;
+  isPlaying = true;
+  score = 0;
+  timeLeft = 30;
+  scoreEl.textContent = score;
+  timeEl.textContent = timeLeft;
+  startBtn.style.display = 'none';
+  resetBtn.style.display = 'inline-block';
+  moveGoose();
+
+  gameInterval = setInterval(() => {
+    timeLeft--;
+    timeEl.textContent = timeLeft;
+    if (timeLeft <= 0) {
+      clearInterval(gameInterval);
+      clearInterval(gooseInterval);
+      isPlaying = false;
+      crosshair.style.display = 'none';
+      alert('游戏结束！你的得分是：' + score);
+    }
+  }, 1000);
+
+  gooseInterval = setInterval(moveGoose, 800);
+}
+
+function resetGame() {
+  clearInterval(gameInterval);
+  clearInterval(gooseInterval);
+  isPlaying = false;
+  score = 0;
+  timeLeft = 30;
+  scoreEl.textContent = score;
+  timeEl.textContent = timeLeft;
+  crosshair.style.display = 'none';
+  startBtn.style.display = 'inline-block';
+  resetBtn.style.display = 'none';
+  goose.innerHTML = '<img src="icons/goose_run.png" style="width:100%;height:100%;object-fit:contain;" onerror="this.src=\' icons/emoji/goose_set_0.png\'">';
+  goose.style.left = '50%';
+  goose.style.top = '50%';
+  goose.style.transform = 'translate(-50%, -50%)';
+}
+</script>
+
+<p class="t-hint" style="margin-top:10px;">移动鼠标瞄准 · 点击射击 · 限时30秒</p>
 `);}
 
 function P19(){return page(19,'',`
