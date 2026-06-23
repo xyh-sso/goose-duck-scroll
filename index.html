@@ -765,17 +765,8 @@ function initGame(){
     if (distance < 50) {
       score += 10;
       scoreEl.textContent = score;
-      // 显示鸡腿
-      goose.innerHTML = '<img src="icons/chicken_leg.png" style="width:100%;height:100%;object-fit:contain;" onerror="this.src=\'icons/emoji/duck_neutral_set_0.png\'">';
-      // 1秒后隐藏鸡腿并移动到新位置
-      setTimeout(() => {
-        goose.style.opacity = '0';
-        setTimeout(() => {
-          moveGoose();
-          goose.innerHTML = '<img src="icons/goose_run.png" style="width:100%;height:100%;object-fit:contain;" onerror="this.src=\'icons/emoji/goose_set_0.png\'">';
-          goose.style.opacity = '1';
-        }, 200);
-      }, 1000);
+      // 直接移动到新位置
+      moveGoose();
     }
   });
 
