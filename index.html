@@ -760,14 +760,184 @@ function P20(){return `<div class="page" id="p20" data-pg="20" style="background
   </div>
 </div>`;}
 
+function P21(){return page(21,'',`
+<h2 class="t-lg a-fade a-d1">阵营胜率排行</h2>
+<p class="t-sm a-fade a-d2" style="color:var(--wine);text-align:center;">鹅鸭阵营胜率最高的五个职业</p>
+${rule()}
+
+<!-- 鹅阵营胜率排行 -->
+<div class="card" style="margin:16px 0;">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+    <span style="font-size:2rem;">🦢</span>
+    <h3 style="font-family:var(--serif);color:var(--wine);">鹅阵营胜率TOP5</h3>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:8px;">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span style="font-size:1.5rem;">🎭</span>
+      <div style="flex:1;background:#e8e0d0;border-radius:4px;overflow:hidden;">
+        <div style="width:90.7%;background:linear-gradient(90deg, #b8943d, #d4b85c);padding:8px 12px;text-align:right;">
+          <span style="font-weight:bold;color:#3d0f1a;">模仿者</span>
+          <span style="font-weight:bold;color:#3d0f1a;margin-left:10px;">45.35%</span>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span style="font-size:1.5rem;">⚰️</span>
+      <div style="flex:1;background:#e8e0d0;border-radius:4px;overflow:hidden;">
+        <div style="width:86.1%;background:linear-gradient(90deg, #b8943d, #d4b85c);padding:8px 12px;text-align:right;">
+          <span style="font-weight:bold;color:#3d0f1a;">殡仪员</span>
+          <span style="font-weight:bold;color:#3d0f1a;margin-left:10px;">43.03%</span>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span style="font-size:1.5rem;">⚔️</span>
+      <div style="flex:1;background:#e8e0d0;border-radius:4px;overflow:hidden;">
+        <div style="width:85.9%;background:linear-gradient(90deg, #b8943d, #d4b85c);padding:8px 12px;text-align:right;">
+          <span style="font-weight:bold;color:#3d0f1a;">复仇者</span>
+          <span style="font-weight:bold;color:#3d0f1a;margin-left:10px;">42.96%</span>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span style="font-size:1.5rem;">🔍</span>
+      <div style="flex:1;background:#e8e0d0;border-radius:4px;overflow:hidden;">
+        <div style="width:85.7%;background:linear-gradient(90deg, #b8943d, #d4b85c);padding:8px 12px;text-align:right;">
+          <span style="font-weight:bold;color:#3d0f1a;">侦探</span>
+          <span style="font-weight:bold;color:#3d0f1a;margin-left:10px;">42.84%</span>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span style="font-size:1.5rem;">🔮</span>
+      <div style="flex:1;background:#e8e0d0;border-radius:4px;overflow:hidden;">
+        <div style="width:85.7%;background:linear-gradient(90deg, #b8943d, #d4b85c);padding:8px 12px;text-align:right;">
+          <span style="font-weight:bold;color:#3d0f1a;">通灵者</span>
+          <span style="font-weight:bold;color:#3d0f1a;margin-left:10px;">42.84%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 鸭阵营胜率排行 -->
+<div class="card card-wine" style="margin:16px 0;">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+    <span style="font-size:2rem;">🦆</span>
+    <h3 style="font-family:var(--serif);color:#000;">鸭阵营胜率TOP5</h3>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:8px;">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span style="font-size:1.5rem;">🎯</span>
+      <div style="flex:1;background:#f5e8e8;border-radius:4px;overflow:hidden;">
+        <div style="width:80.9%;background:linear-gradient(90deg, #8b2a3a, #c94040);padding:8px 12px;text-align:right;">
+          <span style="font-weight:bold;color:#fff;">刺客</span>
+          <span style="font-weight:bold;color:#fff;margin-left:10px;">40.47%</span>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span style="font-size:1.5rem;">🍗</span>
+      <div style="flex:1;background:#f5e8e8;border-radius:4px;overflow:hidden;">
+        <div style="width:78.3%;background:linear-gradient(90deg, #8b2a3a, #c94040);padding:8px 12px;text-align:right;">
+          <span style="font-weight:bold;color:#fff;">食鸟鸭</span>
+          <span style="font-weight:bold;color:#fff;margin-left:10px;">39.17%</span>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span style="font-size:1.5rem;">🔫</span>
+      <div style="flex:1;background:#f5e8e8;border-radius:4px;overflow:hidden;">
+        <div style="width:77.3%;background:linear-gradient(90deg, #8b2a3a, #c94040);padding:8px 12px;text-align:right;">
+          <span style="font-weight:bold;color:#fff;">专业杀手</span>
+          <span style="font-weight:bold;color:#fff;margin-left:10px;">38.63%</span>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span style="font-size:1.5rem;">👻</span>
+      <div style="flex:1;background:#f5e8e8;border-radius:4px;overflow:hidden;">
+        <div style="width:76.8%;background:linear-gradient(90deg, #8b2a3a, #c94040);padding:8px 12px;text-align:right;">
+          <span style="font-weight:bold;color:#fff;">隐形鸭</span>
+          <span style="font-weight:bold;color:#fff;margin-left:10px;">38.42%</span>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span style="font-size:1.5rem;">🕵️</span>
+      <div style="flex:1;background:#f5e8e8;border-radius:4px;overflow:hidden;">
+        <div style="width:76.5%;background:linear-gradient(90deg, #8b2a3a, #c94040);padding:8px 12px;text-align:right;">
+          <span style="font-weight:bold;color:#fff;">间谍</span>
+          <span style="font-weight:bold;color:#fff;margin-left:10px;">38.26%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p class="t-hint a-fade a-d4" style="margin-top:12px;">数据来源：鹅鸭快报 · 胜率统计</p>
+`);}
+
+function P22(){return page(22,'',`
+<h2 class="t-lg a-fade a-d1">角色人气词云</h2>
+<p class="t-sm a-fade a-d2" style="color:var(--wine);text-align:center;">玩家最喜爱的角色排行</p>
+${rule()}
+
+<div class="card" style="margin:16px 0;min-height:400px;position:relative;overflow:hidden;">
+  <div style="position:relative;width:100%;height:400px;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;padding:20px;">
+    <!-- 词云图 - 根据人气大小排列 -->
+    <div style="font-size:3.5rem;color:var(--wine);font-weight:900;font-family:var(--serif);text-shadow:2px 2px 4px rgba(0,0,0,0.2);">鹈鹕</div>
+    <div style="font-size:2.8rem;color:var(--gold);font-weight:700;font-family:var(--serif);">警长</div>
+    <div style="font-size:2.5rem;color:var(--wine-bright);font-weight:700;font-family:var(--serif);">刺客</div>
+    <div style="font-size:2.2rem;color:var(--gold-light);font-weight:600;font-family:var(--serif);">模仿者</div>
+    <div style="font-size:2rem;color:var(--ink);font-weight:600;font-family:var(--serif);">加拿大鹅</div>
+    <div style="font-size:1.8rem;color:var(--wine);font-weight:600;font-family:var(--serif);">秃鹫</div>
+    <div style="font-size:1.6rem;color:var(--gold);font-weight:500;font-family:var(--serif);">通灵者</div>
+    <div style="font-size:1.5rem;color:var(--ink-soft);font-weight:500;font-family:var(--serif);">猎鹰</div>
+    <div style="font-size:1.4rem;color:var(--wine-bright);font-weight:500;font-family:var(--serif);">炸弹鸭</div>
+    <div style="font-size:1.3rem;color:var(--gold-light);font-weight:400;font-family:var(--serif);">鸽子</div>
+    <div style="font-size:1.2rem;color:var(--ink-mid);font-weight:400;font-family:var(--serif);">复仇者</div>
+    <div style="font-size:1.1rem;color:var(--wine);font-weight:400;font-family:var(--serif);">食鸟鸭</div>
+    <div style="font-size:1rem;color:var(--gold);font-weight:400;font-family:var(--serif);">殡仪员</div>
+    <div style="font-size:0.95rem;color:var(--ink-soft);font-weight:400;font-family:var(--serif);">专业杀手</div>
+    <div style="font-size:0.9rem;color:var(--wine-bright);font-weight:400;font-family:var(--serif);">间谍</div>
+    <div style="font-size:0.85rem;color:var(--gold-light);font-weight:400;font-family:var(--serif);">隐形鸭</div>
+    <div style="font-size:0.8rem;color:var(--ink-mid);font-weight:300;font-family:var(--serif);">观鸟者</div>
+    <div style="font-size:0.75rem;color:var(--wine);font-weight:300;font-family:var(--serif);">工程师</div>
+    <div style="font-size:0.7rem;color:var(--gold);font-weight:300;font-family:var(--serif);">肉汁鹅</div>
+    <div style="font-size:0.65rem;color:var(--ink-soft);font-weight:300;font-family:var(--serif);">大白鹅</div>
+  </div>
+</div>
+
+<div class="split" style="margin-top:12px;">
+  <div class="split-col l">
+    <h3 style="font-family:var(--serif);color:var(--wine);margin-bottom:8px;">🏆 人气TOP5</h3>
+    <p class="t-body" style="font-size:0.82rem;">1. 鹈鹕 - 独行吞噬王者</p>
+    <p class="t-body" style="font-size:0.82rem;">2. 警长 - 执法击杀快感</p>
+    <p class="t-body" style="font-size:0.82rem;">3. 刺客 - 会议狙击刺激</p>
+    <p class="t-body" style="font-size:0.82rem;">4. 模仿者 - 伪装嫁祸乐趣</p>
+    <p class="t-body" style="font-size:0.82rem;">5. 加拿大鹅 - 被动保护机制</p>
+  </div>
+  <div class="split-col r">
+    <h3 style="font-family:var(--serif);color:var(--wine);margin-bottom:8px;">📊 人气分布</h3>
+    <p class="t-body" style="font-size:0.82rem;">• 独行角色最受欢迎</p>
+    <p class="t-body" style="font-size:0.82rem;">• 执法类角色紧随其后</p>
+    <p class="t-body" style="font-size:0.82rem;">• 伪装类角色备受青睐</p>
+    <p class="t-body" style="font-size:0.82rem;">• 基础角色人气稳定</p>
+  </div>
+</div>
+
+<p class="t-hint a-fade a-d4" style="margin-top:12px;">词云大小代表玩家喜爱程度</p>
+`);}
+
 // ═══════════════════ APP LOGIC ═══════════════════
-let cur=1, curFac='goose', tY=0, tX=0, total=20, navLock=false, lastNavTime=0;
+let cur=1, curFac='goose', tY=0, tX=0, total=22, navLock=false, lastNavTime=0;
 
 function init(){
   let h='';
   h+=P1();h+=P2();h+=P3();h+=P4();h+=P5();h+=P6();h+=P7();h+=P8();
   for(let i=9;i<=13;i++)h+=PChar(i);
-  h+=P14();h+=P15();h+=P16();h+=P17();h+=P18();h+=P19();h+=P20();
+  h+=P14();h+=P15();h+=P16();h+=P17();h+=P18();h+=P19();h+=P20();h+=P21();h+=P22();
   document.getElementById('app').innerHTML=h;
 
   document.querySelectorAll('.page').forEach((p,i)=>{
