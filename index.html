@@ -886,113 +886,25 @@ function P21(){return page(21,'',`
 <p class="t-sm a-fade a-d2" style="color:var(--wine);text-align:center;">鹅鸭阵营胜率最高的五个职业</p>
 ${rule()}
 
-<!-- 鹅阵营胜率排行 -->
-<div class="card" style="margin:16px 0;">
-  <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-    <span style="font-size:2rem;">🦢</span>
-    <h3 style="font-family:var(--serif);color:var(--wine);">鹅阵营胜率TOP5</h3>
+<!-- 鹅阵营胜率排行 水平柱状图 -->
+<div class="card" style="margin:16px 0;padding:16px 10px;">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+    <img src="icons/emoji/goose_set_0.png" style="width:28px;height:28px;border-radius:50%;border:2px solid var(--gold);">
+    <h3 style="font-family:var(--serif);color:var(--wine);">鹅阵营胜率 TOP5</h3>
   </div>
-  <div style="display:flex;flex-direction:column;gap:8px;">
-    <div style="display:flex;align-items:center;gap:10px;">
-      <span style="font-size:1.5rem;">🎭</span>
-      <div style="flex:1;background:#e8e0d0;border-radius:4px;overflow:hidden;">
-        <div style="width:90.7%;background:linear-gradient(90deg, #b8943d, #d4b85c);padding:8px 12px;text-align:right;">
-          <span style="font-weight:bold;color:#3d0f1a;">模仿者</span>
-          <span style="font-weight:bold;color:#3d0f1a;margin-left:10px;">45.35%</span>
-        </div>
-      </div>
-    </div>
-    <div style="display:flex;align-items:center;gap:10px;">
-      <span style="font-size:1.5rem;">⚰️</span>
-      <div style="flex:1;background:#e8e0d0;border-radius:4px;overflow:hidden;">
-        <div style="width:86.1%;background:linear-gradient(90deg, #b8943d, #d4b85c);padding:8px 12px;text-align:right;">
-          <span style="font-weight:bold;color:#3d0f1a;">殡仪员</span>
-          <span style="font-weight:bold;color:#3d0f1a;margin-left:10px;">43.03%</span>
-        </div>
-      </div>
-    </div>
-    <div style="display:flex;align-items:center;gap:10px;">
-      <span style="font-size:1.5rem;">⚔️</span>
-      <div style="flex:1;background:#e8e0d0;border-radius:4px;overflow:hidden;">
-        <div style="width:85.9%;background:linear-gradient(90deg, #b8943d, #d4b85c);padding:8px 12px;text-align:right;">
-          <span style="font-weight:bold;color:#3d0f1a;">复仇者</span>
-          <span style="font-weight:bold;color:#3d0f1a;margin-left:10px;">42.96%</span>
-        </div>
-      </div>
-    </div>
-    <div style="display:flex;align-items:center;gap:10px;">
-      <span style="font-size:1.5rem;">🔍</span>
-      <div style="flex:1;background:#e8e0d0;border-radius:4px;overflow:hidden;">
-        <div style="width:85.7%;background:linear-gradient(90deg, #b8943d, #d4b85c);padding:8px 12px;text-align:right;">
-          <span style="font-weight:bold;color:#3d0f1a;">侦探</span>
-          <span style="font-weight:bold;color:#3d0f1a;margin-left:10px;">42.84%</span>
-        </div>
-      </div>
-    </div>
-    <div style="display:flex;align-items:center;gap:10px;">
-      <span style="font-size:1.5rem;">🔮</span>
-      <div style="flex:1;background:#e8e0d0;border-radius:4px;overflow:hidden;">
-        <div style="width:85.7%;background:linear-gradient(90deg, #b8943d, #d4b85c);padding:8px 12px;text-align:right;">
-          <span style="font-weight:bold;color:#3d0f1a;">通灵者</span>
-          <span style="font-weight:bold;color:#3d0f1a;margin-left:10px;">42.84%</span>
-        </div>
-      </div>
-    </div>
+  <div style="position:relative;width:100%;height:260px;">
+    <canvas id="gooseWinChart"></canvas>
   </div>
 </div>
 
-<!-- 鸭阵营胜率排行 -->
-<div class="card card-wine" style="margin:16px 0;">
-  <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-    <span style="font-size:2rem;">🦆</span>
-    <h3 style="font-family:var(--serif);color:#000;">鸭阵营胜率TOP5</h3>
+<!-- 鸭阵营胜率排行 水平柱状图 -->
+<div class="card card-wine" style="margin:16px 0;padding:16px 10px;">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+    <img src="icons/emoji/duck_neutral_set_0.png" style="width:28px;height:28px;border-radius:50%;border:2px solid var(--gold);">
+    <h3 style="font-family:var(--serif);color:#000;">鸭阵营胜率 TOP5</h3>
   </div>
-  <div style="display:flex;flex-direction:column;gap:8px;">
-    <div style="display:flex;align-items:center;gap:10px;">
-      <span style="font-size:1.5rem;">🎯</span>
-      <div style="flex:1;background:#f5e8e8;border-radius:4px;overflow:hidden;">
-        <div style="width:80.9%;background:linear-gradient(90deg, #8b2a3a, #c94040);padding:8px 12px;text-align:right;">
-          <span style="font-weight:bold;color:#fff;">刺客</span>
-          <span style="font-weight:bold;color:#fff;margin-left:10px;">40.47%</span>
-        </div>
-      </div>
-    </div>
-    <div style="display:flex;align-items:center;gap:10px;">
-      <span style="font-size:1.5rem;">🍗</span>
-      <div style="flex:1;background:#f5e8e8;border-radius:4px;overflow:hidden;">
-        <div style="width:78.3%;background:linear-gradient(90deg, #8b2a3a, #c94040);padding:8px 12px;text-align:right;">
-          <span style="font-weight:bold;color:#fff;">食鸟鸭</span>
-          <span style="font-weight:bold;color:#fff;margin-left:10px;">39.17%</span>
-        </div>
-      </div>
-    </div>
-    <div style="display:flex;align-items:center;gap:10px;">
-      <span style="font-size:1.5rem;">🔫</span>
-      <div style="flex:1;background:#f5e8e8;border-radius:4px;overflow:hidden;">
-        <div style="width:77.3%;background:linear-gradient(90deg, #8b2a3a, #c94040);padding:8px 12px;text-align:right;">
-          <span style="font-weight:bold;color:#fff;">专业杀手</span>
-          <span style="font-weight:bold;color:#fff;margin-left:10px;">38.63%</span>
-        </div>
-      </div>
-    </div>
-    <div style="display:flex;align-items:center;gap:10px;">
-      <span style="font-size:1.5rem;">👻</span>
-      <div style="flex:1;background:#f5e8e8;border-radius:4px;overflow:hidden;">
-        <div style="width:76.8%;background:linear-gradient(90deg, #8b2a3a, #c94040);padding:8px 12px;text-align:right;">
-          <span style="font-weight:bold;color:#fff;">隐形鸭</span>
-          <span style="font-weight:bold;color:#fff;margin-left:10px;">38.42%</span>
-        </div>
-      </div>
-    </div>
-    <div style="display:flex;align-items:center;gap:10px;">
-      <span style="font-size:1.5rem;">🕵️</span>
-      <div style="flex:1;background:#f5e8e8;border-radius:4px;overflow:hidden;">
-        <div style="width:76.5%;background:linear-gradient(90deg, #8b2a3a, #c94040);padding:8px 12px;text-align:right;">
-          <span style="font-weight:bold;color:#fff;">间谍</span>
-          <span style="font-weight:bold;color:#fff;margin-left:10px;">38.26%</span>
-        </div>
-      </div>
-    </div>
+  <div style="position:relative;width:100%;height:260px;">
+    <canvas id="duckWinChart"></canvas>
   </div>
 </div>
 
@@ -1001,35 +913,11 @@ ${rule()}
 
 function P22(){return page(22,'',`
 <h2 class="t-lg a-fade a-d1">角色人气词云</h2>
-<p class="t-sm a-fade a-d2" style="color:var(--wine);text-align:center;">玩家最喜爱的角色排行</p>
+<p class="t-sm a-fade a-d2" style="color:var(--wine);text-align:center;">玩家最喜爱的角色排行 · 词云大小代表喜爱程度</p>
 ${rule()}
 
-<div class="card" style="margin:16px 0;min-height:400px;position:relative;overflow:hidden;">
-  <div style="position:relative;width:100%;height:400px;display:flex;align-items:center;justify-content:center;">
-    <!-- 圆形词云图 -->
-    <div style="position:relative;width:320px;height:320px;border-radius:50%;background:linear-gradient(135deg, rgba(245,239,224,0.8), rgba(236,227,208,0.9));border:3px solid var(--gold);box-shadow:0 4px 20px rgba(32,8,14,0.2);display:flex;align-items:center;justify-content:center;">
-      <!-- 中心大字 -->
-      <div style="position:absolute;font-size:2.5rem;color:var(--wine);font-weight:900;font-family:var(--serif);text-shadow:2px 2px 4px rgba(0,0,0,0.2);">鹈鹕</div>
-      <!-- 周围环绕的角色名 -->
-      <div style="position:absolute;width:100%;height:100%;">
-        <div style="position:absolute;top:10%;left:50%;transform:translateX(-50%);font-size:1.2rem;color:var(--gold);font-weight:700;font-family:var(--serif);">警长</div>
-        <div style="position:absolute;top:25%;right:10%;font-size:1.1rem;color:var(--wine-bright);font-weight:700;font-family:var(--serif);">刺客</div>
-        <div style="position:absolute;top:50%;right:5%;font-size:1rem;color:var(--gold-light);font-weight:600;font-family:var(--serif);">模仿者</div>
-        <div style="position:absolute;bottom:25%;right:10%;font-size:0.9rem;color:var(--ink);font-weight:600;font-family:var(--serif);">加拿大鹅</div>
-        <div style="position:absolute;bottom:10%;left:50%;transform:translateX(-50%);font-size:0.85rem;color:var(--wine);font-weight:600;font-family:var(--serif);">秃鹫</div>
-        <div style="position:absolute;bottom:25%;left:10%;font-size:0.8rem;color:var(--gold);font-weight:500;font-family:var(--serif);">通灵者</div>
-        <div style="position:absolute;top:50%;left:5%;font-size:0.75rem;color:var(--ink-soft);font-weight:500;font-family:var(--serif);">猎鹰</div>
-        <div style="position:absolute;top:25%;left:10%;font-size:0.7rem;color:var(--wine-bright);font-weight:500;font-family:var(--serif);">炸弹鸭</div>
-        <div style="position:absolute;top:15%;left:25%;font-size:0.65rem;color:var(--gold-light);font-weight:400;font-family:var(--serif);">鸽子</div>
-        <div style="position:absolute;top:35%;right:20%;font-size:0.6rem;color:var(--ink-mid);font-weight:400;font-family:var(--serif);">复仇者</div>
-        <div style="position:absolute;bottom:35%;right:20%;font-size:0.55rem;color:var(--wine);font-weight:400;font-family:var(--serif);">食鸟鸭</div>
-        <div style="position:absolute;bottom:15%;left:25%;font-size:0.5rem;color:var(--gold);font-weight:400;font-family:var(--serif);">殡仪员</div>
-        <div style="position:absolute;top:45%;left:20%;font-size:0.45rem;color:var(--ink-soft);font-weight:400;font-family:var(--serif);">专业杀手</div>
-        <div style="position:absolute;top:65%;right:15%;font-size:0.4rem;color:var(--wine-bright);font-weight:400;font-family:var(--serif);">间谍</div>
-        <div style="position:absolute;bottom:40%;left:15%;font-size:0.35rem;color:var(--gold-light);font-weight:400;font-family:var(--serif);">隐形鸭</div>
-      </div>
-    </div>
-  </div>
+<div class="card" style="margin:16px 0;padding:16px 8px;position:relative;overflow:hidden;">
+  <canvas id="wordCloudCanvas" style="display:block;width:100%;height:420px;"></canvas>
 </div>
 
 <div class="split" style="margin-top:12px;">
@@ -1123,7 +1011,7 @@ function init(){
   let h='';
   h+=P1();h+=P2();h+=P3();h+=P4();h+=P5();h+=P6();h+=P7();h+=P8();
   for(let i=9;i<=13;i++)h+=PChar(i);
-  h+=P14();h+=P15();h+=P16();h+=P17();h+=P18();h+=P19();h+=P21();h+=P22();h+=P23();h+=P20();
+  h+=P14();h+=P15();h+=P16();h+=P17();h+=P18();h+=P19();h+=P21();h+=P22();h+=P20();h+=P23();
   document.getElementById('app').innerHTML=h;
 
   document.querySelectorAll('.page').forEach((p,i)=>{
@@ -1322,152 +1210,234 @@ document.body.addEventListener('click',function(){this.focus();});
 function initCharts(){
   const barCtx = document.getElementById('dauBarChart');
   const lineCtx = document.getElementById('dauLineChart');
+  const gooseWinCtx = document.getElementById('gooseWinChart');
+  const duckWinCtx = document.getElementById('duckWinChart');
+  const wordCloudCanvas = document.getElementById('wordCloudCanvas');
+
   if(!barCtx || !lineCtx) return;
 
+  const fontFamily = "'Playfair Display','Noto Serif SC',serif";
   const months = ['1月 公测', '2月 春节', '3月 平稳', '4月 联动', '5月 淡季', '6月 当前'];
   const weekday = [280, 245, 195, 175, 128, 135];
   const weekend = [360, 310, 260, 280, 190, 203];
 
-  // Load character icons for chart decoration
+  // Load character icons
   const gooseImg = new Image(); gooseImg.src = 'icons/emoji/goose_set_0.png';
   const duckImg = new Image(); duckImg.src = 'icons/emoji/duck_neutral_set_0.png';
 
-  // Shared font config
-  const fontFamily = "'Playfair Display','Noto Serif SC',serif";
+  // Shared tooltip
+  const tooltipOpts = {
+    titleFont: { family: fontFamily },
+    bodyFont: { family: fontFamily }
+  };
 
-  // ── Bar Chart: Monthly DAU ──
+  // ── P23: DAU Bar Chart ──
   new Chart(barCtx, {
     type: 'bar',
     data: {
       labels: months,
       datasets: [
-        {
-          label: '工作日常规日活',
-          data: weekday,
-          backgroundColor: 'rgba(61, 15, 26, 0.75)',
-          borderColor: '#3d0f1a',
-          borderWidth: 1.5,
-          borderRadius: 4,
-          order: 2
-        },
-        {
-          label: '周末高峰日活',
-          data: weekend,
-          backgroundColor: 'rgba(184, 148, 61, 0.7)',
-          borderColor: '#b8943d',
-          borderWidth: 1.5,
-          borderRadius: 4,
-          order: 2
-        }
+        { label: '工作日常规日活', data: weekday, backgroundColor: 'rgba(61,15,26,0.75)', borderColor: '#3d0f1a', borderWidth: 1.5, borderRadius: 4, order: 2 },
+        { label: '周末高峰日活', data: weekend, backgroundColor: 'rgba(184,148,61,0.7)', borderColor: '#b8943d', borderWidth: 1.5, borderRadius: 4, order: 2 }
       ]
     },
     options: {
-      responsive: true,
-      maintainAspectRatio: false,
+      responsive: true, maintainAspectRatio: false,
       plugins: {
-        legend: {
-          labels: { font: { family: fontFamily, size: 11 }, color: '#2a2a2a', padding: 16, usePointStyle: true }
-        },
-        tooltip: {
-          titleFont: { family: fontFamily },
-          bodyFont: { family: fontFamily },
-          callbacks: { label: ctx => ctx.dataset.label + ': ' + ctx.raw + '万' }
-        }
+        legend: { labels: { font:{family:fontFamily,size:11}, color:'#2a2a2a', padding:16, usePointStyle:true } },
+        tooltip: { ...tooltipOpts, callbacks:{ label: ctx => ctx.dataset.label+': '+ctx.raw+'万' } }
       },
       scales: {
-        x: { ticks: { font: { family: fontFamily, size: 10 }, color: '#444' }, grid: { color: 'rgba(184,148,61,0.12)' } },
-        y: { ticks: { font: { family: fontFamily, size: 10 }, color: '#444', callback: v => v + '万' }, grid: { color: 'rgba(184,148,61,0.12)' }, beginAtZero: false, min: 50, max: 400 }
+        x: { ticks:{ font:{family:fontFamily,size:10}, color:'#444' }, grid:{ color:'rgba(184,148,61,0.12)' } },
+        y: { ticks:{ font:{family:fontFamily,size:10}, color:'#444', callback:v=>v+'万' }, grid:{ color:'rgba(184,148,61,0.12)' }, beginAtZero:false, min:50, max:400 }
       }
     },
     plugins: [{
-      id: 'barIcons',
-      afterDraw(chart) {
-        const { ctx, scales } = chart;
-        const meta0 = chart.getDatasetMeta(0);
-        const meta1 = chart.getDatasetMeta(1);
-        const allBars = [...meta0.data, ...meta1.data];
-        const imgs = [duckImg, gooseImg];  // duck on weekday, goose on weekend
-        if(!duckImg.complete || !gooseImg.complete) return;
-        allBars.forEach((bar, i) => {
-          const img = i < 6 ? imgs[0] : imgs[1];
-          ctx.drawImage(img, bar.x - 14, bar.y - 32, 28, 28);
-        });
+      id:'barIcons', afterDraw(chart){
+        const {ctx} = chart;
+        const allBars = [...chart.getDatasetMeta(0).data, ...chart.getDatasetMeta(1).data];
+        if(!duckImg.complete||!gooseImg.complete) return;
+        allBars.forEach((bar,i)=>{ ctx.drawImage(i<6?duckImg:gooseImg, bar.x-14, bar.y-32, 28, 28); });
       }
     }]
   });
 
-  // ── Line Chart: DAU Trend ──
-  // Custom plugin: draw goose/duck icons at data points
-  const pointIcons = {
-    id: 'pointIcons',
-    afterDatasetsDraw(chart) {
-      const { ctx } = chart;
-      if(!gooseImg.complete || !duckImg.complete) return;
-      chart.data.datasets.forEach((ds, dsIdx) => {
-        const meta = chart.getDatasetMeta(dsIdx);
-        const img = dsIdx === 0 ? duckImg : gooseImg;
-        meta.data.forEach((pt, i) => {
-          ctx.drawImage(img, pt.x - 16, pt.y - 32, 32, 32);
-        });
-      });
-    }
-  };
+  // ── P23: DAU Line Chart ──
+  const pointIcons = { id:'pointIcons', afterDatasetsDraw(chart){
+    const {ctx} = chart;
+    if(!gooseImg.complete||!duckImg.complete) return;
+    chart.data.datasets.forEach((ds,dsIdx)=>{
+      const meta = chart.getDatasetMeta(dsIdx), img = dsIdx===0?duckImg:gooseImg;
+      meta.data.forEach((pt)=>{ ctx.drawImage(img, pt.x-16, pt.y-32, 32, 32); });
+    });
+  }};
 
   new Chart(lineCtx, {
     type: 'line',
     data: {
       labels: months,
       datasets: [
-        {
-          label: '工作日 DAU',
-          data: weekday,
-          borderColor: '#3d0f1a',
-          backgroundColor: 'rgba(61, 15, 26, 0.1)',
-          borderWidth: 2.5,
-          pointBackgroundColor: '#3d0f1a',
-          pointBorderColor: '#ece3d0',
-          pointBorderWidth: 2,
-          pointRadius: 6,
-          pointHoverRadius: 9,
-          tension: 0.35,
-          fill: true
-        },
-        {
-          label: '周末 DAU',
-          data: weekend,
-          borderColor: '#b8943d',
-          backgroundColor: 'rgba(184, 148, 61, 0.12)',
-          borderWidth: 2.5,
-          pointBackgroundColor: '#b8943d',
-          pointBorderColor: '#ece3d0',
-          pointBorderWidth: 2,
-          pointRadius: 6,
-          pointHoverRadius: 9,
-          tension: 0.35,
-          fill: true
-        }
+        { label:'工作日 DAU', data:weekday, borderColor:'#3d0f1a', backgroundColor:'rgba(61,15,26,0.1)', borderWidth:2.5, pointBackgroundColor:'#3d0f1a', pointBorderColor:'#ece3d0', pointBorderWidth:2, pointRadius:6, pointHoverRadius:9, tension:0.35, fill:true },
+        { label:'周末 DAU', data:weekend, borderColor:'#b8943d', backgroundColor:'rgba(184,148,61,0.12)', borderWidth:2.5, pointBackgroundColor:'#b8943d', pointBorderColor:'#ece3d0', pointBorderWidth:2, pointRadius:6, pointHoverRadius:9, tension:0.35, fill:true }
       ]
     },
     options: {
-      responsive: true,
-      maintainAspectRatio: false,
+      responsive: true, maintainAspectRatio: false,
       plugins: {
-        legend: {
-          labels: { font: { family: fontFamily, size: 11 }, color: '#2a2a2a', padding: 16, usePointStyle: true }
-        },
-        tooltip: {
-          titleFont: { family: fontFamily },
-          bodyFont: { family: fontFamily },
-          callbacks: { label: ctx => ctx.dataset.label + ': ' + ctx.raw + '万' }
-        }
+        legend: { labels: { font:{family:fontFamily,size:11}, color:'#2a2a2a', padding:16, usePointStyle:true } },
+        tooltip: { ...tooltipOpts, callbacks:{ label: ctx => ctx.dataset.label+': '+ctx.raw+'万' } }
       },
       scales: {
-        x: { ticks: { font: { family: fontFamily, size: 10 }, color: '#444' }, grid: { color: 'rgba(184,148,61,0.12)' } },
-        y: { ticks: { font: { family: fontFamily, size: 10 }, color: '#444', callback: v => v + '万' }, grid: { color: 'rgba(184,148,61,0.12)' }, beginAtZero: false, min: 50, max: 400 }
+        x: { ticks:{ font:{family:fontFamily,size:10}, color:'#444' }, grid:{ color:'rgba(184,148,61,0.12)' } },
+        y: { ticks:{ font:{family:fontFamily,size:10}, color:'#444', callback:v=>v+'万' }, grid:{ color:'rgba(184,148,61,0.12)' }, beginAtZero:false, min:50, max:400 }
       }
     },
     plugins: [pointIcons]
   });
+
+  // ── P21: Goose Win Rate Horizontal Bar ──
+  if(gooseWinCtx){
+    const gooseNames = ['模仿者','殡仪员','复仇者','侦探','通灵者'];
+    const gooseRates = [45.35, 43.03, 42.96, 42.84, 42.84];
+    new Chart(gooseWinCtx, {
+      type: 'bar',
+      data: {
+        labels: gooseNames,
+        datasets: [{
+          label: '胜率 %', data: gooseRates,
+          backgroundColor: ['rgba(184,148,61,0.85)','rgba(184,148,61,0.7)','rgba(184,148,61,0.55)','rgba(184,148,61,0.4)','rgba(184,148,61,0.3)'],
+          borderColor: '#b8943d', borderWidth: 1.2, borderRadius: 3
+        }]
+      },
+      options: {
+        indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { ...tooltipOpts, callbacks:{ label: ctx => '胜率: '+ctx.raw+'%' } }
+        },
+        scales: {
+          x: { min:38, max:48, ticks:{ font:{family:fontFamily,size:9}, color:'#444', callback:v=>v+'%' }, grid:{ color:'rgba(184,148,61,0.1)' } },
+          y: { ticks:{ font:{family:fontFamily,size:11}, color:'#3d0f1a' }, grid:{ display:false } }
+        }
+      },
+      plugins: [{
+        id:'gooseBarIcons', afterDraw(chart){
+          const {ctx} = chart; if(!gooseImg.complete) return;
+          chart.getDatasetMeta(0).data.forEach((bar)=>{ ctx.drawImage(gooseImg, bar.x-42, bar.y-13, 26, 26); });
+        }
+      }]
+    });
+  }
+
+  // ── P21: Duck Win Rate Horizontal Bar ──
+  if(duckWinCtx){
+    const duckNames = ['刺客','食鸟鸭','专业杀手','隐形鸭','间谍'];
+    const duckRates = [40.47, 39.17, 38.63, 38.42, 38.26];
+    new Chart(duckWinCtx, {
+      type: 'bar',
+      data: {
+        labels: duckNames,
+        datasets: [{
+          label: '胜率 %', data: duckRates,
+          backgroundColor: ['rgba(139,42,58,0.85)','rgba(139,42,58,0.7)','rgba(139,42,58,0.55)','rgba(139,42,58,0.4)','rgba(139,42,58,0.3)'],
+          borderColor: '#8b2a3a', borderWidth: 1.2, borderRadius: 3
+        }]
+      },
+      options: {
+        indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { ...tooltipOpts, callbacks:{ label: ctx => '胜率: '+ctx.raw+'%' } }
+        },
+        scales: {
+          x: { min:34, max:43, ticks:{ font:{family:fontFamily,size:9}, color:'#444', callback:v=>v+'%' }, grid:{ color:'rgba(184,148,61,0.1)' } },
+          y: { ticks:{ font:{family:fontFamily,size:11}, color:'#000' }, grid:{ display:false } }
+        }
+      },
+      plugins: [{
+        id:'duckBarIcons', afterDraw(chart){
+          const {ctx} = chart; if(!duckImg.complete) return;
+          chart.getDatasetMeta(0).data.forEach((bar)=>{ ctx.drawImage(duckImg, bar.x-42, bar.y-13, 26, 26); });
+        }
+      }]
+    });
+  }
+
+  // ── P22: Canvas Word Cloud ──
+  if(wordCloudCanvas){
+    const dpr = window.devicePixelRatio || 1;
+    const rect = wordCloudCanvas.parentElement.getBoundingClientRect();
+    const W = rect.width, H = 420;
+    wordCloudCanvas.width = W * dpr; wordCloudCanvas.height = H * dpr;
+    wordCloudCanvas.style.width = W+'px'; wordCloudCanvas.style.height = H+'px';
+    const ctx = wordCloudCanvas.getContext('2d');
+    ctx.scale(dpr, dpr);
+
+    // Parchment background
+    const bgGrad = ctx.createRadialGradient(W/2, H/2, 20, W/2, H/2, W*0.65);
+    bgGrad.addColorStop(0, '#faf6ec'); bgGrad.addColorStop(0.5, '#f5efe0'); bgGrad.addColorStop(1, '#e8dcc8');
+    ctx.fillStyle = bgGrad; ctx.fillRect(0, 0, W, H);
+
+    // Gold border circle
+    ctx.beginPath(); ctx.arc(W/2, H/2, W*0.42, 0, Math.PI*2);
+    ctx.strokeStyle = 'rgba(184,148,61,0.45)'; ctx.lineWidth = 2.5; ctx.stroke();
+    ctx.beginPath(); ctx.arc(W/2, H/2, W*0.38, 0, Math.PI*2);
+    ctx.strokeStyle = 'rgba(184,148,61,0.2)'; ctx.lineWidth = 1; ctx.stroke();
+
+    // Word data: [text, weight(1-10), color]
+    const words = [
+      ['鹈鹕',10,'#3d0f1a'],['警长',9,'#b8943d'],['刺客',8.5,'#5a1a2a'],
+      ['模仿者',8,'#b8943d'],['加拿大鹅',7.5,'#3d0f1a'],['秃鹫',7,'#8b6914'],
+      ['通灵者',6.5,'#6b5b4a'],['猎鹰',6,'#5a1a2a'],['炸弹鸭',5.5,'#8b2a3a'],
+      ['鸽子',5,'#b8943d'],['复仇者',4.5,'#3d0f1a'],['食鸟鸭',4,'#8b2a3a'],
+      ['殡仪员',3.5,'#6b5b4a'],['专业杀手',3,'#5a1a2a'],['间谍',2.5,'#8b2a3a'],
+      ['隐形鸭',2,'#6b5b4a']
+    ];
+
+    // Spiral placement
+    const placed = [];
+    const fontSize = (w) => 14 + w * 3.2;
+    const cx = W/2, cy = H/2;
+
+    words.forEach(([text, weight, color]) => {
+      const fs = fontSize(weight);
+      ctx.font = `900 ${fs}px "${fontFamily.replace(/'/g,'')}"`;
+      const metrics = ctx.measureText(text);
+      const tw = metrics.width, th = fs;
+
+      // Spiral outward from center
+      let placed_ok = false;
+      for(let r = 0; r < W*0.44 && !placed_ok; r += 3){
+        for(let a = 0; a < Math.PI*2 && !placed_ok; a += 0.12){
+          const tx = cx + Math.cos(a) * r - tw/2;
+          const ty = cy + Math.sin(a) * r + th/3;
+          const overlaps = placed.some(p =>
+            tx < p.x+p.w && tx+tw > p.x && ty-th < p.y+p.h && ty > p.y
+          );
+          if(!overlaps){
+            placed.push({x:tx, y:ty-th, w:tw, h:th});
+            ctx.fillStyle = color;
+            ctx.globalAlpha = 0.92;
+            ctx.fillText(text, tx, ty);
+            ctx.globalAlpha = 1;
+            placed_ok = true;
+          }
+        }
+      }
+    });
+
+    // Scatter goose/duck emoji decorations
+    if(gooseImg.complete && duckImg.complete){
+      const emojis = [
+        [0.18,0.2,gooseImg],[0.82,0.25,duckImg],[0.15,0.78,duckImg],
+        [0.85,0.72,gooseImg],[0.5,0.88,gooseImg],[0.78,0.55,duckImg],
+        [0.22,0.5,gooseImg],[0.7,0.12,gooseImg],[0.4,0.15,duckImg]
+      ];
+      emojis.forEach(([rx,ry,img]) => {
+        ctx.drawImage(img, W*rx-14, H*ry-14, 28, 28);
+      });
+    }
+  }
 }
 
 init();
